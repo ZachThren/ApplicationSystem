@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CMSC389N</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .redBackground { background: red }
+            .greenBackground { background: green }
+        </style>
+    </head>
+
+    <body>
+        <h1>Pull/Push</h1>        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2 redBackground" >
+                    <h2>Schedule</h2>
+                </div>
+                <div class="col-xs-10 greenBackground" >
+                    <h2>Syllabus</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-xs-push-10 redBackground" >
+                    <h2>Schedule</h2>
+                </div>
+                <div class="col-xs-10 col-xs-pull-2 greenBackground" >
+                    <h2>Syllabus</h2>
+                </div>
+            </div>            
+        </div>
+        
+        <script src="bootstrap/jquery-3.2.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CMSC389N</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .redBackground { background: red }
+            .greenBackground { background: green }
+        </style>
+    </head>
+
+    <body>
+        <h1>Offsetting</h1>        
+        <div class="container">
+            <div class="row">
+                <!-- using col-xs-offset-3 and text-center -->
+                <div class="col-xs-6 col-xs-offset-3 text-center redBackground" >
+                    <h2>Title</h2>
+                </div>
+            </div>
+        </div>
+        
+        <script src="bootstrap/jquery-3.2.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>

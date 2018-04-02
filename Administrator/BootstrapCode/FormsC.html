@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Forms</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container-fluid"> 
+            <form action="#" class="form-horizontal">  <!-- Try class="form-inline" or class="form-horizontal" Reduce window size-->
+                <div class="form-group">                   
+                    <label for="taname" class="control-label col-sm-3">TA Name</label>
+                    <div class="col-sm-9">
+                        <!-- You can use input-md, input-sm, etc. to control height -->
+                        <input type="text" id="taname" class="form-control input-md" autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">                   
+                    <label for="disabled" class="control-label col-sm-3">Disabled</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="disabled" value="spring" class="form-control" disabled>
+                    </div>
+                </div>
+                
+                 <div class="form-group">                   
+                    <label for="readonly" class="control-label col-sm-3">Readonly</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="readonly" value="south" class="form-control" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="password" class="control-label col-sm-3">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="password" class="form-control" title="Provide good passwords">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="taemail" class="control-label col-sm-3">TA Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" id="taemail" class="form-control">
+                    </div>
+                </div>
+                   
+                <div class="form-group">                   
+                    <label for="date" class="control-label col-sm-3">Date</label>
+                    <div class="col-sm-9">
+                        <input type="date" id="date" class="form-control">
+                    </div>
+                </div>                   
+                   
+                <div class="form-group">                   
+                    <label for="url" class="control-label col-sm-3">Web Site</label>
+                    <div class="col-sm-9">
+                        <input type="url" id="url" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="email" class="control-label col-sm-3">Email Address</label>
+                    <div class="col-sm-9">
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">                                   
+                    <label for="code" class="control-label col-sm-3">Code</label>
+                    <div class="col-sm-9">
+                        <input type="number" min="0" max="50" step="10" value ="1" id="code" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="course" class="control-label col-sm-3">Course</label>
+                    <div class="col-sm-9">
+                        <select id="course" class="form-control">
+                            <option value="cmsc131">cmsc131</option>
+                            <option value="cmsc132" selected>cmsc132</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">                   
+                    <label for="languages" class="control-label col-sm-3">Languages</label>
+                    <div class="col-sm-9">
+                        <select id="languages" class="form-control" multiple size="2">
+                            <option value="C">C</option>
+                            <option value="Java" selected>Java</option>
+                            <option value="Fortran" selected>Fortran</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">                   
+                    <label for="cellphone" class="control-label col-sm-3">CellPhone</label>
+                    <div class="col-sm-9">
+                        <input type="tel" id="cellphone" pattern="\([0-9]\){3}\)[0-9]{3}-[0-9]{4}" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="textarea" class="control-label col-sm-3">Textarea</label>
+                    <div class="col-sm-9">
+                        <textarea id="textarea" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">                   
+                    <label for="search" class="control-label col-sm-3">Search</label>
+                    <div class="col-sm-9">
+                        <input type="search" id="search" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="time" class="control-label col-sm-3">Time</label>
+                    <div class="col-sm-9">
+                        <input type="time" id="time" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">                   
+                    <label for="week" class="control-label col-sm-3">Week</label>
+                    <div class="col-sm-9">
+                        <input type="week" id="week" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkbox" class="control-label col-sm-3">Checkbox</label>
+                    <div class="col-sm-9">
+                        <!-- you can replace checkbox-inline with checkbox -->
+                        <input type="checkbox" id="checkbox" class="checkbox-inline">Laptop
+                         <input type="checkbox" id="checkbox2" class="checkbox-inline">Mobile
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="radio" class="control-label col-sm-3">Radio</label>
+                    <div class="col-sm-3">
+                        <!-- You can replace radio-inline with radio -->
+                        <input type="radio" id="radio" name="degree" class="radio-inline">BS
+                        <input type="radio" id="radio2" name="degree" class="radio-inline">MS
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-3 col-sm-push-3">
+                        <input type="submit" value="Assistance" class="form-control">
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <script src="bootstrap/jquery-3.2.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>
