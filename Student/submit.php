@@ -8,38 +8,54 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
-		<form action="{$_SERVER["PHP_SELF"]}" method="post">
-		<b>Name: </b>
-			<input type="text" name="name" required><br><br>
-		<b>Email: </b>
-			<input type="email" name="email" required><br><br>
-		<b>GPA: </b>
-			<input type="number" name="gpa" step="0.01" required><br><br>
-		<b>Year: </b>
-		<br>
-			<input type="radio" name="year" value="10" required> 10
-			<br>
-			<input type="radio" name="year" value="11" required> 11
-			<br>
-			<input type="radio" name="year" value="12" required> 12<br><br>
-		<b>Gender: </b>
-		<br>
-			<input type="radio" name="gender" value="M" required> M
-			<br>
-			<input type="radio" name="gender" value="F" required> F<br><br>
-		<b>Password: </b>
-				<input type="password" name="password" required><br><br>
-		<b>Verify Password: </b>
-				<input required type="password" name="verifypass" required>
-		<br><br>
+	<h1 align="center"> Undergraduate TA Application 2018 </h1>
+	  <div class="container-fluid">
 
-		<input type="submit" name="submitInfoButton" value="Submit Data">
+		<h3> Contact Information </h3>
+		<form action="{$_SERVER["PHP_SELF"]}" method="post">
+
+		<label>First Name: </label>
+			<input type="text" name="first" placeholder="John" class="form-control" required><br>
+		<label>Last Name: </label>
+			<input type="text" name="last" placeholder="Smith" class="form-control" required><br>
+		<b>Email: </b>
+			<input type="email" name="email" placeholder="example@umd.edu" class="form-control" required><br>
+
+		<h3> Student Information </h3>
+		<b>University Directory ID: </b>
+			<input type="text" name="uid" placeholder="terps" class="form-control" required><br>
+		<b>Are you an Undergraduate, Masters, or PhD Student?</b>
+		<div class="form-group">
+				<div class="col-sm-12">
+						<!-- you can replace radio-inline with checkbox -->
+						<input type="radio" name="degree" id="checkbox" class="radio-inline"> Undergraduate
+						<input type="radio" name="degree" id="checkbox" class="radio-inline"> MS/PhD
+
+				</div>
+		</div>
+		<br>
+		<b>Have you ever been a TA for a CMSC class?</b>
+		<div class="form-group">
+				<div class="col-sm-12">
+						<!-- you can replace radio-inline with checkbox -->
+						<input type="radio" name="experience" id="checkbox" class="radio-inline"> Yes
+						<input type="radio" name="experience" id="checkbox" class="radio-inline"> No
+				</div>
+		</div>
+		<br>
+		<b>GPA: </b>
+			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required>
+		<label for="transcript_upload">Please upload your unofficial transcript</label>
+		<input type="file">
+		<br>
+		<br>
+		<input type="submit" class="btn btn-info" name="submitInfoButton" value="Submit Data">
 		<br><br>
 
 		</form>
-
-		<form action = "main.html" method = 'post'>
-			<input type="submit" name="mainMenuButton" value="Return to main menu">
+		</div>
+		<form action = "main.html" method = 'post' align="center">
+			<input type="submit" class="btn btn-info" name="mainMenuButton" value="Return to main menu">
 		</form>
 BODY;
 
@@ -114,7 +130,7 @@ EOBODY;
   	 	header("Location: main.html");
 	}
 
-	$page = generatePage($body.$message, "Submit");
+	$page = generatePage($body.$message, "Department of Computer Science TA Application");
 	echo $page;
 
 	function connectToDB($host, $user, $password, $database) {
