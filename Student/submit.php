@@ -8,7 +8,7 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
-	<h1 align="center"> Undergraduate TA Application 2018 </h1>
+	<h1 align="center">TA Application 2018 </h1>
 	  <div class="container-fluid">
 
 		<h3> Contact Information </h3>
@@ -54,7 +54,7 @@
 
 		</form>
 		</div>
-		<form action = "main.html" method = 'post' align="center">
+		<form action = "../main.html" method = 'post' align="center">
 			<input type="submit" class="btn btn-info" name="mainMenuButton" value="Return to main menu">
 		</form>
 BODY;

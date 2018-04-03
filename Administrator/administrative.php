@@ -37,9 +37,6 @@ EOBODY;
         <input type="radio" name="graduate" id="graduate" value="graduate"/><label for="graduate">Graduate</label>
         <input type="radio" name="graduate" id="undergrad" value="undergrad" /><label for="undergrad">Undergraduate</label><br><br>
         
-        <strong>Filter Condition (optional)</strong>
-        <input type="text" name="filter" style="background-color: lavender"><br><br>
-        
         <input type="submit" name="displayApp" value="Display Applications"/>
         <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;" />
         <div style="text-align:left"> If you have any question about our program, please contact the system administrator at
