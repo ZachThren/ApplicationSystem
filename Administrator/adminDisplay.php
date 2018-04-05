@@ -10,6 +10,10 @@
     $undergraduate = $_SESSION["undergraduate"];
     $graduate = $_SESSION["graduate"];
 
+    $head = <<<HEADHEAD
+    <br><img src="umdLogo.gif" alt="UMD logo"/><br>
+    <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+HEADHEAD;
 
     //Building the heads of the table
     $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "ADD TA"];
@@ -74,7 +78,7 @@ TABLE2;
     }
 
 
-
+    //retrieving data from Applications table add constructing bodies of tables
     $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript","Extra_Information" ];
     $fieldsQuery = implode(", ", $fields);
     $applications_query = "select {$fieldsQuery} from Applications order by {$sortby}";  
@@ -117,8 +121,6 @@ TABLE2;
                 }
 
                 if (empty($accepted_TAs) == false) {
-                    echo "in";
-                    exit;
                     if (in_array($row['Directory_ID'], $accepted_TAs)) {
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
@@ -151,16 +153,23 @@ TABLE2;
     if (empty($accepted_TAs)) {
         $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
     } else {
-        $accepted_table .= "<div><input type='submit' class='btn btn-success' value='Remove checked TAs' name='Remove'></div>";
+        $accepted_table .= "<div align='right'><input type='submit' class='btn btn-danger' value='Remove checked TAs' name='Remove'></div>";
     }
     if (empty($applying_TAs)) {
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
     } else {
-        $applying_table .= "<div><input type='submit' class='btn btn-success' value='Add checked TAs' name='Add'></div>";
+        $applying_table .= "<div align='right'><input type='submit' class='btn btn-success' value='Add checked TAs' name='Add'></div>";
     }
-    $applying_table .= "</form>";
-    $accepted_table .= "</form>";
 
-    $body = $accepted_table."<br><br>".$applying_table;
+    $applying_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
+    $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
+
+    $homeForm = <<<EOFORM
+        <form action = "administrative.php" method='post' align="center">
+        <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
+    </form>
+EOFORM;
+
+    $body = $head.$accepted_table.$applying_table."<br>".$homeForm;
     echo generatePage($body, "Display Administrative");
 ?>

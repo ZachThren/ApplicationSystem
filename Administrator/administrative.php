@@ -57,7 +57,7 @@ EOBODY;
         <input type="submit" class='btn btn-primary' name="displayApp" value="Display Applications"/>
         <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;"/>
         <div style="text-align:left"> If you have any question about our program, please contact the system administrator at
-            <a style="text-align:center" href="mailto:your address" >tche1@terpmail.umd.edu</a>
+            <a style="text-align:center" href="mailto:your address">admin@terpmail.edu.umd</a>
         </div>
         </form>
 eobody;
