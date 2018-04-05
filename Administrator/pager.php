@@ -9,7 +9,7 @@ function generatePage($body, $title) {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <title> $title </title> 
                 <link rel="stylesheet" href="mainstyle.css" type="text/css" />
-                <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" type="text/css" href="../Assets/bootstrap/css/bootstrap.css">
             </head>
                     
             <body class="container-fluid">

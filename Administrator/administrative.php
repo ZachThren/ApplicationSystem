@@ -12,8 +12,9 @@ if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
         <hr style="height:1px;border:none;color:#333;background-color:#333;" />
         <h1>Applications</h1><br>
         
-        <strong>Select Course</strong><br>                
-        <select name="course" class="container-fluid">                                       
+        <div class="form-group">
+            <label for="name">Select Course</label>
+            <select class="form-control" name="course">                               
 EOBODY;
     
     foreach ($courses as $course) {
@@ -21,24 +22,40 @@ EOBODY;
     }
 
     $body .= <<<eobody
-        </select><br><br>
+        </select></div><br>
 
-        <strong>Select field to sort applications</strong>
-        <select name="sortby" class="container-fluid">
-            <option value="select">[select]</option>
-            <option value="uid">University ID</option>
-            <option value="name" selected>name</option>
-            <option value="email">email</option>
-            <option value="gpa">gpa</option>
-            <option value="year">year</option>
-            <option value="gender">gender</option>
-        </select><br><br>
+        <div class="form-group">
+            <label for="term">Select Term</label>
+            <select class="form-control" name="term">
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer ID</option>
+                <option value="Fall">Fall</option>
+                <option value="Winter">Winter</option>
+            </select>
+        </div><br>
+
+        <div class="form-group">
+            <label for="sortby">Select field to sort by</label>
+            <select class="form-control" name="sortby">
+                <option value="Directory_ID">Directory ID</option>
+                <option value="First">First Name</option>
+                <option value="Last">Last Name</option>
+                <option value="Email">Email</option>
+                <option value="GPA">GPA</option>
+            </select>
+        </div><br>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="Gradute" name="graduate">
+          <label class="form-check-label" for="gradute">Gradute</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="Undergraduate" name="undergrad">
+          <label class="form-check-label" for="undergrad">Undergraduate</label>
+        </div><br>
         
-        <input type="radio" name="graduate" id="graduate" value="graduate"/><label for="graduate">Graduate</label>
-        <input type="radio" name="graduate" id="undergrad" value="undergrad" /><label for="undergrad">Undergraduate</label><br><br>
-        
-        <input type="submit" name="displayApp" value="Display Applications"/>
-        <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;" />
+        <input type="submit" class='btn btn-primary' name="displayApp" value="Display Applications"/>
+        <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;"/>
         <div style="text-align:left"> If you have any question about our program, please contact the system administrator at
             <a style="text-align:center" href="mailto:your address" >tche1@terpmail.umd.edu</a>
         </div>
@@ -49,6 +66,7 @@ eobody;
     if  (isset($_POST["displayApp"])) {
         $_SESSION["course"] = $_POST["course"];
         $_SESSION["sortby"] = $_POST["sortby"];
+        $_SESSION["term"] = $_POST["term"];
         $_SESSION["undergraduate"] = $_POST["undergrad"];
         $_SESSION["graduate"] = $_POST["graduate"];
 
