@@ -1,10 +1,7 @@
 <?php
-require_once("pager.php");
+require_once("support.php");
 require_once("courses.php");
 session_start();
-
-if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
-    $_SERVER['PHP_AUTH_USER'] === "main" && $_SERVER['PHP_AUTH_PW'] === "terps"){
 
     $body = <<<EOBODY
         <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
@@ -54,7 +51,7 @@ EOBODY;
           <label class="form-check-label" for="undergrad">Undergraduate</label>
         </div><br>
         
-        <input type="submit" class='btn btn-primary' name="displayApp" value="Display Applications"/>
+        <input type="submit" class="btn btn-primary" name="displayApp" value="Display Applications"/>
         <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;"/>
         <div style="text-align:left"> If you have any question about our program, please contact the system administrator at
             <a style="text-align:center" href="mailto:your address">admin@terpmail.edu.umd</a>
@@ -72,10 +69,6 @@ eobody;
 
         header("Location: adminDisplay.php");
     }
-} else {
-    header("WWW-Authenticate: Basic realm=\"Example System\"");
-    header("HTTP/1.0 401 Unauthorized");
-}
 
 echo generatePage($body, "TA Application | Administrative Access");
 ?>

@@ -3,5 +3,5 @@
 	$dbuser = "dbuser";
 	$dbpassword = "dragon123";
 	$database = "cmsc389n";
-	$table = "Applications";
+	$table = "Applications_Spring_2018";
 ?>
