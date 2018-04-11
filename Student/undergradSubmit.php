@@ -8,6 +8,9 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
+	<br>
+	<img src="../umdLogo.gif" alt = "umdLogo.gif">
+	<hr>
 	<h1 align="center">Undergraduate UMD CS TA Application</h1>
 	  <div class="container-fluid">
 
