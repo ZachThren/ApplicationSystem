@@ -22,16 +22,6 @@ EOBODY;
         </select></div><br>
 
         <div class="form-group">
-            <label for="term">Select Term</label>
-            <select class="form-control" name="term">
-                <option value="Spring">Spring</option>
-                <option value="Summer">Summer ID</option>
-                <option value="Fall">Fall</option>
-                <option value="Winter">Winter</option>
-            </select>
-        </div><br>
-
-        <div class="form-group">
             <label for="sortby">Select field to sort by</label>
             <select class="form-control" name="sortby">
                 <option value="Directory_ID">Directory ID</option>
@@ -63,7 +53,6 @@ eobody;
     if  (isset($_POST["displayApp"])) {
         $_SESSION["course"] = $_POST["course"];
         $_SESSION["sortby"] = $_POST["sortby"];
-        $_SESSION["term"] = $_POST["term"];
         $_SESSION["undergraduate"] = $_POST["undergrad"];
         $_SESSION["graduate"] = $_POST["graduate"];
 

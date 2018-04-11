@@ -56,7 +56,7 @@ TABLE2;
     }
 
     //retrieving data from courses table
-    $course_query = "select Course, Applying_For_{$term}, Accepted_For_{$term} from Courses where Course = '{$course}'";
+    $course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate from {$coursesTable} where Course = '{$course}'";
     $applying_TAs = [];
     $accepted_TAs = [];
 
@@ -70,10 +70,13 @@ TABLE2;
         } else {
             $result1->data_seek(0);
             $row = $result1->fetch_array(MYSQLI_ASSOC);
-            $field_applying_term = "Applying_For_".$term;
-            $field_accepted_term = "Accepted_For_".$term;
-            $applying_TAs = unserialize($row[$field_applying_term]);
-            $accepted_TAs = unserialize($row[$field_accepted_term ]);
+            $applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
+            $applying_Graduate = unserialize($row["Applying_Graduate"]);
+            $applying_TAs = $applying_Graduate + $applying_Undergraduate;
+
+            $accepted_Undergraduate = unserialize($row["Accepted_Undergraduate"]);
+            $accepted_Graduate = unserialize($row["Accepted_Graduate"]);
+            $accepted_TAs = $accepted_Undergraduate + $accepted_Graduate;
         }
     }
 
@@ -81,7 +84,7 @@ TABLE2;
     //retrieving data from Applications table add constructing bodies of tables
     $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript","Extra_Information" ];
     $fieldsQuery = implode(", ", $fields);
-    $applications_query = "select {$fieldsQuery} from Applications order by {$sortby}";  
+    $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby}";  
 
     $result2 = $db_connection->query($applications_query);
     if (!$result2) {
