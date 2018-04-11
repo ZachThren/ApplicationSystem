@@ -17,8 +17,19 @@ function generatePage($body, $title="Example") {
 
 
           // Add rows to the form
-          $("#add").click(function(e){
-            $("#container").append("<p>Hello World!</p>");
+          $("#radioButton").click(function(e){
+            $("#container").append("	<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
+          		<select id="course" class="form-control" multiple size="10">
+          				<option>CMSC 131</option>
+          				<option>CMSC 132</option>
+          				<option>CMSC 216</option>
+          				<option>CMSC 250</option>
+          				<option>CMSC 330</option>
+          				<option>CMSC 351</option>
+          				<option>CMSC 414</option>
+          				<option>CMSC 420</option>
+          				<option>CMSC 451</option>
+          		</select><br>");
           });
 
           // Add cols to the form
