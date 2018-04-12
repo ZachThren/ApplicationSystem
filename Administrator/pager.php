@@ -12,8 +12,10 @@
                     <link rel="stylesheet" type="text/css" href="../Assets/bootstrap/css/bootstrap.css">
                 </head>
                         
-                <body class="container-fluid">
-                    $body
+                <body>
+                    <div class="container-fluid">
+                        $body
+                    </div>
                 </body>
             </html>
 EOPAGE;
