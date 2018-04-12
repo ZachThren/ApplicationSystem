@@ -4,9 +4,9 @@ require_once("courses.php");
 session_start();
 
     $body = <<<EOBODY
-        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
         <br><img src="umdLogo.gif" alt="UMD logo"/><br>
         <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
         <h1>Applications</h1><br>
         
         <div class="form-group">
