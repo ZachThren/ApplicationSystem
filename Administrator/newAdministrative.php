@@ -7,7 +7,7 @@
     die($db->connect_error);
   } else {
     $body = "<br><div id=\"accordion\">";
-    $query = "select name from Semesters";
+    $query = "select season, year from Semesters order by ID desc";
     $result = $db->query($query);
     if (!$result) {
       die("Retrieval failed: ". $db->error);
@@ -20,16 +20,12 @@
             <div class="card">
               <div class="card-header" id="heading$index">
                 <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse$index" aria-expanded="true" aria-controls="collapse$index">
-EOBODY;
-          foreach ($row as $value) {
-            $body .= "$value";
-          }
-          $body .= <<<EOBODY
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse$index" aria-expanded="false" aria-controls="collapse$index">
+                    {$row['season']} {$row['year']}
                   </button>
                 </h5>
               </div>
-              <div id="collapse$index" class="collapse show" aria-labelledby="heading$index" data-parent="#accordion">
+              <div id="collapse$index" class="collapse" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
                   <button type="button" class="btn btn-primary">Automatically Assign TAs</button>
                   <br><br>
