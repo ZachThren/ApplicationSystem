@@ -15,8 +15,8 @@
 HEADHEAD;
 
     //Building the heads of the table
-    $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "ADD TA"];
-    $accepted_table_head = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "REMOVE TA"];
+    $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information"];
+    $accepted_table_head = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information"];
 
     $applying_table = <<<THEAD
     <form action="addTA.php" method="post" class="container-fluid">
@@ -117,8 +117,6 @@ TABLE2;
                                 $applying_table .= "<td>{$columValue}</td>";
                             }
                         }
-                        $applying_table .= "<td><input type='checkbox' class='custom-control-input' name='{$row['Directory_ID']}'></td>";
-                        $applying_table .= "</tr>";
                     }
                 }
 
@@ -141,8 +139,6 @@ TABLE2;
                                 $accepted_table .= "<td>{$columValue}</td>";
                             }
                         }
-                        $accepted_table .= "<td><input type='checkbox' class='custom-control-input' name='{$row['Directory_ID']}'></td>";
-                        $accepted_table .= "</tr>";
                     }
                 }
             }
@@ -154,20 +150,17 @@ TABLE2;
 
     if (empty($accepted_TAs)) {
         $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
-    } else {
-        $accepted_table .= "<div align='right'><input type='submit' class='btn btn-danger' value='Remove checked TAs' name='Remove'></div>";
-    }
+    } 
+
     if (empty($applying_TAs)) {
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
-    } else {
-        $applying_table .= "<div align='right'><input type='submit' class='btn btn-success' value='Add checked TAs' name='Add'></div>";
-    }
+    } 
 
     $applying_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
     $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
 
     $homeForm = <<<EOFORM
-        <form action = "administrative.php" method='post' align="center">
+        <form action = "faculty.php" method='post' align="center">
         <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
     </form>
 EOFORM;

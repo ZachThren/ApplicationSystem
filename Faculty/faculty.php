@@ -3,7 +3,7 @@ require_once("support.php");
 require_once("courses.php");
 
 session_start();
- 
+
     $body = <<<EOBODY
         <br><img src="umdLogo.gif" alt="UMD logo"/><br>
         <hr style="height:1px;border:none;color:#333;background-color:#333;" />
@@ -54,26 +54,10 @@ eobody;
     if  (isset($_POST["displayApp"])) {
         $_SESSION["course"] = $_POST["course"];
         $_SESSION["sortby"] = $_POST["sortby"];
-
-        if (isset($_POST["undergrad"])) {
-            echo "isset U";
-        } else {
-            echo "is not set U";
-        }
-
-
-        if (isset($_POST["graduate"])) {
-            echo "isset G";
-        } else {
-            echo "is not set G";
-        }
-
-        exit;
-
         $_SESSION["undergraduate"] = $_POST["undergrad"];
         $_SESSION["graduate"] = $_POST["graduate"];
 
-        header("Location: adminDisplay.php");
+        header("Location: facultyDisplay.php");
     }
 
 echo generatePage($body, "TA Application | Administrative Access");

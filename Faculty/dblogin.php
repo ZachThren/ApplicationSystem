@@ -3,6 +3,6 @@
 	$dbuser = "dbuser";
 	$dbpassword = "dragon123";
 	$database = "cmsc389n";
-	$tableApplicants = "Applications";
-  $tableCourse = "Courses";
+	$applicationsTable = "Applications_Spring_2018";
+	$coursesTable = "Courses_Spring_2018";
 ?>
