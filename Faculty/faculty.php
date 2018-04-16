@@ -54,8 +54,19 @@ eobody;
     if  (isset($_POST["displayApp"])) {
         $_SESSION["course"] = $_POST["course"];
         $_SESSION["sortby"] = $_POST["sortby"];
-        $_SESSION["undergraduate"] = $_POST["undergrad"];
-        $_SESSION["graduate"] = $_POST["graduate"];
+        
+        if (isset($_POST["undergrad"])) {
+            $_SESSION["undergraduate"] = true;
+        } else {
+            $_SESSION["undergraduate"] = false;
+        }
+
+
+        if (isset($_POST["graduate"])) {
+            $_SESSION["graduate"] = true;
+        } else {
+            $_SESSION["graduate"] = false;
+        }
 
         header("Location: facultyDisplay.php");
     }

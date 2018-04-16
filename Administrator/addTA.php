@@ -7,9 +7,6 @@
     $term = $_SESSION["term"];
 
 
-
-
-
     // connecting to database;
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
     if ($db_connection->connect_error) {

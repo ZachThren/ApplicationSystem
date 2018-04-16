@@ -56,22 +56,17 @@ eobody;
         $_SESSION["sortby"] = $_POST["sortby"];
 
         if (isset($_POST["undergrad"])) {
-            echo "isset U";
+            $_SESSION["undergraduate"] = true;
         } else {
-            echo "is not set U";
+            $_SESSION["undergraduate"] = false;
         }
 
 
         if (isset($_POST["graduate"])) {
-            echo "isset G";
+            $_SESSION["graduate"] = true;
         } else {
-            echo "is not set G";
+            $_SESSION["graduate"] = false;
         }
-
-        exit;
-
-        $_SESSION["undergraduate"] = $_POST["undergrad"];
-        $_SESSION["graduate"] = $_POST["graduate"];
 
         header("Location: adminDisplay.php");
     }
