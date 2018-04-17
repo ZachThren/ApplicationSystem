@@ -41,7 +41,7 @@
                 echo "Empty Table<br>";
             } else {
                 $a_course = mysqli_fetch_array($result1, MYSQLI_ASSOC);
-                $new_Max_Ugrad = $a_course["Max_Udergraduate"];
+                $new_Max_Ugrad = $a_course["Max_Udergraduate"];;
                 $new_Max_Grad = $a_course["Max_Graduate"];
 
                 $applying_Undergraduate = unserialize($a_course["Applying_Undergraduate"]);
