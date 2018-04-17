@@ -61,10 +61,10 @@
         if ($num_rows === 0) {
             echo "No Applications<br>";
         } else {
+
+
             for ($row_index = 0; $row_index < $num_rows; $row_index++) {
                 $result2->data_seek($row_index);
-
-                
                 $student = $result2->fetch_array(MYSQLI_ASSOC);
 
 
@@ -72,7 +72,10 @@
 
 
 
+
             }
+
+            
         }
     }
 
