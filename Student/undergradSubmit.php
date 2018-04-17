@@ -9,8 +9,8 @@
 	$message = "";
 	$body = <<<BODY
 	<br>
-	<img src="../umdLogo.gif" alt = "umdLogo.gif">
-	<hr>
+	<img src="../Assets/umdLogo.gif" alt = "umdLogo.gif">
+	<hr style="height:1px;border:none;color:#333;background-color:#333;" />
 	<h1 align="center">Undergraduate UMD CS TA Application</h1>
 	  <div class="container-fluid">
 

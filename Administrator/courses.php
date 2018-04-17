@@ -1,4 +1,5 @@
 <?php
+    $gpa_cutoff = 3.5;
     $courses = array
     (
         "CMSC122", "CMSC131", "CMSC132", "CMSC132A", "CMSC132H", "CMSC216", 

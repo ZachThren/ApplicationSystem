@@ -9,8 +9,8 @@
 	$message = "";
 	$body = <<<BODY
 	<br>
-	<img src="../umdLogo.gif" alt = "umdLogo.gif">
-	<hr>
+	<img src="../Assets/umdLogo.gif" alt = "umdLogo.gif">
+	<hr style="height:1px;border:none;color:#333;background-color:#333;" />
 	<h1 align="center">Graduate UMD CS TA Application </h1>
 	  <div class="container-fluid">
 
@@ -45,11 +45,10 @@
 		</select><br>
 		</div>
 		<div class="col-sm-9">
-		<b>Are you an Undergraduate, Masters, or PhD Student?</b>
+		<b>Are you a Masters, or PhD Student?</b>
 		<div class="form-group">
 				<div class="col-sm-12">
 						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="degree" id="checkbox" value="Undergraduate" class="radio-inline"> Undergraduate
 						<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
 						<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
 
