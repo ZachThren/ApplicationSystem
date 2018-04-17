@@ -27,16 +27,32 @@ EOBODY;
 
     $body .= <<<EOBODY
         </select></div>
-        <label for="name">Max Value</label>
+        <label for="name">Number of TAs needed</label>
         <input type="number" name="Max" style="background-color: lavender" class="form-control"/><br>
-        <input type="submit" class="btn btn-primary" name="Edit" value="Update"/>
+        <input type="submit" class="btn btn-primary" name="submit" value="Update"/>
 EOBODY;
 
-    if  (isset($_POST["Edit"])) {
+    if  (isset($_POST["submit"])) {
         $table1 = "Courses_Spring_2018";
-        $db = connectToDB($dbhost, $dbuser, $dbpassword, $database);
-        $sqlQuery = sprintf("UPDATE $table1 SET Max_Total = %d WHERE Course = %s", $_POST["Edit"], $_POST["Max"]);
-        mysqli_query($db, $sqlQuery);
+        $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+
+        if ($db_connection->connect_error) {
+            die($db_connection->connect_error);
+        }
+
+        $c = $_POST["course"];
+        $m = $_POST["Max"];
+
+        $sqlQuery = "UPDATE $table1 SET Max_Total = $m WHERE Course = '{$c}'";
+
+        //$sqlQuery = sprintf("UPDATE $table1 SET Max_Total = 10 WHERE Course = %s", $_POST["Edit"], $_POST["Max"]);
+        $result1 = $db_connection->query($sqlQuery);
+
+        if (!$result1) {
+            die("Retrieval of courses failed: ". $db_connection->error);
+        }
+//        $sqlQuery = sprintf("delete from $table1 WHERE Max_Toal = 50");
+//        mysqli_query($db, $sqlQuery);
         $body .= "<br><br><b style='color: green'>Max TAs for ".$_POST["course"]." changed to </b>".$_POST["Max"];
         $body .= "
         <br><hr style=\"height:1px;border:none;color:#333;background-color:#333;\"/>
