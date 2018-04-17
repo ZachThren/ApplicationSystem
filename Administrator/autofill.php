@@ -82,7 +82,7 @@
             $update_Accepted_Grad = serialize($accepted_Graduate);
 
             $update_query = "update {$applicationsTable}, set (Applying_Undergraduate = {$update_Applying_Ugrad}, Applying_Graduate = {$update_Applying_Grad}, Accepted_Undergraduate = {$update_Accepted_Ugrad}, Accepted_Graduate = {$update_Accepted_Grad}, Max_Undergraduate = {$new_Max_Ugrad}, Max_Graduate = {$new_Max_Grad}) where Course = '{$every_course}'";
-            mysqli_query($db_connection, $course_query);
+            mysqli_query($db_connection, $update_query);
         }
     }
 //    $course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} where Course = '{$course}'";
