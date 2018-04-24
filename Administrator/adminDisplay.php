@@ -8,6 +8,8 @@
     $sortby = $_SESSION["sortby"];
     $undergraduate = $_SESSION["undergraduate"];
     $graduate = $_SESSION["graduate"];
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
 
     $head = <<<HEADHEAD
     <br><img src="umdLogo.gif" alt="UMD logo"/><br>
@@ -69,19 +71,34 @@ TABLE2;
         } else {
             $result1->data_seek(0);
             $row = $result1->fetch_array(MYSQLI_ASSOC);
+
             $applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
             $applying_Graduate = unserialize($row["Applying_Graduate"]);
-            $applying_TAs = $applying_Graduate + $applying_Undergraduate;
-
             $accepted_Undergraduate = unserialize($row["Accepted_Undergraduate"]);
             $accepted_Graduate = unserialize($row["Accepted_Graduate"]);
-            $accepted_TAs = $accepted_Undergraduate + $accepted_Graduate;
+
+            if (empty($applying_Undergraduate)) {
+                $applying_Undergraduate = [];
+            }
+            if (empty($applying_Graduate)) {
+                $applying_Graduate = [];
+            }
+
+            if (empty($accepted_Undergraduate)) {
+                $accepted_Undergraduate = [];
+            }
+            if (empty($accepted_Graduate)) {
+                $accepted_Graduate = [];
+            }
+
+            $applying_TAs = array_merge($applying_Undergraduate, $applying_Graduate);
+            $accepted_TAs = array_merge($accepted_Undergraduate, $accepted_Graduate);
         }
     }
 
 
     //retrieving data from Applications table add constructing bodies of tables
-    $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript","Extra_Information" ];
+    $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript"];
     $fieldsQuery = implode(", ", $fields);
     $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby}";  
 
@@ -103,10 +120,10 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='Transcript {$row['Directory_ID']}'></td>";
+                                $applying_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript {$row['Directory_ID']}'></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
-                                if (count($previous_course) == 0) {
+                                if (empty($previous_course)) {
                                     $applying_table .= "<td>No Previous Experience</td>";
                                 } else {
                                     $previous_course_str = implode(', ', $previous_course);
@@ -117,7 +134,12 @@ TABLE2;
                                 $applying_table .= "<td>{$columValue}</td>";
                             }
                         }
-                        $applying_table .= "<td><input type='checkbox' class='custom-control-input' name='{$row['Directory_ID']}'></td>";
+
+                        $applying_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}'></td>";
+
+                        $applying_table .= "<td><div class='form-check'>
+                                            <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
+                                            </div></td>";
                         $applying_table .= "</tr>";
                     }
                 }
@@ -127,10 +149,10 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='Transcript {$row['Directory_ID']}'></td>";
+                                $accepted_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript{$row['Directory_ID']}'></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
-                                if (count($previous_course) == 0) {
+                                if (empty($previous_course)) {
                                     $accepted_table .= "<td>No Previous Experience</td>";
                                 } else {
                                     $previous_course_str = implode(', ', $previous_course);
@@ -141,7 +163,13 @@ TABLE2;
                                 $accepted_table .= "<td>{$columValue}</td>";
                             }
                         }
-                        $accepted_table .= "<td><input type='checkbox' class='custom-control-input' name='{$row['Directory_ID']}'></td>";
+
+                        $accepted_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}'></td>";
+
+                        $accepted_table .= "<td><div class='form-check'>
+                                            <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
+                                            </div></td>";
+
                         $accepted_table .= "</tr>";
                     }
                 }
