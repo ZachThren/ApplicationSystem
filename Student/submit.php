@@ -8,30 +8,24 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
-	<br>
-	<img src="../Assets/umdLogo.gif" alt="UMD logo"/><br>
-	<hr  style="height:1px;border:none;color:#333;background-color:#333;" />
-	
+	<br>	
 	<h1 align="center">UMD CS TA Application</h1>
-	  <div class="container-fluid">
+	<h3> Are you an Undergraduate or Graduate student? </h3>
+	<form action="{$_SERVER["PHP_SELF"]}" method="post">
+	<div class="form-group">
+			<div class="col-sm-3 col-sm-push-1">
+					<input type="submit" class="btn btn-info" value="Undergraduate" name="undergraduate">
+			</div>
+			<div class="col-sm-3 col-sm-push-1">
+					<input type="submit" class="btn btn-info" value="Graduate" name="graduate">
+			</div>
+			<div class="col-sm-3 col-sm-push-1">
+					<input type="submit" class="btn btn-info" value="Main Menu" name="main">
+			</div>
+	</div>
 
-		<h3> Are you an Undergraduate or Graduate student? </h3>
-		<form action="{$_SERVER["PHP_SELF"]}" method="post">
-		<div class="form-group">
-				<div class="col-sm-3 col-sm-push-1">
-						<input type="submit" class="btn btn-info" value="Undergraduate" name="undergraduate">
-				</div>
-				<div class="col-sm-3 col-sm-push-1">
-						<input type="submit" class="btn btn-info" value="Graduate" name="graduate">
-				</div>
-				<div class="col-sm-3 col-sm-push-1">
-						<input type="submit" class="btn btn-info" value="Main Menu" name="main">
-				</div>
-		</div>
-
-		</form>
-		<img></img>
-		<hr>
+	</form>
+	<img></img>
 BODY;
 
 	if(isset($_POST["undergraduate"])){
