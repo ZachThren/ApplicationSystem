@@ -2,6 +2,8 @@
 	require_once("support.php");	
     require_once "dblogin.php"; 
 
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
 	$table = $coursesTable;
 
 	$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -9,14 +11,25 @@
         die($db_connection->connect_error);
     }
 	
+	function generateRandomString($length = 5) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+	    return $randomString;
+	}
+
+	$random = generateRandomString();
 	
-	$first = "test4";
-	$email = "test4@email.com";
-	$id = "test4id";
-	$gpa = 3.0;
+	$first = "test".$random;
+	$email = "test".$random."@email.com";
+	$id = "test".$random."id";
+	$gpa = rand(0, 40) / 10;
 	$coursesToTA = ['cmsc131', 'cmsc132', 'cmsc250', 'cmsc216', 'cmsc351'];
 	$courses = serialize($coursesToTA);
-	$degree = 'Undergraduate';
+	$degree = 'PhD';
 	$fileResume = "resume.pdf";
 	$fileData = addslashes(file_get_contents($fileResume));
 	
