@@ -190,7 +190,7 @@ TABLE2;
     $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
 
     $homeForm = <<<EOFORM
-        <form action = "administrative.php" method='post' align="left" style="margin-left: 20px">
+        <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">
         <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
     </form>
     
