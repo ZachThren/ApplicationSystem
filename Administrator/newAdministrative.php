@@ -83,7 +83,12 @@ EOBODY;
         $body .= "<p>There are no semesters in the database</p>";
       }
     }
+
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
-    echo generatePage($body, "Administrative");
+    $body .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;'/>";
+
+
+    $finalBody = $body;
+    echo generatePage($finalBody, "Administrative");
   }
 ?>

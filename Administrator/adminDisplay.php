@@ -11,11 +11,6 @@
     $applicationsTable = "Applications_Spring_2018";
     $coursesTable = "Courses_Spring_2018";
 
-    $head = <<<HEADHEAD
-    <br><img src="umdLogo.gif" alt="UMD logo"/><br>
-    <hr style="height:1px;border:none;color:#333;background-color:#333;" />
-HEADHEAD;
-
     //Building the heads of the table
     $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "ADD TA"];
     $accepted_table_head = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "REMOVE TA"];
@@ -195,11 +190,12 @@ TABLE2;
     $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
 
     $homeForm = <<<EOFORM
-        <form action = "administrative.php" method='post' align="center">
+        <form action = "administrative.php" method='post' align="left" style="margin-left: 20px">
         <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
     </form>
+    
 EOFORM;
 
-    $body = $head.$accepted_table.$applying_table."<br>".$homeForm;
+    $body = $accepted_table.$applying_table."<br>".$homeForm;
     echo generatePage($body, "Display Administrative");
 ?>
