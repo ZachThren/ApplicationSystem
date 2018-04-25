@@ -176,8 +176,8 @@ TABLE2;
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
     } 
 
-    $applying_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
-    $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
+    $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
 
     $homeForm = <<<EOFORM
         <form action = "faculty.php" method='post' align="left" style="margin-left: 20px">

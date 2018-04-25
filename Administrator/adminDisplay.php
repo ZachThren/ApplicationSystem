@@ -186,8 +186,8 @@ TABLE2;
         $applying_table .= "<div align='right'><input type='submit' class='btn btn-success' value='Add checked TAs' name='Add'></div>";
     }
 
-    $applying_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
-    $accepted_table .= "<hr style='height:1px;border:none;color:gray;background-color:#333;' /></form>";
+    $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
 
     $homeForm = <<<EOFORM
         <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">
@@ -195,7 +195,7 @@ TABLE2;
     </form>
     
 EOFORM;
-
+    
     $body = $accepted_table.$applying_table."<br>".$homeForm;
     echo generatePage($body, "Display Administrative");
 ?>

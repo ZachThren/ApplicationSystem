@@ -71,9 +71,9 @@
               </div>
               <div id="collapse$index" class="collapse" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
-                  <button type="button" class="btn btn-primary">Automatically Assign TAs</button>
+                  <a href="autofill.php" class="btn btn-primary">Automatically Assign TAs</a>
                   <br><br>
-                  <button type="button" class="btn btn-primary">Manually Assign TAs</button>
+                  <a href="manualfill.php" class="btn btn-primary">Manually Assign TAs</a>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@ EOBODY;
     }
 
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
-    $body .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;'/>";
+    $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
 
     $finalBody = $body;
