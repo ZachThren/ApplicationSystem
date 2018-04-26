@@ -64,7 +64,7 @@
                 echo "No Applications<br>";
             } else {
                 while ($a_student = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-                    if ($a_student["GPA"] >= $gpa_cutoff && ($a_student["Degree"] === 'MS' ||  $a_student["Degree"] === 'PhD')) {
+                    if ($a_student["GPA"] >= $gpa_cutoff && ($a_student["Degree"] === 'MS' || $a_student["Degree"] === 'PhD')) {
                         unset($applying_Graduate[$a_student["Directory_ID"]]);
                         array_push($accepted_Graduate, $a_student["Directory_ID"]);
                         $new_Max_Grad--;

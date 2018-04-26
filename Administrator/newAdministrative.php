@@ -71,9 +71,10 @@
               </div>
               <div id="collapse$index" class="collapse" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
-                  <button type="button" class="btn btn-primary">Automatically Assign TAs</button>
-                  <br><br>
-                  <button type="button" class="btn btn-primary">Manually Assign TAs</button>
+                  <form action="{$_SERVER["PHP_SELF"]}" method="post"> 
+                    <button type="submit" name="auto" class="btn btn-primary">Automatically Assign TAs</button> 
+                    <button type="submit" name="manual" class="btn btn-primary">Manually Assign TAs</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -82,6 +83,14 @@ EOBODY;
       } else {
         $body .= "<p>There are no semesters in the database</p>";
       }
+    }
+
+    if (isset($_POST["auto"])) {
+      header("Location: autofill.php");
+    }
+
+    if (isset($_POST["manual"])) {
+        header("Location: autofill.php");
     }
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     echo generatePage($body, "Administrative");
