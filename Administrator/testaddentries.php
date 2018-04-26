@@ -27,7 +27,7 @@
 	$email = "test".$random."@email.com";
 	$id = "test".$random."id";
 	$gpa = rand(0, 40) / 10;
-	$coursesToTA = ['cmsc131', 'cmsc132', 'cmsc250', 'cmsc216', 'cmsc351'];
+	$coursesToTA = ['CMSC131', 'CMSC132', 'CMSC250', 'CMSC216', 'CMSC351'];
 	$courses = serialize($coursesToTA);
 	$degree = 'PhD';
 	$fileResume = "resume.pdf";

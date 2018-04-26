@@ -51,7 +51,8 @@
                 if (empty($accepted_Graduate)) {
                     $accepted_Graduate = [];
                 }
-                $applications_query = "select Directory_ID, GPA, Degree from {$applicationsTable} order by GPA DESC";
+
+                $applications_query = "select Directory_ID, GPA, Degree, Courses from {$applicationsTable} order by GPA DESC";
                 $result2 = mysqli_query($db_connection, $applications_query);
                 if (!$result2) {
                     die("Retrieval failed: ". $db_connection->error);
@@ -65,13 +66,19 @@
                         for ($row_index = 0; $row_index < $num_rows; $row_index++) {
                             $result2->data_seek($row_index);
                             $row = $result2->fetch_array(MYSQLI_ASSOC);
+                            $applyingTo = unserialize($row['Courses']);
+
                             if ($addedUndergrad >= $new_Max_Ugrad && $addedGrad >= $new_Max_Grad) {
                                 break;
                             }
-                            if ($row["Degree"] == "Undergraduate" && $addedUndergrad < $new_Max_Ugrad) {
+                            echo "DEBUG";
+                            echo $currName;
+                            print_r($applyingTo);
+                            echo "<<>>";
+                            if ($row["Degree"] == "Undergraduate" && $addedUndergrad < $new_Max_Ugrad && in_array($currName, $applyingTo)) {
                                 array_push($accepted_Undergraduate, $row["Directory_ID"]);
                                 $addedUndergrad = $addedUndergrad + 1;
-                            } else if ($addedGrad < $new_Max_Grad) {
+                            } else if ($addedGrad < $new_Max_Grad && in_array($currName, $applyingTo)) {
                                 array_push($accepted_Graduate, $row["Directory_ID"]);
                                 $addedGrad = $addedGrad + 1;
                             }
