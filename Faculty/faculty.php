@@ -5,8 +5,6 @@ require_once("courses.php");
 session_start();
 
     $body = <<<EOBODY
-        <br><img src="umdLogo.gif" alt="UMD logo"/><br>
-        <hr style="height:1px;border:none;color:#333;background-color:#333;" />
         <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
         <h1>Applications</h1><br>
         
@@ -40,13 +38,10 @@ EOBODY;
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox" value="Undergraduate" name="undergrad">
           <label class="form-check-label" for="undergrad">Undergraduate</label>
-        </div><br>
+        </div><br><br>
         
-        <input type="submit" class="btn btn-primary" name="displayApp" value="Display Applications"/>
-        <br><br><hr style="height:1px;border:none;color:#333;background-color:#333;"/>
-        <div style="text-align:left"> If you have any question about our program, please contact the system administrator at
-            <a style="text-align:center" href="mailto:your address">admin@terpmail.edu.umd</a>
-        </div>
+        <input type="submit" class="btn btn-info" name="displayApp" value="Display Applications"/>
+        <br>
         </form>
 eobody;
 

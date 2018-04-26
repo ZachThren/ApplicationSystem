@@ -37,12 +37,18 @@ function generatePage($body, $title="Example") {
 });
 
         </script>
-    </head>
+    </head> 
 
-    <body>
-            $body
-            <script src="bootstrap/jquery-3.2.1.min.js"></script>
-            <script src="bootstrap/js/bootstrap.min.js"></script>
+    <body>  
+        <br><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px"><br>
+        <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+        <div class="container-fluid">
+          $body
+        </div>
+        <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
+
+        <script src="bootstrap/jquery-3.2.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
 EOPAGE;

@@ -4,7 +4,9 @@
 
     session_start();
     $course = $_SESSION["course"];
-    $term = $_SESSION["term"];
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
+
 
     // connecting to database;
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -12,14 +14,16 @@
         die($db_connection->connect_error);
     }
 
-    $course_query = "select Course, Applying_For_{$term}, Accepted_For_{$term} from Courses where Course = '{$course}'";
-    $applying_TAs = [];
-    $accepted_TAs = [];
+    ////////////////////////
+    $course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} where Course = '{$course}'";
 
-    $field_applying_term = "Applying_For_".$term;
-    $field_accepted_term = "Accepted_For_".$term;
+    $applying_Undergraduate = [];
+    $applying_Graduate = [];
 
-    $result1 = $db_connection->query($course_query);
+    $accepted_Undergraduate = [];
+    $accepted_Graduate = [];
+
+    $result1 = mysqli_query($db_connection, $course_query);
     if (!$result1) {
         die("Retrieval of courses failed: ". $db_connection->error);
     } else {
@@ -27,48 +31,92 @@
         if ($num_rows === 0) {
             echo "Empty Table<br>";
         } else {
-            $result1->data_seek(0);
-            $row = $result1->fetch_array(MYSQLI_ASSOC);
+            $a_course = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 
-            $applying_TAs = unserialize($row[$field_applying_term]);
-            $accepted_TAs = unserialize($row[$field_accepted_term ]);
+            $applying_Undergraduate = unserialize($a_course["Applying_Undergraduate"]);
+            $applying_Graduate = unserialize($a_course["Applying_Graduate"]);
+
+            $accepted_Undergraduate = unserialize($a_course["Accepted_Undergraduate"]);
+            $accepted_Graduate = unserialize($a_course["Accepted_Graduate"]);
         }
     }
+    ////////////////////////
 
-    if (empty($accepted_TAs)) {
-    	$accepted_TAs = [];
+    if (empty($applying_Undergraduate)) {
+        $applying_Undergraduate = [];
     }
-    if (empty($applying_TAs)) {
-    	$applying_TAs = [];
+    if (empty($applying_Graduate)) {
+        $applying_Graduate = [];
+    }
+
+    if (empty($accepted_Undergraduate)) {
+        $accepted_Undergraduate = [];
+    }
+    if (empty($accepted_Graduate)) {
+        $accepted_Graduate = [];
     }
 
     foreach($_POST as $key => $value) {
-    	if ($key != "Add") {
-    		array_push($applying_TAs, $key);
-    	}
+        if ($key != "Add") {
+            echo "key".$key;
+            $applications_query = "select Directory_ID, Degree from {$applicationsTable} where Directory_ID='{$key}'";  
+            $student;
+            
+            $result2 = $db_connection->query($applications_query);
+            if (!$result2) {
+                die("Retrieval failed: ". $db_connection->error);
+            } else {
+                $num_rows = $result2->num_rows;
+
+                if ($num_rows === 0) {
+                    echo "No Applications<br>";
+                } else {
+                        $result2->data_seek(0);
+                        $student = $result2->fetch_array(MYSQLI_ASSOC);
+
+                        if ($student["Degree"] == "Undergraduate") {
+                            array_push($applying_Undergraduate, $key);
+                        } else {
+                            array_push($applying_Graduate, $key);
+                        }
+                }
+            }
+
+        }
     }
 
-    $updated_accepted_TAs = [];
-
-    foreach($accepted_TAs as $key => $value) {
-    	if (!(in_array($value, $applying_TAs))) {
-    		array_push($updated_accepted_TAs, $value);
-    	}
+    $updated_accepted_undergraduate = [];
+    foreach($accepted_Undergraduate as $key => $value) {
+        if (!(in_array($value, $applying_Undergraduate))) {
+            array_push($updated_accepted_undergraduate, $value);
+        }
     }
 
-    $final_accepted = serialize($updated_accepted_TAs);
-    $final_applying = serialize($applying_TAs);
+    $updated_accepted_graduate = [];
+    foreach($accepted_Graduate as $key => $value) {
+        if (!(in_array($value, $applying_Graduate))) {
+            array_push($updated_accepted_graduate, $value);
+        }
+    }
 
+    $final_accepted_undergraduate = serialize($updated_accepted_undergraduate);
+    $final_accepted_graduate = serialize($updated_accepted_graduate);
 
-    $update_query = "update Courses ";
-    $update_query .= "set {$field_applying_term} = '".$final_applying."', {$field_accepted_term} = '".$final_accepted."' ";
+    $final_applying_undergraduate = serialize($applying_Undergraduate);
+    $final_applying_graduate = serialize($applying_Graduate);
+
+    
+    $update_query = "update {$coursesTable} ";
+    $update_query .= "set Applying_Undergraduate = '".$final_applying_undergraduate."', Applying_Graduate = '".$final_applying_graduate."', Accepted_Undergraduate = '".$final_accepted_undergraduate."', Accepted_Graduate = '".$final_accepted_graduate."' ";
     $update_query .= "where Course = '{$course}'";
+
 
     $result = $db_connection->query($update_query);
     if (!$result) {
         die("Retrieval of courses failed: ". $db_connection->error);
     } else {
-    	header("Location: adminDisplay.php");
+        
+        header("Location: adminDisplay.php");
     }
 
 ?>
