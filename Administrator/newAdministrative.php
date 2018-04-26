@@ -27,7 +27,7 @@
         Passed_MEI tinyint,
         Taking_UMEI tinyint,
         Extra_Information varchar(500)
-      );
+      )";
       $result = $db->query($query);
       $query = "create table testCourses_{$_POST["season"]}_{$_POST["year"]} (
         Course varchar(50) primary key,
