@@ -71,16 +71,9 @@
               </div>
               <div id="collapse$index" class="collapse" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
-<<<<<<< HEAD
-                  <form action="{$_SERVER["PHP_SELF"]}" method="post"> 
-                    <button type="submit" name="auto" class="btn btn-primary">Automatically Assign TAs</button> 
-                    <button type="submit" name="manual" class="btn btn-primary">Manually Assign TAs</button>
-                  </form>
-=======
                   <a href="autofill.php" class="btn btn-primary">Automatically Assign TAs</a>
                   <br><br>
                   <a href="manualfill.php" class="btn btn-primary">Manually Assign TAs</a>
->>>>>>> 5743860fc93a1f87b4616e6ad6bc91b8db54b06b
                 </div>
               </div>
             </div>
@@ -91,16 +84,6 @@ EOBODY;
       }
     }
 
-<<<<<<< HEAD
-    if (isset($_POST["auto"])) {
-      header("Location: autofill.php");
-    }
-
-    if (isset($_POST["manual"])) {
-        header("Location: autofill.php");
-    }
-=======
->>>>>>> 5743860fc93a1f87b4616e6ad6bc91b8db54b06b
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
