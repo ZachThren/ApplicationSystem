@@ -38,7 +38,7 @@
                 $a_course = $result0->fetch_array(MYSQLI_ASSOC);
                 $currName = $a_course['Course'];
 
-                echo $currName." ".$course_index."<br>";
+                echo $currName . " " . $course_index . "<br>";
 
                 //initializing the data for the current course
                 $new_Max_Ugrad = $a_course["Max_Undergraduate"];
@@ -67,7 +67,7 @@
 
                 $result2 = mysqli_query($db_connection, $applications_query);
                 if (!$result2) {
-                    die("Retrieval failed: ". $db_connection->error);
+                    die("Retrieval failed: " . $db_connection->error);
                 } else {
                     $num_rows = $result2->num_rows;
 
@@ -93,8 +93,10 @@
                                 $addedGrad = $addedGrad + 1;
                             }
                         }
-
-<<<<<<< HEAD
+                    }
+                }
+            }
+        }
         $result2 = mysqli_query($db_connection, $applications_query);
         if (!$result2) {
             die("Retrieval failed: ". $db_connection->error);
@@ -113,8 +115,7 @@
                         unset($applying_Undergraduate[$a_student["Directory_ID"]]);
                         array_push($accepted_Undergraduate, $a_student["Directory_ID"]);
                         $new_Max_Ugrad--;
-=======
->>>>>>> 5743860fc93a1f87b4616e6ad6bc91b8db54b06b
+
                     }
 
                     $updated_applying_u = [];
