@@ -1,12 +1,22 @@
 <?php
-require_once("support.php");
-require_once("courses.php");
-require_once "dblogin.php";
+    require_once("support.php");
+    require_once("courses.php");
+    require_once "dblogin.php";
 
+    session_start();
 
-session_start();
-$applicationsTable = "Applications_Spring_2018";
-$coursesTable = "Courses_Spring_2018";
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
+
+    if (isset($_POST["coursesTable"])) {
+        $coursesTable = $_POST["coursesTable"];
+    }
+    if (isset($_POST["applicationsTable"])) {
+        $applicationsTable = $_POST["applicationsTable"];
+    }
+
+    $_SESSION["coursesTable"] = $coursesTable;
+    $_SESSION["applicationsTable"] = $applicationsTable;
 
     $body = <<<EOBODY
         <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">

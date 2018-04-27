@@ -1,21 +1,32 @@
 <?php
-require_once("support.php");
-require_once("courses.php");
-require_once "dblogin.php";
+    require_once("support.php");
+    require_once("courses.php");
+    require_once "dblogin.php";
 
-session_start();
-$applicationsTable = "Applications_Spring_2018";
-$coursesTable = "Courses_Spring_2018";
- 
+    session_start();
+
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
+
+    if (isset($_POST["coursesTable"])) {
+        $coursesTable = $_POST["coursesTable"];
+    }
+    if (isset($_POST["applicationsTable"])) {
+        $applicationsTable = $_POST["applicationsTable"];
+    }
+
+    $_SESSION["coursesTable"] = $coursesTable;
+    $_SESSION["applicationsTable"] = $applicationsTable;
+     
     $body = <<<EOBODY
-        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
-        <h1>Applications</h1><br>
-        
-        <div class="form-group">
-            <label for="name">Select Course</label>
-            <select class="form-control" name="course">                               
+            <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
+            <h1>Applications</h1><br>
+            
+            <div class="form-group">
+                <label for="name">Select Course</label>
+                <select class="form-control" name="course">                               
 EOBODY;
-    
+        
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
     if ($db_connection->connect_error) {
         die($db_connection->connect_error);
@@ -89,5 +100,5 @@ eobody;
         header("Location: adminDisplay.php");
     }
 
-echo generatePage($body, "TA Application | Administrative Access");
+    echo generatePage($body, "TA Application | Administrative Access");
 ?>

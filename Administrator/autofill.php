@@ -2,15 +2,21 @@
     require_once "support.php";
     require_once "dblogin.php";
     require_once "courses.php";
-    //retrieving fields from form session
+
     session_start();
-    /*
-    $applicationsTable = $_SESSION["applicationsTable"];
-    $coursesTable = $_SESSION["coursesTable"];
-    $course = $_SESSION["course"];
-    */
+    
     $applicationsTable = "Applications_Spring_2018";
     $coursesTable = "Courses_Spring_2018";
+
+    if (isset($_POST["coursesTable"])) {
+        $coursesTable = $_POST["coursesTable"];
+    }
+    if (isset($_POST["applicationsTable"])) {
+        $applicationsTable = $_POST["applicationsTable"];
+    }
+
+    $_SESSION["coursesTable"] = $coursesTable;
+    $_SESSION["applicationsTable"] = $applicationsTable;
     
     // connecting to database;
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);

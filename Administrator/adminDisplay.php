@@ -4,12 +4,13 @@
 
     //retrieving fields from form session
     session_start();
+    
     $course = $_SESSION["course"];
     $sortby = $_SESSION["sortby"];
     $undergraduate = $_SESSION["undergraduate"];
     $graduate = $_SESSION["graduate"];
-    $applicationsTable = "Applications_Spring_2018";
-    $coursesTable = "Courses_Spring_2018";
+    $applicationsTable = $_SESSION["applicationsTable"];
+    $coursesTable = $_SESSION["coursesTable"];
 
     //Building the heads of the table
     $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "ADD TA"];
