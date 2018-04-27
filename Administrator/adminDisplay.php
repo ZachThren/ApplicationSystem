@@ -86,6 +86,15 @@ TABLE2;
                 $accepted_Graduate = [];
             }
 
+            if ($undergraduate != "Undergraduate" && $graduate == "Graduate") {
+                $applying_Undergraduate = [];
+                $accepted_Undergraduate = [];
+            }
+            if ($undergraduate == "Undergraduate" && $graduate != "Graduate") {
+                $applying_Graduate = [];
+                $accepted_Graduate = [];
+            }
+
             $applying_TAs = array_merge($applying_Undergraduate, $applying_Graduate);
             $accepted_TAs = array_merge($accepted_Undergraduate, $accepted_Graduate);
         }
@@ -115,7 +124,7 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript {$row['Directory_ID']}'></td>";
+                                $applying_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -130,7 +139,7 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}'></td>";
+                        $applying_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
 
                         $applying_table .= "<td><div class='form-check'>
                                             <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
@@ -144,7 +153,7 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript{$row['Directory_ID']}'></td>";
+                                $accepted_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -159,7 +168,7 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}'></td>";
+                        $accepted_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
 
                         $accepted_table .= "<td><div class='form-check'>
                                             <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
