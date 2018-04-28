@@ -63,12 +63,13 @@
             <input type="text" class="form-control" name="year" value="$this_year"/>
           </div>
         </div>
+        <br>
 EOBODY;
     for ($index = 1; $index <= $courses; $index++) {
       $result->data_seek($index - 1);
       $result_array = $result->fetch_array(MYSQLI_ASSOC);
       $body .= <<<EOBODY
-        <div class="form-row">
+        <div class="form-row" id="row$index">
           <div class="col">
             <strong>Course #$index</strong></br>
             <input type="text" class="form-control" name="course$index" value="{$result_array['Course']}"/>

@@ -15,13 +15,13 @@
                 <br><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px"><br>
                 <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin: auto; width: 50%">
                     $body
                 </div>
 
                 <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
                 <form action = "../main.html" method='post' align="center">
-                        <input type="submit" class="btn btn-info" name="home" value="Return Home">
+                        <input type="submit" class="btn btn-primary" name="home" value="Return Home">
                 </form>
                 <br><br>
                 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
