@@ -7,7 +7,7 @@
     die($db->connect_error);
   } else {
     if (isset($_POST["submit"])) {
-      $query = "create table Applications_{$_POST["season"]}_{$_POST["year"]} (
+      $query = "create table testApplications_{$_POST["season"]}_{$_POST["year"]} (
         First varchar(20),
         Last varchar(20),
         Email varchar(32),
@@ -29,7 +29,7 @@
         Extra_Information varchar(500)
       )";
       $result = $db->query($query);
-      $query = "create table Courses_{$_POST["season"]}_{$_POST["year"]} (
+      $query = "create table testCourses_{$_POST["season"]}_{$_POST["year"]} (
         Course varchar(50) primary key,
         Applying_Undergraduate varchar(1500),
         Applying_Graduate varchar(1000),
@@ -40,15 +40,23 @@
         Max_Total int
       )";
       $result = $db->query($query);
-      $total_courses = ((count($_POST) - 3) / 2);
-      for ($index = 1; $index <= $total_courses; $index++) {
-        $maxGrad = $_POST["maxTA$index"] / 2;
-        $query = "insert into Courses_{$_POST["season"]}_{$_POST["year"]}
+      $courses = array();
+      $total_courses = 0;
+      foreach ($_POST as $key => $value) {
+        if ((strlen($key) > 6) && (substr($key, 0, 6) == "course")) {
+          $courses[] = substr($key, 6, strlen($key) - 6);
+          $total_courses++;
+        }
+      }
+      foreach ($courses as $key) {
+        $maxUndergrad = (($_POST["maxTA$key"] / 3) * 2);
+        $maxGrad = $_POST["maxTA$key"] / 3;
+        $query = "insert into testCourses_{$_POST["season"]}_{$_POST["year"]}
           (Course, Max_Undergraduate, Max_Graduate, Max_Total) values (
-            \"{$_POST["course$index"]}\",
-            {$_POST["maxTA$index"]},
+            \"{$_POST["course$key"]}\",
+            {$maxUndergrad},
             {$maxGrad},
-            {$_POST["maxTA$index"]}
+            {$_POST["maxTA$key"]}
           )";
         $result = $db->query($query);
       }

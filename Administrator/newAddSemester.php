@@ -54,37 +54,76 @@
     $body = <<<EOBODY
       <form action="newAdministrative.php" method="post">
         <div class="form-row">
-          <div class="col">
-            <strong>Season</strong></br>
+          <div class="form-group col-sm-2 offset-sm-2 text-center mt-2">
+            <strong>Season</strong>
+          </div>
+          <div class="form-group col-sm-2">
             <input type="text" class="form-control" name="season" value="$this_season"/>
           </div>
-          <div class="col">
-            <strong>Year</strong></br>
+          <div class="form-group col-sm-2 text-center mt-2">
+            <strong>Year</strong>
+          </div>
+          <div class="form-group col-sm-2">
             <input type="text" class="form-control" name="year" value="$this_year"/>
           </div>
         </div>
         <br>
+        <script>
+          let rows = new Set();
+        </script>
 EOBODY;
     for ($index = 1; $index <= $courses; $index++) {
       $result->data_seek($index - 1);
       $result_array = $result->fetch_array(MYSQLI_ASSOC);
       $body .= <<<EOBODY
         <div class="form-row" id="row$index">
-          <div class="col">
-            <strong>Course #$index</strong></br>
+          <div class="form-group col-sm-2 offset-sm-2 text-center mt-2">
+            Course Name
+          </div>
+          <div class="form-group col-sm-2">
             <input type="text" class="form-control" name="course$index" value="{$result_array['Course']}"/>
           </div>
-          <div class="col">
-            <strong>Maximum TAs</strong></br>
-            <input type="number" class="form-control" name="maxTA$index" value="{$result_array['Max_Total']}"/>
+          <div class="form-group col-sm-2 text-center mt-2">
+            Maximum TAs
+          </div>
+          <div class="form-group col-sm-2">
+            <input type="number" min="0" class="form-control" name="maxTA$index" value="{$result_array['Max_Total']}"/>
+          </div>
+          <div class="col-xs-1">
+            <button type="button" class="btn btn-default delete $index">Delete</button>
           </div>
         </div>
+        <script>
+          rows.add($index);
+        </script>
 EOBODY;
     }
     $body .= <<<EOBODY
-        <br><input type="submit" class="form-control" value="Create Semester" name="submit"/><br>
-        <a class="btn btn-primary" href="newAdministrative.php" role="button">Go Back</a>
+        <div class="form-group col-sm-4 offset-sm-4">
+          <button type="button" class="btn btn-default btn-block add">Add Course</button>
+        </div>
+        <div class="form-group col-sm-8 offset-sm-2">
+          <button type="submit" class="btn btn-default btn-block" name="submit"/>Create Semester</button>
+          <button class="btn btn-primary btn-block" href="newAdministrative.php">Go Back</button>
+        </div>
       </form>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script>
+        $(document).ready(function(){
+          $(document).on('click', ".add", function(){
+            let addTo = "#row" + Math.max.apply(Math, [...rows]);
+            next = Math.max.apply(Math, [...rows]) + 1;
+            rows.add(next);
+            let newIn = '<div class="form-row" id="row'+ next +'"><div class="form-group col-sm-2 offset-sm-2 text-center mt-2">Course Name</div><div class="form-group col-sm-2"><input type="text" class="form-control" name="course'+ next +'"/></div><div class="form-group col-sm-2 text-center mt-2">Maximum TAs</div><div class="form-group col-sm-2"><input type="number" min="0" class="form-control" name="maxTA'+ next +'"/></div><div class="col-xs-1"><button type="button" class="btn btn-default delete '+ next +'">Delete</button></div></div>';
+            let newInput = $(newIn);
+            $(addTo).after(newInput);
+          });
+          $(document).on('click', ".delete", function(){
+            rows.delete(parseInt(this.className.split(" ")[3]));
+            $(this).closest(".form-row").remove();
+          });
+        });
+      </script>
 EOBODY;
     echo generatePage($body, "Add Semester");
   }
