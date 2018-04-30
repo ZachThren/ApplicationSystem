@@ -16,7 +16,7 @@
         Courses varchar(200),
         Previous varchar(300),
         Degree enum('Undergraduate','MS','PhD'),
-        Transcript blob,
+        Transcript longblob,
         Position_Type enum('Full','Part'),
         Want_Teach tinyint,
         Advisor varchar(32),
