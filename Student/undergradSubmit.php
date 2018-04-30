@@ -33,15 +33,32 @@
 		<div class="col-sm-6">
 		<b>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</b>
 		<select id="course" class="form-control" name="courses[]" multiple size="10">
-				<option>CMSC131</option>
-				<option>CMSC132</option>
-				<option>CMSC216</option>
-				<option>CMSC250</option>
-				<option>CMSC330</option>
-				<option>CMSC351</option>
-				<option>CMSC414</option>
-				<option>CMSC420</option>
-				<option>CMSC451</option>
+BODY;
+$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+if ($db_connection->connect_error) {
+		die($db_connection->connect_error);
+}
+$course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} order by 'Course'";
+$result0 = mysqli_query($db_connection, $course_query);
+if (!$result0) {
+		die("Retrieval of courses failed: ". $db_connection->error);
+} else {
+		$num_rows_course = $result0->num_rows;
+		if ($num_rows_course === 0) {
+				echo "Empty Table<br>";
+		} else {
+				//iterating through the courses
+				for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+						$result0->data_seek($course_index);
+						$a_course = $result0->fetch_array(MYSQLI_ASSOC);
+						$currName = $a_course['Course'];
+						$body .= "<option value="."$currName".">"."$currName"."</option> ";
+				}
+
+		}
+}
+mysqli_close($db_connection);
+	$body .= <<<WHATEVER
 		</select><br>
 		</div>
 
@@ -77,15 +94,33 @@
 		<br><br/>
 		<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
 		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
-				<option>CMSC131</option>
-				<option>CMSC132</option>
-				<option>CMSC216</option>
-				<option>CMSC250</option>
-				<option>CMSC330</option>
-				<option>CMSC351</option>
-				<option>CMSC414</option>
-				<option>CMSC420</option>
-				<option>CMSC451</option>
+WHATEVER;
+$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+if ($db_connection->connect_error) {
+		die($db_connection->connect_error);
+}
+$course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} order by 'Course'";
+$result0 = mysqli_query($db_connection, $course_query);
+if (!$result0) {
+		die("Retrieval of courses failed: ". $db_connection->error);
+} else {
+		$num_rows_course = $result0->num_rows;
+		if ($num_rows_course === 0) {
+				echo "Empty Table<br>";
+		} else {
+				//iterating through the courses
+				for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+						$result0->data_seek($course_index);
+						$a_course = $result0->fetch_array(MYSQLI_ASSOC);
+						$currName = $a_course['Course'];
+						$body .= "<option value="."$currName".">"."$currName"."</option> ";
+				}
+
+		}
+}
+mysqli_close($db_connection);
+
+		$body .=<<<NEXT
 		</select><br>
 
 		<b>Any other information you would like to provide us?</b>
@@ -105,7 +140,7 @@
 			</div>
 		</div>
 		</form>
-BODY;
+NEXT;
 
 	if(isset($_POST["continueButton"])){
 		$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
