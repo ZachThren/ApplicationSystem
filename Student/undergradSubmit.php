@@ -32,16 +32,16 @@
 
 		<div class="col-sm-6">
 		<b>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</b>
-		<select id="course" class="form-control" name="courses" multiple size="10">
-				<option>CMSC 131</option>
-				<option>CMSC 132</option>
-				<option>CMSC 216</option>
-				<option>CMSC 250</option>
-				<option>CMSC 330</option>
-				<option>CMSC 351</option>
-				<option>CMSC 414</option>
-				<option>CMSC 420</option>
-				<option>CMSC 451</option>
+		<select id="course" class="form-control" name="courses[]" multiple size="10">
+				<option>CMSC131</option>
+				<option>CMSC132</option>
+				<option>CMSC216</option>
+				<option>CMSC250</option>
+				<option>CMSC330</option>
+				<option>CMSC351</option>
+				<option>CMSC414</option>
+				<option>CMSC420</option>
+				<option>CMSC451</option>
 		</select><br>
 		</div>
 
@@ -76,16 +76,16 @@
 						<input type="radio" name="currentTA" value="false" class="radio-inline"> No
 		<br><br/>
 		<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
-		<select id="course" class="form-control" name="previousCourses" multiple size="10">
-				<option>CMSC 131</option>
-				<option>CMSC 132</option>
-				<option>CMSC 216</option>
-				<option>CMSC 250</option>
-				<option>CMSC 330</option>
-				<option>CMSC 351</option>
-				<option>CMSC 414</option>
-				<option>CMSC 420</option>
-				<option>CMSC 451</option>
+		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
+				<option>CMSC131</option>
+				<option>CMSC132</option>
+				<option>CMSC216</option>
+				<option>CMSC250</option>
+				<option>CMSC330</option>
+				<option>CMSC351</option>
+				<option>CMSC414</option>
+				<option>CMSC420</option>
+				<option>CMSC451</option>
 		</select><br>
 
 		<b>Any other information you would like to provide us?</b>
@@ -114,10 +114,10 @@ BODY;
 		$email = trim($_POST["email"]); // String
 		$directoryid = trim($_POST["directoryid"]); // String
 		$gpa = trim($_POST["gpa"]); //Float
-		$courses = $_POST["courses"]; // String Array
-		$previousCourses = $_POST["previousCourses"];
+		$courses = serialize($_POST["courses"]); // String Array
+		$previousCourses = serialize($_POST["previousCourses"]);
 		$degree = "Undergraduate"; // UNDERGRADUATE SUBMISSION
-		$transcript = "NULL"; // Blob
+		$transcript = addslashes(file_get_contents($_POST["transcript"])); // Blob
 		$positionType = $_POST["positionType"]; // String enum
 		$wantTeach = $_POST["wantTeach"]; // Boolean
 		$advisor = "NULL";// Not a grad student
@@ -133,16 +133,135 @@ BODY;
 			$dbuser = "dbuser";
 			$dbpassword = "dragon123";
 			$database = "cmsc389n";
+
+			// To determine which table to use
 			$applicationsTable = "Applications_Spring_2018";
 			$coursesTable = "Courses_Spring_2018";
+
+
+			if (isset($_SESSION["coursesTable"])) {
+					$coursesTable = $_SESSION["coursesTable"];
+			}
+
+			if (isset($_SESSION["applicationsTable"])) {
+					$applicationsTable = $_SESSION["applicationsTable"];
+			}
 			//Logging into database
 		    $db = connectToDB($dbhost, $dbuser, $dbpassword, $database);
 
 			//Setting the query string
 			$sqlQuery  = "insert INTO $applicationsTable (First,Last,Email,Directory_ID,GPA,Courses,Previous,Degree,Transcript,Position_Type,Extra_Information) values
-			(\"$first\",\"$last\",\"$email\",\"$directoryid\",$gpa,\"$courses\",\"$previousCourses\",\"$degree\",$transcript,\"$positionType\",\"$extraInformation\")";
+			(\"$first\",\"$last\",\"$email\",\"$directoryid\",$gpa,".$courses.",".$previousCourses.",\"$degree\",\"$transcript\",\"$positionType\",\"$extraInformation\")";
 			//Executing Query
 			$result = mysqli_query($db, $sqlQuery);
+
+
+
+/*
+
+$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+	if ($db_connection->connect_error) {
+			die($db_connection->connect_error);
+	}
+
+$first = "first".$random;
+$last = "last".$random;
+$email = "test".$random."@email.com";
+$id = "test".$random."id";
+$gpa = rand(0, 40) / 10;
+$coursesToTA = ['CMSC131', 'CMSC132', 'CMSC250', 'CMSC216', 'CMSC351'];
+$previousArr = ['CMSC131', 'CMSC132'];
+$previous = serialize($previousArr);
+$courses = serialize($coursesToTA);
+$degree = 'PhD';
+$fileResume = "resume.pdf";
+$fileData = addslashes(file_get_contents($fileResume));
+$wanteach = true;
+$advisor = "Jon";
+$currTA = true;
+$currStep = 1;
+$currCourse = "CMSC132";
+$currInstructor = "Nelson";
+$passedMEI = true;
+$takingUMEI = false;
+$extraInfo = "I really want this position";
+$posi = "Part";
+
+$applicationsTable = "Applications_Spring_2018";
+$coursesTable = "Courses_Spring_2018";
+
+
+if (isset($_SESSION["coursesTable"])) {
+		$coursesTable = $_SESSION["coursesTable"];
+}
+
+if (isset($_SESSION["applicationsTable"])) {
+		$applicationsTable = $_SESSION["applicationsTable"];
+}
+
+$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
+$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
+
+$result1 = $db_connection->query($sqlQuery);
+
+if (!$result1) {
+			die("Applications failed: ". $db_connection->error);
+	}
+
+
+foreach($coursesToTA as $key => $value) {
+	//retrieving data from courses table
+		$course_query = "select Course, Applying_Undergraduate, Applying_Graduate from {$coursesTable} where Course = '{$value}'";
+		$applying_Undergraduate = array();
+		$applying_Graduate = array();
+
+
+		$result1 = $db_connection->query($course_query);
+		if (!$result1) {
+				die("Courses failed: ". $db_connection->error);
+		} else {
+				$num_rows = $result1->num_rows;
+				if ($num_rows === 0) {
+						echo "Empty Table<br>";
+				} else {
+						$result1->data_seek(0);
+						$row = $result1->fetch_array(MYSQLI_ASSOC);
+						$applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
+						$applying_Graduate = unserialize($row["Applying_Graduate"]);
+
+				}
+		}
+
+
+		if ($degree == 'Undergraduate') {
+			global $applying_Undergraduate;
+			array_push($applying_Undergraduate, $id);
+		} else {
+			global $applying_Graduate;
+			array_push($applying_Graduate, $id);
+		}
+
+		$Applying_U = serialize($applying_Undergraduate);
+		$Applying_G = serialize($applying_Graduate);
+
+		$update_query = "update Courses_Spring_2018 set Applying_Graduate = '{$Applying_G}', Applying_Undergraduate = '{$Applying_U}' where Course = '{$value}'";
+
+		$result = $db_connection->query($update_query);
+		if (!$result) {
+				die("Retrieval of courses failed: ". $db_connection->error);
+		}
+
+}
+
+
+
+
+*/
+
+
+
+
+
 
 			// If SQL query did not fail
 			if ($result) {

@@ -1,6 +1,6 @@
 <?php
-	require_once("support.php");
-    require_once "dblogin.php";
+	require_once("support.php");	
+    require_once "dblogin.php"; 
 
     $applicationsTable = "Applications_Spring_2018";
     $coursesTable = "Courses_Spring_2018";
@@ -10,7 +10,7 @@
     if ($db_connection->connect_error) {
         die($db_connection->connect_error);
     }
-
+	
 	function generateRandomString($length = 5) {
 	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	    $charactersLength = strlen($characters);
@@ -22,7 +22,7 @@
 	}
 
 	$random = generateRandomString();
-
+	
 	$first = "first".$random;
 	$last = "last".$random;
 	$email = "test".$random."@email.com";
@@ -45,7 +45,7 @@
 	$takingUMEI = false;
 	$extraInfo = "I really want this position";
 	$posi = "Part";
-
+	
 	$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
 	$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
 
@@ -62,7 +62,7 @@
 	    $applying_Undergraduate = array();
 	    $applying_Graduate = array();
 
-
+	    
 	    $result1 = $db_connection->query($course_query);
 	    if (!$result1) {
 	        die("Courses failed: ". $db_connection->error);
@@ -75,10 +75,10 @@
 	            $row = $result1->fetch_array(MYSQLI_ASSOC);
 	            $applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
 	            $applying_Graduate = unserialize($row["Applying_Graduate"]);
-
+	            
 	        }
 	    }
-
+	    
 
 	    if ($degree == 'Undergraduate') {
 	    	global $applying_Undergraduate;
@@ -96,9 +96,9 @@
 	    $result = $db_connection->query($update_query);
 	    if (!$result) {
 	        die("Retrieval of courses failed: ". $db_connection->error);
-	    }
+	    } 
 
 	}
-
+	
 	echo "added";
 ?>
