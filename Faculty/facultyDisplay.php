@@ -124,7 +124,10 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $applying_table .= "<form action='transcript.php' method='post'>"
+                                $applying_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $applying_table .= "<button class='btn btn-primary' type='submit' >Transcript</button></td>"
+                                $applying_table .= "</form>"
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
