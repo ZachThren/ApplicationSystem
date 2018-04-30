@@ -8,7 +8,7 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
-	<br>	
+	<br>
 	<h1 align="center">UMD CS TA Application</h1>
 	<h3> Are you an Undergraduate or Graduate student? </h3>
 	<form action="{$_SERVER["PHP_SELF"]}" method="post">
