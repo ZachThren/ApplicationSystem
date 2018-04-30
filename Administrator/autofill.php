@@ -5,8 +5,8 @@
 
     session_start();
     
-    $applicationsTable = "Applications_Spring_2018";
-    $coursesTable = "Courses_Spring_2018";
+    $applicationsTable = $_POST["applicationsTable"];
+    $coursesTable = $_POST["coursesTable"];
 
     if (isset($_POST["coursesTable"])) {
         $coursesTable = $_POST["coursesTable"];

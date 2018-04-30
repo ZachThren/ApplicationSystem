@@ -7,7 +7,7 @@
     die($db->connect_error);
   } else {
     if (isset($_POST["submit"])) {
-      $query = "create table testApplications_{$_POST["season"]}_{$_POST["year"]} (
+      $query = "create table Applications_{$_POST["season"]}_{$_POST["year"]} (
         First varchar(20),
         Last varchar(20),
         Email varchar(32),
@@ -29,7 +29,7 @@
         Extra_Information varchar(500)
       )";
       $result = $db->query($query);
-      $query = "create table testCourses_{$_POST["season"]}_{$_POST["year"]} (
+      $query = "create table Courses_{$_POST["season"]}_{$_POST["year"]} (
         Course varchar(50) primary key,
         Applying_Undergraduate varchar(1500),
         Applying_Graduate varchar(1000),
@@ -118,8 +118,11 @@ EOBODY;
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
+    $header = <<<headx
+    <h1> Choose Term</h1>
+headx;
 
-    $finalBody = $body;
+    $finalBody = $header.$body;
     echo generatePage($finalBody, "Administrative");
   }
 ?>
