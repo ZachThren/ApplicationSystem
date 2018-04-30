@@ -200,8 +200,13 @@ TABLE2;
             <p>Degree: <span id="degree"></span></p>
             <p>Position Type: <span id="type"></span></p>
             <p>Want_Teach: <span id="pref"></span></p>
+            <p>Currently A TA: <span id="currentta"></span></p>
+            <p>TAing for Current Course: <span id="currentcourse"></span></p>
+            <p>Instructor for that Course: <span id="instructor"></span></p>
             <p>Advisor: <span id="advisor"></span></p>
-            <p>Taking UMEI: <span id="umei"></span></p>
+
+            <p>Taking UMEI: <span id="takenumei"></span></p>
+            <p>Passed UMEI: <span id="passedumei"></span></p>
             <p>Extra Info: <span id="note"></span></p>
           </div>
 
@@ -230,12 +235,17 @@ TABLE2;
           $("#email").text(student.Email);
           $("#directoryid").text(student.Directory_ID);
           $("#gpa").text(student.GPA);
-          // $("#courses").text(student.Courses);
+
           $("#degree").text(student.Degree);
           $("#type").text(student.Position_Type);
           $("#pref").text(student.Want_Teach);
+          $("#currentta").text(student.Current_TA);
+            $("#currentcourse").text(student.Current_Course);
+              $("#instrctor").text(student.Instructor);
           $("#advisor").text(student.Advisor);
-          $("#umei").text(student.Passed_MEI);
+          $("#takenumei").text(student.Taking_UMEI);
+            $("#passedumei").text(student.Passed_MEI);
+
           $("#note").text(student.Extra_Information);
         }
 
