@@ -27,8 +27,8 @@ EOBODY;
         die($db_connection->connect_error);
     }
 
-    $course_query = "select Season, Year from Semesters";
-    $result0 = mysqli_query($db_connection, $course_query);
+    $query = "select Season, Year from Semesters order by 'ID' ASC";
+    $result0 = mysqli_query($db_connection, $query);
     if (!$result0) {
         die("Retrieval of courses failed: ". $db_connection->error);
     } else {
@@ -36,12 +36,10 @@ EOBODY;
         if ($num_rows_course === 0) {
             echo "Empty Table<br>";
         } else {
-
             //iterating through the semesters
-            for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+            for ($course_index = $num_rows_course - 1; $course_index >= 0; $course_index--) {
                 $result0->data_seek($course_index);
                 $sem = $result0->fetch_array(MYSQLI_ASSOC);
-
                 $sem = $sem['Season']."_".$sem['Year'];
                 $body .= "<option value="."$sem".">"."$sem"."</option> ";
             }
