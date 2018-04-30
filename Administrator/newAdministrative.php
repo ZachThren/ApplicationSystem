@@ -84,7 +84,8 @@
             $option3 = "";
           }
           if (($row["season"] == "Winter" && $row["year"] == 2017) || ($row["season"] == "Spring" && $row["year"] == 2017)
-              || ($row["season"] == "Summer" && $row["year"] == 2017) || ($row["season"] == "Fall" && $row["year"] == 2017)) {
+              || ($row["season"] == "Summer" && $row["year"] == 2017) || ($row["season"] == "Fall" && $row["year"] == 2017)
+              || ($row["season"] == "Winter" && $row["year"] == 2018)) {
             $option4 = "disabled";
           } else {
             $option4 = "";
