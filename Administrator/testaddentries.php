@@ -79,12 +79,16 @@
 	        }
 	    }
 	    
+	    if (empty($applying_Undergraduate)) {
+    		$applying_Undergraduate = [];
+		}
+		if (empty($applying_Graduate)) {
+			$applying_Graduate = [];
+		}
 
 	    if ($degree == 'Undergraduate') {
-	    	global $applying_Undergraduate;
 	    	array_push($applying_Undergraduate, $id);
 	    } else {
-	    	global $applying_Graduate;
 	    	array_push($applying_Graduate, $id);
 	    }
 
