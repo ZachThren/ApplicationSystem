@@ -1,7 +1,7 @@
 <?php
     require_once("support.php");
     require_once("courses.php");
-    require_once "dblogin.php";
+    require_once ("dblogin.php";
 
     session_start();
 
@@ -19,12 +19,12 @@
     $body = <<<EOBODY
         <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
         <h1>Applications</h1><br>
-        
+
         <div class="form-group">
             <label for="name">Select Course</label>
-            <select class="form-control" name="course">                               
+            <select class="form-control" name="course">
 EOBODY;
-    
+
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
     if ($db_connection->connect_error) {
         die($db_connection->connect_error);
@@ -71,7 +71,7 @@ EOBODY;
           <input class="form-check-input" type="checkbox" value="Undergraduate" name="undergrad">
           <label class="form-check-label" for="undergrad">Undergraduate</label>
         </div><br><br>
-        
+
         <input type="submit" class="btn btn-info" name="displayApp" value="Display Applications"/>
         <br>
         </form>
@@ -81,7 +81,7 @@ eobody;
     if  (isset($_POST["displayApp"])) {
         $_SESSION["course"] = $_POST["course"];
         $_SESSION["sortby"] = $_POST["sortby"];
-        
+
         if (isset($_POST["undergrad"])) {
             $_SESSION["undergraduate"] = true;
         } else {
