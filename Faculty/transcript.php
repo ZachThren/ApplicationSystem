@@ -15,7 +15,7 @@ session_start();
       $applicationsTable = $_SESSION["applicationsTable"];
   }
 
-  $id = "testhC6HJid";
+  $id = $_POST['transcript'];
 
   $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
     if ($db_connection->connect_error) {
@@ -30,9 +30,14 @@ session_start();
       $result->data_seek(0);
       $recordArray = $result->fetch_array(MYSQLI_ASSOC);
 
-  		header("Content-type: application/pdf");
-  		echo $recordArray['Transcript'];
-  		mysqli_free_result($result);
+      $bytes = $recordArray['Transcript'];
+      header("Content-type: application/pdf");
+      
+      print $bytes;
+
+  		//header("Content-type: application/pdf");
+  		//echo $recordArray['Transcript'];
+  		//mysqli_free_result($result);
 
   }
 ?>
