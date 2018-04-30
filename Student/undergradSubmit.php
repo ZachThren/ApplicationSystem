@@ -1,7 +1,7 @@
 <?php
 	require_once("support.php");
 	require_once('applicant.php');
-
+	require_once('dblogin.php');
 	// Starts session. We need to keep track to see if they are a valid user.
 	session_start();
 
@@ -76,7 +76,7 @@
 						<input type="radio" name="currentTA" value="false" class="radio-inline"> No
 		<br><br/>
 		<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
-		<select id="course" class="form-control" multiple size="10">
+		<select id="course" class="form-control" name="previousCourses" multiple size="10">
 				<option>CMSC 131</option>
 				<option>CMSC 132</option>
 				<option>CMSC 216</option>
@@ -87,6 +87,10 @@
 				<option>CMSC 420</option>
 				<option>CMSC 451</option>
 		</select><br>
+
+		<b>Any other information you would like to provide us?</b>
+		<input type="text" name="extraInformation" class="form-control" required><br/>
+
 		</div>
 
 		</div>
@@ -111,51 +115,46 @@ BODY;
 		$directoryid = trim($_POST["directoryid"]); // String
 		$gpa = trim($_POST["gpa"]); //Float
 		$courses = $_POST["courses"]; // String Array
-		$transcript = $_POST["transcript"]; // Blob
+		$previousCourses = $_POST["previousCourses"];
+		$degree = "Undergraduate"; // UNDERGRADUATE SUBMISSION
+		$transcript = "NULL"; // Blob
 		$positionType = $_POST["positionType"]; // String enum
 		$wantTeach = $_POST["wantTeach"]; // Boolean
-		$currentTA = $_POST["currentTA"]; // Boolean
+		$advisor = "NULL";// Not a grad student
+		$currentTA = "NULL";// Not a grad Student
+		$currentStep = "NULL";
+		$currentCourses = "NULL";
+		$currentInstructor = "NULL";
+		$passedMEI = "NULL";
+		$takingMEI = "NULL";
+		$extraInformation = $_POST["extraInformation"];
 
-		if ($password !== $verifypass) {
-			$message = "<h2>Passwords do not match</h2>";
-		} else {
-			$safePass = password_hash($password, PASSWORD_DEFAULT);
-			$password = "";
-			$userID = new applicant($name,$email,$gpa,$year,$gender,$safePass);
-			$_SESSION["userID"] = serialize($userID);
-		}
+			$dbhost = "dbinstance389.cqiva6sltzci.us-east-2.rds.amazonaws.com";
+			$dbuser = "dbuser";
+			$dbpassword = "dragon123";
+			$database = "cmsc389n";
+			$applicationsTable = "Applications_Spring_2018";
+			$coursesTable = "Courses_Spring_2018";
+			//Logging into database
+		    $db = connectToDB($dbhost, $dbuser, $dbpassword, $database);
 
-		if(isset($_SESSION['userID'])){
-			$userID = unserialize($_SESSION["userID"]);
-
-			$host = "localhost";
-		    $user = "dbuser";
-		    $dbpassword = "goodbyeWorld";
-		    $database = "applicationdb";
-		    $table = "applicants";
-		    $db = connectToDB($host, $user, $dbpassword, $database);
-
-		    $name = $userID->getName();
-		    $email = $userID->getEmail();
-		 	$gpa = $userID->getGpa();
-			$year = $userID->getYear();
-			$gender = $userID->getGender();
-			$password = $userID->getPassword();
-
-			$sqlQuery  = "insert into $table (name,email,gpa,year,gender,password) values (\"$name\",\"$email\",$gpa,$year,\"$gender\",\"$password\")";
+			//Setting the query string
+			$sqlQuery  = "insert INTO $applicationsTable (First,Last,Email,Directory_ID,GPA,Courses,Previous,Degree,Transcript,Position_Type,Extra_Information) values
+			(\"$first\",\"$last\",\"$email\",\"$directoryid\",$gpa,\"$courses\",\"$previousCourses\",\"$degree\",$transcript,\"$positionType\",\"$extraInformation\")";
+			//Executing Query
 			$result = mysqli_query($db, $sqlQuery);
 
+			// If SQL query did not fail
 			if ($result) {
 				$body = <<<EOBODY
 					<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
-					<h3>The following entry has been added to the database</h3>
+					<h3>--Confirmation--</h3>
 
-					<b>Name: </b> $name<br>
+					<b>Name: </b> $first $last<br>
+					<b>DirectoryID: </b> $directoryid<br>
 					<b>Email: </b> $email<br>
-					<b>Gpa: </b> $gpa<br>
-					<b>Year: </b> $year<br>
-					<b>Gender: </b> $gender<br>
+					<b>Course Applied: </b> $courses<br>
 					<br>
 
 					<input type="submit" name="mainMenuButton" value="Return to main menu">
@@ -167,11 +166,12 @@ EOBODY;
 		        unset($_SESSION["userID"]);
 
 			} else {
+				// SQL query failed
 				$body = "Inserting records failed.".mysqli_error($db);
 			}
 			mysqli_close($db);
 		}
-	}
+
 
 	if(isset($_POST["mainMenuButton"])){
   	 	header("Location: ../main.html");

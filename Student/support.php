@@ -37,11 +37,10 @@ function generatePage($body, $title="Example") {
 });
 
         </script>
-    </head> 
+    </head>
 
-    <body>  
-        <br><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px"><br>
-        <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+    <body>
+
         <div class="container-fluid">
           $body
         </div>
