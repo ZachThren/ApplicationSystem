@@ -40,10 +40,24 @@
         Max_Total int
       )";
       $result = $db->query($query);
-      $total_courses = ((count($_POST) - 3) / 2);
-      for ($index = 1; $index <= $total_courses; $index++) {
-        $query = "insert into Courses_{$_POST["season"]}_{$_POST["year"]}
-          (Course, Max_Total) values (\"{$_POST["course$index"]}\", {$_POST["maxTA$index"]})";
+      $courses = array();
+      $total_courses = 0;
+      foreach ($_POST as $key => $value) {
+        if ((strlen($key) > 6) && (substr($key, 0, 6) == "course")) {
+          $courses[] = substr($key, 6, strlen($key) - 6);
+          $total_courses++;
+        }
+      }
+      foreach ($courses as $key) {
+        $maxUndergrad = (($_POST["maxTA$key"] / 3) * 2);
+        $maxGrad = $_POST["maxTA$key"] / 3;
+        $query = "insert into testCourses_{$_POST["season"]}_{$_POST["year"]}
+          (Course, Max_Undergraduate, Max_Graduate, Max_Total) values (
+            \"{$_POST["course$key"]}\",
+            {$maxUndergrad},
+            {$maxGrad},
+            {$_POST["maxTA$key"]}
+          )";
         $result = $db->query($query);
       }
       $query = "insert into Semesters (Season, Year, NumOfCourses) values
@@ -60,20 +74,37 @@
         for ($index = 0; $index < $result->num_rows; $index++) {
           $result->data_seek($index);
           $row = $result->fetch_array(MYSQLI_ASSOC);
+          if ($index == 0) {
+            $option1 = "collapsed";
+            $option2 = "true";
+            $option3 = "show";
+          } else {
+            $option1 = "";
+            $option2 = "false";
+            $option3 = "";
+          }
           $body .= <<<EOBODY
             <div class="card">
               <div class="card-header" id="heading$index">
                 <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse$index" aria-expanded="false" aria-controls="collapse$index">
-                    {$row['season']} {$row['year']}
+                  <button class="btn btn-link {$option1}" data-toggle="collapse" data-target="#collapse$index" aria-expanded="{$option2}" aria-controls="collapse$index">
+                    {$row["season"]} {$row["year"]}
                   </button>
                 </h5>
               </div>
-              <div id="collapse$index" class="collapse" aria-labelledby="heading$index" data-parent="#accordion">
+              <div id="collapse$index" class="collapse {$option3}" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
-                  <a href="autofill.php" class="btn btn-primary">Automatically Assign TAs</a>
-                  <br><br>
-                  <a href="manualfill.php" class="btn btn-primary">Manually Assign TAs</a>
+                  <form action="autofill.php" method="post">
+                    <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
+                    <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
+                    <button type="submit" class="btn btn-primary">Automatically Assign TAs</button>
+                  </form>
+                  <br>
+                  <form action="manualfill.php" method="post">
+                    <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
+                    <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
+                    <button type="submit" class="btn btn-primary">Manually Assign TAs</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -87,8 +118,11 @@ EOBODY;
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
+    $header = <<<headx
+    <h1> Choose Term</h1>
+headx;
 
-    $finalBody = $body;
+    $finalBody = $header.$body;
     echo generatePage($finalBody, "Administrative");
   }
 ?>

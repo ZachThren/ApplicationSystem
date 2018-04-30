@@ -1,20 +1,54 @@
 <?php
-require_once("support.php");
-require_once("courses.php");
+    require_once("support.php");
+    require_once("courses.php");
+    require_once "dblogin.php";
 
-session_start();
- 
+    session_start();
+
+    $applicationsTable = "Applications_Spring_2018";
+    $coursesTable = "Courses_Spring_2018";
+
+    if (isset($_POST["coursesTable"])) {
+        $coursesTable = $_POST["coursesTable"];
+    }
+    if (isset($_POST["applicationsTable"])) {
+        $applicationsTable = $_POST["applicationsTable"];
+    }
+
+    $_SESSION["coursesTable"] = $coursesTable;
+    $_SESSION["applicationsTable"] = $applicationsTable;
+     
     $body = <<<EOBODY
-        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
-        <h1>Applications</h1><br>
-        
-        <div class="form-group">
-            <label for="name">Select Course</label>
-            <select class="form-control" name="course">                               
+            <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
+            <h1>Applications</h1><br>
+            
+            <div class="form-group">
+                <label for="name">Select Course</label>
+                <select class="form-control" name="course">                               
 EOBODY;
-    
-    foreach ($courses as $course) {
-        $body .= "<option value="."$course".">"."$course"."</option> ";
+        
+    $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+    if ($db_connection->connect_error) {
+        die($db_connection->connect_error);
+    }
+    $course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} order by 'Course'";
+    $result0 = mysqli_query($db_connection, $course_query);
+    if (!$result0) {
+        die("Retrieval of courses failed: ". $db_connection->error);
+    } else {
+        $num_rows_course = $result0->num_rows;
+        if ($num_rows_course === 0) {
+            echo "Empty Table<br>";
+        } else {
+            //iterating through the courses
+            for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+                $result0->data_seek($course_index);
+                $a_course = $result0->fetch_array(MYSQLI_ASSOC);
+                $currName = $a_course['Course'];
+                $body .= "<option value="."$currName".">"."$currName"."</option> ";
+            }
+
+        }
     }
 
     $body .= <<<eobody
@@ -66,5 +100,5 @@ eobody;
         header("Location: adminDisplay.php");
     }
 
-echo generatePage($body, "TA Application | Administrative Access");
+    echo generatePage($body, "TA Application | Administrative Access");
 ?>

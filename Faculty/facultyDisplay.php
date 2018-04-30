@@ -4,12 +4,13 @@
 
     //retrieving fields from form session
     session_start();
+
     $course = $_SESSION["course"];
     $sortby = $_SESSION["sortby"];
     $undergraduate = $_SESSION["undergraduate"];
     $graduate = $_SESSION["graduate"];
-    $applicationsTable = "Applications_Spring_2018";
-    $coursesTable = "Courses_Spring_2018";
+    $applicationsTable = $_SESSION["applicationsTable"];
+    $coursesTable = $_SESSION["coursesTable"];
 
     //Building the heads of the table
     $applying_table_head =  ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information"];
@@ -85,6 +86,15 @@ TABLE2;
                 $accepted_Graduate = [];
             }
 
+            if ($undergraduate != "Undergraduate" && $graduate == "Graduate") {
+                $applying_Undergraduate = [];
+                $accepted_Undergraduate = [];
+            }
+            if ($undergraduate == "Undergraduate" && $graduate != "Graduate") {
+                $applying_Graduate = [];
+                $accepted_Graduate = [];
+            }
+
             $applying_TAs = array_merge($applying_Undergraduate, $applying_Graduate);
             $accepted_TAs = array_merge($accepted_Undergraduate, $accepted_Graduate);
         }
@@ -94,7 +104,7 @@ TABLE2;
     //retrieving data from Applications table add constructing bodies of tables
     $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript"];
     $fieldsQuery = implode(", ", $fields);
-    $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby}";
+    $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby} DESC";
 
     $result2 = $db_connection->query($applications_query);
     if (!$result2) {
@@ -114,7 +124,7 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript {$row['Directory_ID']}' onclick='showTranscript({$row['Directory_ID']}');' ></td>";
+                                $applying_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -140,7 +150,7 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><input type='submit' class='btn btn-primary' value='Transcript {$row['Directory_ID']}' name ='transcript{$row['Directory_ID']}' onclick='showTranscript({$row['Directory_ID']});'></td>";
+                                $accepted_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
