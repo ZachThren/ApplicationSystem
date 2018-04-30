@@ -199,8 +199,8 @@ TABLE2;
 
             <p>Degree: <span id="degree"></span></p>
             <p>Position Type: <span id="type"></span></p>
-            <p>Want_Teach: <span id="pref"></span></p>
-            <p>Currently A TA: <span id="currentta"></span></p>
+            <p>Want To Teach: <span id="pref"></span></p>
+            <p>Currently a TA: <span id="currentta"></span></p>
             <p>TAing for Current Course: <span id="currentcourse"></span></p>
             <p>Instructor for that Course: <span id="instructor"></span></p>
             <p>Advisor: <span id="advisor"></span></p>
@@ -228,7 +228,7 @@ TABLE2;
         data: {"id": id},
         success: function(response) {
           var student = JSON.parse(response);
-          var pref = "False";
+          var pref = "No";
 
 
           $("#first").text(student.First);
@@ -240,30 +240,30 @@ TABLE2;
           $("#degree").text(student.Degree);
           $("#type").text(student.Position_Type);
           if (student.Want_Teach == 1) {
-            pref = "True"
+            pref = "Yes"
           } else {
-            pref = "True"
+            pref = "Yes"
           }
           $("#pref").text(pref);
           if (student.Current_TA == 1) {
-            pref = "True"
+            pref = "Yes"
           } else {
-            pref = "True"
+            pref = "Yes"
           }
           $("#currentta").text(pref);
             $("#currentcourse").text(student.Current_Course);
               $("#instructor").text(student.Current_Instructor);
           $("#advisor").text(student.Advisor);
           if (student.Taking_UMEI == 1) {
-            pref = "True"
+            pref = "Yes"
           } else {
-            pref = "True"
+            pref = "Yes"
           }
           $("#takenumei").text(pref);
           if (student.Passed_MEI == 1) {
-            pref = "True"
+            pref = "Yes"
           } else {
-            pref = "True"
+            pref = "Yes"
           }
             $("#passedumei").text(pref);
 
