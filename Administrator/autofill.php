@@ -5,8 +5,8 @@
 
     session_start();
     
-    $applicationsTable = $_POST["coursesTable"];
-    $coursesTable = $_POST["applicationsTable"];
+    $applicationsTable = $_POST["applicationsTable"];
+    $coursesTable = $_POST["coursesTable"];
 
     if (isset($_POST["coursesTable"])) {
         $coursesTable = $_POST["coursesTable"];
