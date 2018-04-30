@@ -51,7 +51,7 @@
       foreach ($courses as $key) {
         $maxUndergrad = (($_POST["maxTA$key"] / 3) * 2);
         $maxGrad = $_POST["maxTA$key"] / 3;
-        $query = "insert into testCourses_{$_POST["season"]}_{$_POST["year"]}
+        $query = "insert into Courses_{$_POST["season"]}_{$_POST["year"]}
           (Course, Max_Undergraduate, Max_Graduate, Max_Total) values (
             \"{$_POST["course$key"]}\",
             {$maxUndergrad},
