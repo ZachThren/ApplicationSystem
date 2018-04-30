@@ -1,6 +1,5 @@
 <?php
     require_once("support.php");
-    require_once("courses.php");
     require_once "dblogin.php";
 
     session_start();
@@ -10,7 +9,7 @@
         $_SESSION["coursesTable"] = "Courses_".$term;
         $_SESSION["applicationsTable"] = "Applications_".$term;
         echo  $_SESSION["coursesTable"]."<br>".$_SESSION["applicationsTable"];
-        header("Location: faculty.php");
+        header("Location: submit.php");
     }
 
     $body = <<<EOBODY

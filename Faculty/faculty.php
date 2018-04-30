@@ -1,7 +1,7 @@
 <?php
     require_once("support.php");
     require_once("courses.php");
-    require_once ("dblogin.php";
+    require_once ("dblogin.php");
 
     session_start();
 
