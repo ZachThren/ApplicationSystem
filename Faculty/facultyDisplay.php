@@ -228,6 +228,7 @@ TABLE2;
         data: {"id": id},
         success: function(response) {
           var student = JSON.parse(response);
+          var pref = "False";
 
 
           $("#first").text(student.First);
@@ -238,13 +239,33 @@ TABLE2;
 
           $("#degree").text(student.Degree);
           $("#type").text(student.Position_Type);
-          $("#pref").text(student.Want_Teach);
-          $("#currentta").text(student.Current_TA);
+          if (student.Want_Teach == 1) {
+            pref = "True"
+          } else {
+            pref = "True"
+          }
+          $("#pref").text(pref);
+          if (student.Current_TA == 1) {
+            pref = "True"
+          } else {
+            pref = "True"
+          }
+          $("#currentta").text(pref);
             $("#currentcourse").text(student.Current_Course);
-              $("#instrctor").text(student.Instructor);
+              $("#instructor").text(student.Current_Instructor);
           $("#advisor").text(student.Advisor);
-          $("#takenumei").text(student.Taking_UMEI);
-            $("#passedumei").text(student.Passed_MEI);
+          if (student.Taking_UMEI == 1) {
+            pref = "True"
+          } else {
+            pref = "True"
+          }
+          $("#takenumei").text(pref);
+          if (student.Passed_MEI == 1) {
+            pref = "True"
+          } else {
+            pref = "True"
+          }
+            $("#passedumei").text(pref);
 
           $("#note").text(student.Extra_Information);
         }
