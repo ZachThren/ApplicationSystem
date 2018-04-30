@@ -1,6 +1,6 @@
 <?php
     require_once "support.php";
-    require_once "dblogin.php"; 
+    require_once "dblogin.php";
 
     //retrieving fields from form session
     session_start();
@@ -17,7 +17,7 @@
     $accepted_table_head = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information"];
 
     $applying_table = <<<THEAD
-    <form action="addTA.php" method="post" class="container-fluid">
+
     <div>
         <h1>Applications for {$course}</h1>
     </div>
@@ -26,7 +26,6 @@
 THEAD;
 
     $accepted_table = <<<TABLE2
-    <form action="removeTA.php" method="post" class="container-fluid">
     <div>
         <h1>Current TAs for {$course}</h1>
     </div>
@@ -105,7 +104,7 @@ TABLE2;
     //retrieving data from Applications table add constructing bodies of tables
     $fields = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', "Previous","Transcript"];
     $fieldsQuery = implode(", ", $fields);
-    $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby} DESC";  
+    $applications_query = "select {$fieldsQuery} from {$applicationsTable} order by {$sortby} DESC";
 
     $result2 = $db_connection->query($applications_query);
     if (!$result2) {
@@ -140,7 +139,7 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</div></td>";
+                        $applying_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $applying_table .= "</tr>";
                     }
@@ -166,7 +165,7 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
+                        $accepted_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $accepted_table .= "</tr>";
                     }
@@ -178,22 +177,110 @@ TABLE2;
     $applying_table .= "</table>";
     $accepted_table .= "</table>";
 
+    $modal = <<<EOMODAL
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Student Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>First Name: <span id="first"></span></p>
+            <p>Last Name: <span id="last"></span></p>
+            <p>Email: <span id="email"></span></p>
+            <p>Directory ID: <span id="directoryid"></span></p>
+            <p>GPA: <span id="gpa"></span></p>
+
+            <p>Degree: <span id="degree"></span></p>
+            <p>Position Type: <span id="type"></span></p>
+            <p>Want_Teach: <span id="pref"></span></p>
+            <p>Currently A TA: <span id="currentta"></span></p>
+            <p>TAing for Current Course: <span id="currentcourse"></span></p>
+            <p>Instructor for that Course: <span id="instructor"></span></p>
+            <p>Advisor: <span id="advisor"></span></p>
+
+            <p>Taking UMEI: <span id="takenumei"></span></p>
+            <p>Passed UMEI: <span id="passedumei"></span></p>
+            <p>Extra Info: <span id="note"></span></p>
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function showDetails(button) {
+      var id = button.id;
+      //ajax call to get student Information
+      $.ajax({
+        url: "student.php",
+        method: "GET",
+        data: {"id": id},
+        success: function(response) {
+          var student = JSON.parse(response);
+
+
+          $("#first").text(student.First);
+          $("#last").text(student.Last);
+          $("#email").text(student.Email);
+          $("#directoryid").text(student.Directory_ID);
+          $("#gpa").text(student.GPA);
+
+          $("#degree").text(student.Degree);
+          $("#type").text(student.Position_Type);
+          $("#pref").text(student.Want_Teach);
+          $("#currentta").text(student.Current_TA);
+            $("#currentcourse").text(student.Current_Course);
+              $("#instrctor").text(student.Instructor);
+          $("#advisor").text(student.Advisor);
+          $("#takenumei").text(student.Taking_UMEI);
+            $("#passedumei").text(student.Passed_MEI);
+
+          $("#note").text(student.Extra_Information);
+        }
+
+      });
+
+    }
+
+    </script>
+
+EOMODAL;
+
+    $applying_table .= $modal;
+
+    $accepted_table .= $modal;
+
+
     if (empty($accepted_TAs)) {
         $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
-    } 
+    }
 
     if (empty($applying_TAs)) {
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
-    } 
+    }
 
     $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
     $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
 
+
     $homeForm = <<<EOFORM
         <form action = "faculty.php" method='post' align="left" style="margin-left: 20px">
         <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
-    </form>
+        </form>
 EOFORM;
+
+
 
     $body = $accepted_table.$applying_table."<br>".$homeForm;
     echo generatePage($body, "Display Administrative");
