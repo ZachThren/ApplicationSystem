@@ -83,7 +83,7 @@
             $option1 = "";
             $option2 = "false";
             $option3 = "";
-            $option4 = "disabled"
+            $option4 = "disabled";
           }
           $body .= <<<EOBODY
             <div class="card">
