@@ -8,15 +8,13 @@
     $applicationsTable = "Applications_Spring_2018";
     $coursesTable = "Courses_Spring_2018";
 
-    if (isset($_POST["coursesTable"])) {
-        $coursesTable = $_POST["coursesTable"];
-    }
-    if (isset($_POST["applicationsTable"])) {
-        $applicationsTable = $_POST["applicationsTable"];
+    if (isset($_SESSION["coursesTable"])) {
+        $coursesTable = $_SESSION["coursesTable"];
     }
 
-    $_SESSION["coursesTable"] = $coursesTable;
-    $_SESSION["applicationsTable"] = $applicationsTable;
+    if (isset($_SESSION["applicationsTable"])) {
+        $applicationsTable = $_SESSION["applicationsTable"];
+    }
 
     $body = <<<EOBODY
         <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
