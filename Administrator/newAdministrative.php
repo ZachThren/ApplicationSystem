@@ -118,8 +118,11 @@ EOBODY;
     $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
+    $header = <<<headx
+    <h1> Choose Term</h1>
+headx;
 
-    $finalBody = $body;
+    $finalBody = $header.$body;
     echo generatePage($finalBody, "Administrative");
   }
 ?>
