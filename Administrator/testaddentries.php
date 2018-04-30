@@ -23,18 +23,31 @@
 
 	$random = generateRandomString();
 	
-	$first = "test".$random;
+	$first = "first".$random;
+	$last = "last".$random;
 	$email = "test".$random."@email.com";
 	$id = "test".$random."id";
 	$gpa = rand(0, 40) / 10;
 	$coursesToTA = ['CMSC131', 'CMSC132', 'CMSC250', 'CMSC216', 'CMSC351'];
+	$previousArr = ['CMSC131', 'CMSC132'];
+	$previous = serialize($previousArr);
 	$courses = serialize($coursesToTA);
 	$degree = 'PhD';
 	$fileResume = "resume.pdf";
 	$fileData = addslashes(file_get_contents($fileResume));
+	$wanteach = true;
+	$advisor = "Jon";
+	$currTA = true;
+	$currStep = 1;
+	$currCourse = "CMSC132";
+	$currInstructor = "Nelson";
+	$passedMEI = true;
+	$takingUMEI = false;
+	$extraInfo = "I really want this position";
+	$posi = "Part";
 	
-	$sqlQuery = "insert into $applicationsTable (First, Email, Directory_ID, GPA, Courses, Degree, Transcript) values ";
-	$sqlQuery .= "('{$first}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}')";
+	$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
+	$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
 
 	$result1 = $db_connection->query($sqlQuery);
 
