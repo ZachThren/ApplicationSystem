@@ -108,150 +108,110 @@
 BODY;
 
 	if(isset($_POST["continueButton"])){
+		$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+			if ($db_connection->connect_error) {
+					die($db_connection->connect_error);
+			}
 
-		$first = trim($_POST["first"]); // String
-		$last = trim($_POST["last"]); // String
-		$email = trim($_POST["email"]); // String
-		$directoryid = trim($_POST["directoryid"]); // String
-		$gpa = trim($_POST["gpa"]); //Float
-		$courses = serialize($_POST["courses"]); // String Array
-		$previousCourses = serialize($_POST["previousCourses"]);
-		$degree = "Undergraduate"; // UNDERGRADUATE SUBMISSION
-		$transcript = addslashes(file_get_contents($_POST["transcript"])); // Blob
-		$positionType = $_POST["positionType"]; // String enum
-		$wantTeach = $_POST["wantTeach"]; // Boolean
-		$advisor = "NULL";// Not a grad student
-		$currentTA = "NULL";// Not a grad Student
-		$currentStep = "NULL";
-		$currentCourses = "NULL";
-		$currentInstructor = "NULL";
+		$first = $_POST["first"];
+		$last = $_POST["last"];
+		$email = $_POST["email"];
+		$id = $_POST["directoryid"];
+		$gpa = $_POST["gpa"];
+		$previous = serialize($_POST["previousCourses"]);
+		$coursesToTA = $_POST["courses"];
+		$courses = serialize($coursesToTA );
+		$degree = 'Undergraduate';
+
+		$filePath = $_POST["transcript"];
+		$fileData = addslashes(file_get_contents($_POST["transcript"]));
+
+		$wanteach = "NULL";
+		$advisor = "NULL";
+		$currTA = "NULL";
+		$currStep = "NULL"; // 1, 2, 3
+		$currCourse = "NULL";
+		$currInstructor = "NULL";
 		$passedMEI = "NULL";
-		$takingMEI = "NULL";
-		$extraInformation = $_POST["extraInformation"];
+		$takingUMEI = "NULL";
+		$extraInfo = $_POST["extraInformation"];
+		$posi = $_POST["positionType"];
 
-			$dbhost = "dbinstance389.cqiva6sltzci.us-east-2.rds.amazonaws.com";
-			$dbuser = "dbuser";
-			$dbpassword = "dragon123";
-			$database = "cmsc389n";
-
-			// To determine which table to use
-			$applicationsTable = "Applications_Spring_2018";
-			$coursesTable = "Courses_Spring_2018";
+		$applicationsTable = "Applications_Spring_2018";
+		$coursesTable = "Courses_Spring_2018";
 
 
-			if (isset($_SESSION["coursesTable"])) {
-					$coursesTable = $_SESSION["coursesTable"];
+		if (isset($_SESSION["coursesTable"])) {
+				$coursesTable = $_SESSION["coursesTable"];
+		}
+
+		if (isset($_SESSION["applicationsTable"])) {
+				$applicationsTable = $_SESSION["applicationsTable"];
+		}
+
+		$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
+		$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
+
+		$result1 = $db_connection->query($sqlQuery);
+
+		if (!$result1) {
+					die("Applications failed: ". $db_connection->error);
 			}
 
-			if (isset($_SESSION["applicationsTable"])) {
-					$applicationsTable = $_SESSION["applicationsTable"];
+
+		foreach($coursesToTA as $key => $value) {
+			//retrieving data from courses table
+				$course_query = "select Course, Applying_Undergraduate, Applying_Graduate from {$coursesTable} where Course = '{$value}'";
+				$applying_Undergraduate = array();
+				$applying_Graduate = array();
+
+
+				$result1 = $db_connection->query($course_query);
+				if (!$result1) {
+						die("Courses failed: ". $db_connection->error);
+				} else {
+						$num_rows = $result1->num_rows;
+						if ($num_rows === 0) {
+								echo "Empty Table<br>";
+						} else {
+								$result1->data_seek(0);
+								$row = $result1->fetch_array(MYSQLI_ASSOC);
+								$applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
+								$applying_Graduate = unserialize($row["Applying_Graduate"]);
+
+						}
+				}
+
+				if (empty($applying_Undergraduate)) {
+	    		$applying_Undergraduate = [];
 			}
-			//Logging into database
-		    $db = connectToDB($dbhost, $dbuser, $dbpassword, $database);
+			if (empty($applying_Graduate)) {
+				$applying_Graduate = [];
+			}
 
-			//Setting the query string
-			$sqlQuery  = "insert INTO $applicationsTable (First,Last,Email,Directory_ID,GPA,Courses,Previous,Degree,Transcript,Position_Type,Extra_Information) values
-			(\"$first\",\"$last\",\"$email\",\"$directoryid\",$gpa,".$courses.",".$previousCourses.",\"$degree\",\"$transcript\",\"$positionType\",\"$extraInformation\")";
-			//Executing Query
-			$result = mysqli_query($db, $sqlQuery);
 
+				if ($degree == 'Undergraduate') {
+					array_push($applying_Undergraduate, $id);
+				} else {
+					array_push($applying_Graduate, $id);
+				}
+
+				$Applying_U = serialize($applying_Undergraduate);
+				$Applying_G = serialize($applying_Graduate);
+
+				$update_query = "update Courses_Spring_2018 set Applying_Graduate = '{$Applying_G}', Applying_Undergraduate = '{$Applying_U}' where Course = '{$value}'";
+
+				$result = $db_connection->query($update_query);
+				if (!$result) {
+						die("Retrieval of courses failed: ". $db_connection->error);
+				}
+
+		}
 
 
 /*
 
-$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
-	if ($db_connection->connect_error) {
-			die($db_connection->connect_error);
-	}
 
-$first = "first".$random;
-$last = "last".$random;
-$email = "test".$random."@email.com";
-$id = "test".$random."id";
-$gpa = rand(0, 40) / 10;
-$coursesToTA = ['CMSC131', 'CMSC132', 'CMSC250', 'CMSC216', 'CMSC351'];
-$previousArr = ['CMSC131', 'CMSC132'];
-$previous = serialize($previousArr);
-$courses = serialize($coursesToTA);
-$degree = 'PhD';
-$fileResume = "resume.pdf";
-$fileData = addslashes(file_get_contents($fileResume));
-$wanteach = true;
-$advisor = "Jon";
-$currTA = true;
-$currStep = 1;
-$currCourse = "CMSC132";
-$currInstructor = "Nelson";
-$passedMEI = true;
-$takingUMEI = false;
-$extraInfo = "I really want this position";
-$posi = "Part";
-
-$applicationsTable = "Applications_Spring_2018";
-$coursesTable = "Courses_Spring_2018";
-
-
-if (isset($_SESSION["coursesTable"])) {
-		$coursesTable = $_SESSION["coursesTable"];
-}
-
-if (isset($_SESSION["applicationsTable"])) {
-		$applicationsTable = $_SESSION["applicationsTable"];
-}
-
-$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
-$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
-
-$result1 = $db_connection->query($sqlQuery);
-
-if (!$result1) {
-			die("Applications failed: ". $db_connection->error);
-	}
-
-
-foreach($coursesToTA as $key => $value) {
-	//retrieving data from courses table
-		$course_query = "select Course, Applying_Undergraduate, Applying_Graduate from {$coursesTable} where Course = '{$value}'";
-		$applying_Undergraduate = array();
-		$applying_Graduate = array();
-
-
-		$result1 = $db_connection->query($course_query);
-		if (!$result1) {
-				die("Courses failed: ". $db_connection->error);
-		} else {
-				$num_rows = $result1->num_rows;
-				if ($num_rows === 0) {
-						echo "Empty Table<br>";
-				} else {
-						$result1->data_seek(0);
-						$row = $result1->fetch_array(MYSQLI_ASSOC);
-						$applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
-						$applying_Graduate = unserialize($row["Applying_Graduate"]);
-
-				}
-		}
-
-
-		if ($degree == 'Undergraduate') {
-			global $applying_Undergraduate;
-			array_push($applying_Undergraduate, $id);
-		} else {
-			global $applying_Graduate;
-			array_push($applying_Graduate, $id);
-		}
-
-		$Applying_U = serialize($applying_Undergraduate);
-		$Applying_G = serialize($applying_Graduate);
-
-		$update_query = "update Courses_Spring_2018 set Applying_Graduate = '{$Applying_G}', Applying_Undergraduate = '{$Applying_U}' where Course = '{$value}'";
-
-		$result = $db_connection->query($update_query);
-		if (!$result) {
-				die("Retrieval of courses failed: ". $db_connection->error);
-		}
-
-}
 
 
 
@@ -265,15 +225,20 @@ foreach($coursesToTA as $key => $value) {
 
 			// If SQL query did not fail
 			if ($result) {
+				if(empty($coursesToTA)){
+					$coursesToTA = [];
+				}
+				$result = implode(", ",$coursesToTA);
 				$body = <<<EOBODY
 					<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
 					<h3>--Confirmation--</h3>
 
 					<b>Name: </b> $first $last<br>
-					<b>DirectoryID: </b> $directoryid<br>
+					<b>DirectoryID: </b> $id<br>
 					<b>Email: </b> $email<br>
-					<b>Course Applied: </b> $courses<br>
+					<b>Course Applied: </b> $result<br>
+					<b>File:</b> $filePath <br>
 					<br>
 
 					<input type="submit" name="mainMenuButton" value="Return to main menu">
@@ -288,7 +253,7 @@ EOBODY;
 				// SQL query failed
 				$body = "Inserting records failed.".mysqli_error($db);
 			}
-			mysqli_close($db);
+			mysqli_close($db_connection);
 		}
 
 
