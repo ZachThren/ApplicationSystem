@@ -78,32 +78,34 @@
             $option1 = "collapsed";
             $option2 = "true";
             $option3 = "show";
+            $option4 = "";
           } else {
             $option1 = "";
             $option2 = "false";
             $option3 = "";
+            $option4 = "disabled";
           }
           $body .= <<<EOBODY
             <div class="card">
               <div class="card-header" id="heading$index">
                 <h5 class="mb-0">
-                  <button class="btn btn-link {$option1}" data-toggle="collapse" data-target="#collapse$index" aria-expanded="{$option2}" aria-controls="collapse$index">
+                  <button class="btn btn-link $option1" data-toggle="collapse" data-target="#collapse$index" aria-expanded="$option2" aria-controls="collapse$index">
                     {$row["season"]} {$row["year"]}
                   </button>
                 </h5>
               </div>
-              <div id="collapse$index" class="collapse {$option3}" aria-labelledby="heading$index" data-parent="#accordion">
+              <div id="collapse$index" class="collapse $option3" aria-labelledby="heading$index" data-parent="#accordion">
                 <div class="card-body">
                   <form action="autofill.php" method="post">
                     <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
                     <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
-                    <button type="submit" class="btn btn-primary">Automatically Assign TAs</button>
+                    <button type="submit" class="btn btn-primary" $option4>Automatically Assign TAs</button>
                   </form>
                   <br>
                   <form action="manualfill.php" method="post">
                     <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
                     <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
-                    <button type="submit" class="btn btn-primary">Manually Assign TAs</button>
+                    <button type="submit" class="btn btn-primary" $option4>Manually Assign TAs</button>
                   </form>
                 </div>
               </div>
