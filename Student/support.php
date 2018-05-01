@@ -40,11 +40,18 @@ function generatePage($body, $title="Example") {
     </head>
 
     <body>
+        <br><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px"><br>
+        <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
         <div class="container-fluid">
           $body
         </div>
+        
         <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
+        <form action = "../main.html" method='post' align="center">
+                <input type="submit" class="btn btn-info" name="home" value="Return Home">
+        </form>
+        <br><br>
 
         <script src="bootstrap/jquery-3.2.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
