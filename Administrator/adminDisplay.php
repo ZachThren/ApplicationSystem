@@ -197,7 +197,7 @@ TABLE2;
     }
 
     $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
-    $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    $accepted_table .= "<hr style='height:1px;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
 
     $homeForm = <<<EOFORM
         <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">

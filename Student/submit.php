@@ -43,7 +43,6 @@
 	</div>
 
 	</form>
-	<img></img>
 BODY;
 
 	if(isset($_POST["undergraduate"])){

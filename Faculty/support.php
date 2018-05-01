@@ -17,7 +17,7 @@
                 <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
                 
 
-                <div class="container-fluid mycontainer">
+                <div class="container-fluid">
                     $body
                 </div>
 

@@ -142,7 +142,7 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
+                        $applying_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $applying_table .= "</tr>";
                     }
@@ -171,7 +171,7 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
+                        $accepted_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $accepted_table .= "</tr>";
                     }
@@ -297,8 +297,8 @@ EOMODAL;
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
     }
 
-    $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
-    $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    $applying_table .= "</form>";
+    $accepted_table .= "</form>";
 
 
     $homeForm = <<<EOFORM

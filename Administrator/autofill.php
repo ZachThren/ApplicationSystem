@@ -33,7 +33,7 @@
             echo "Empty Table<br>";
         } else {
             //iterating through the courses
-            for ($course_index = 0; $course_index < 5; $course_index++) {
+            for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
                 $result0->data_seek($course_index);
                 $a_course = $result0->fetch_array(MYSQLI_ASSOC);
                 $currName = $a_course['Course'];

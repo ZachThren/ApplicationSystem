@@ -17,7 +17,7 @@
     }
 
     $body = <<<EOBODY
-        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
+        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid mycontainer">
         <h1>Applications</h1><br>
 
         <div class="form-group">
