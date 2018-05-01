@@ -17,7 +17,6 @@
     $accepted_table_head = ['First', 'Last', 'Email', 'Directory_ID', 'GPA', 'Degree', 'Experience',"Transcript","Extra Information", "REMOVE TA"];
 
     $applying_table = <<<THEAD
-    <form action="addTA.php" method="post" class="container-fluid">
     <div>
         <h1>Applications for {$course}</h1>
     </div>
@@ -26,7 +25,6 @@
 THEAD;
 
     $accepted_table = <<<TABLE2
-    <form action="removeTA.php" method="post" class="container-fluid">
     <div>
         <h1>Current TAs for {$course}</h1>
     </div>
@@ -125,7 +123,10 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><dvi class='btn btn-primary transcriptButton' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $applying_table .= "<form action='transcript.php' method='post'>";
+                                $applying_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $applying_table .= "<button class='btn btn-primary transcriptButton' type='submit' >Transcript</button></td>";
+                                $applying_table .= "</form>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -140,11 +141,11 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><dvi class='btn btn-warning moreInfoButton' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
+                        $applying_table .= "<td><div class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' >More Info</div></td>";
 
-                        $applying_table .= "<td><div class='form-check'>
-                                            <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
-                                            </div></td>";
+                        $applying_table .= "<td><form action='addTA.php' method='post'><input type='submit' class='btn btn-success addButtonTA' value='Add' name='Add'>
+                                                <input type='hidden' value='{$row['Directory_ID']}' name='student'></form></td>";
+
                         $applying_table .= "</tr>";
                     }
                 }
@@ -154,7 +155,10 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><dvi class='btn btn-primary transcriptButton' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $accepted_table .= "<form action='transcript.php' method='post'>";
+                                $accepted_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $accepted_table .= "<button class='btn btn-primary transcriptButton' type='submit' >Transcript</button></td>";
+                                $accepted_table .= "</form>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -169,11 +173,10 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><dvi class='btn btn-warning moreInfoButton' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
+                        $accepted_table .= "<td><div class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' >More Info</div></td>";
 
-                        $accepted_table .= "<td><div class='form-check'>
-                                            <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
-                                            </div></td>";
+                        $accepted_table .= "<td><form action='removeTA.php' method='post'><input type='submit' class='btn btn-danger deleteButtonTA' value='Remove' name='Add'>
+                                                <input type='hidden' value='{$row['Directory_ID']}' name='student'></form></td>";
 
                         $accepted_table .= "</tr>";
                     }
@@ -185,23 +188,127 @@ TABLE2;
     $applying_table .= "</table>";
     $accepted_table .= "</table>";
 
-    if (empty($accepted_TAs)) {
-        $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
-    } else {
-        $accepted_table .= "<div align='right'><input type='submit' class='btn btn-danger deleteButtonTA' value='Remove checked TAs' name='Remove'></div>";
-    }
-    if (empty($applying_TAs)) {
-        $applying_table .= "<p> There are no TAs currently applying to this class </p>";
-    } else {
-        $applying_table .= "<div align='right'><input type='submit' class='btn btn-success addButtonTA' value='Add checked TAs' name='Add'></div>";
+        $modal = <<<EOMODAL
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Student Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p><b>First Name:</b> <span id="first"></span></p>
+            <p><b>Last Name:</b> <span id="last"></span></p>
+            <p><b>Email:</b> <span id="email"></span></p>
+            <p><b>Directory ID:</b> <span id="directoryid"></span></p>
+            <p><b>GPA:</b> <span id="gpa"></span></p>
+
+            <p><b>Degree:</b> <span id="degree"></span></p>
+            <p><b>Position Type:</b> <span id="type"></span></p>
+            <p><b>Want To Teach?</b> <span id="pref"></span></p>
+
+            <p><b>Currently a TA?</b> <span id="currentta"></span></p>
+            <p><b>Current Step:</b> <span id="currentstep"></span></p>
+            <p><b>Currently TAing For:</b> <span id="currentcourse"></span></p>
+            <p><b>Instructor for that Course:</b> <span id="instructor"></span></p>
+            <p><b>Advisor:</b> <span id="advisor"></span></p>
+
+            <p><b>Taking UMEI:</b> <span id="takenumei"></span></p>
+            <p><b>Passed UMEI:</b> <span id="passedumei"></span></p>
+            <p><b>Extra Info:</b> <span id="note"></span></p>
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function showDetails(button) {
+      var id = button.id;
+      //ajax call to get student Information
+      $.ajax({
+        url: "student.php",
+        method: "GET",
+        data: {"id": id},
+        success: function(response) {
+          var student = JSON.parse(response);
+          var pref = "No";
+
+
+          $("#first").text(student.First);
+          $("#last").text(student.Last);
+          $("#email").text(student.Email);
+          $("#directoryid").text(student.Directory_ID);
+          $("#gpa").text(student.GPA);
+
+          $("#degree").text(student.Degree);
+          $("#type").text(student.Position_Type);
+          if (student.Want_Teach == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#pref").text(pref);
+          if (student.Current_TA == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#currentta").text(pref);
+          $("#currentta").text(student.Current_Step);
+          $("#currentcourse").text(student.Current_Course);
+          $("#instructor").text(student.Current_Instructor);
+          $("#advisor").text(student.Advisor);
+          if (student.Taking_UMEI == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#takenumei").text(pref);
+          if (student.Passed_MEI == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+         
+         $("#passedumei").text(pref);
+
+          $("#note").text(student.Extra_Information);
+        }
+
+      });
+
     }
 
-    $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
-    $accepted_table .= "<hr style='height:1px;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    </script>
+
+EOMODAL;
+
+    $applying_table .= $modal;
+
+    $accepted_table .= $modal;
+
+    if (empty($accepted_TAs)) {
+        $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
+
+    } 
+
+    if (empty($applying_TAs)) {
+        $applying_table .= "<p> There are no TAs currently applying to this class </p>";
+    } 
 
     $homeForm = <<<EOFORM
         <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">
-        <input type="submit" class="btn btn-info continueButton" name="goback" value="Choose Another Course">
+        <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
     </form>
     
 EOFORM;

@@ -55,33 +55,29 @@
     if (empty($accepted_Graduate)) {
         $accepted_Graduate = [];
     }
+    
+    $key = $_POST["student"];
 
-    foreach($_POST as $key => $value) {
-        if ($key != "Add") {
-            echo "key".$key;
-            $applications_query = "select Directory_ID, Degree from {$applicationsTable} where Directory_ID='{$key}'";  
-            $student;
-            
-            $result2 = $db_connection->query($applications_query);
-            if (!$result2) {
-                die("Retrieval failed: ". $db_connection->error);
-            } else {
-                $num_rows = $result2->num_rows;
+    $applications_query = "select Directory_ID, Degree from {$applicationsTable} where Directory_ID='{$key}'";  
+    $student;
+    
+    $result2 = $db_connection->query($applications_query);
+    if (!$result2) {
+        die("Retrieval failed: ". $db_connection->error);
+    } else {
+        $num_rows = $result2->num_rows;
 
-                if ($num_rows === 0) {
-                    echo "No Applications<br>";
+        if ($num_rows === 0) {
+            echo "No Applications<br>";
+        } else {
+                $result2->data_seek(0);
+                $student = $result2->fetch_array(MYSQLI_ASSOC);
+
+                if ($student["Degree"] == "Undergraduate") {
+                    array_push($applying_Undergraduate, $key);
                 } else {
-                        $result2->data_seek(0);
-                        $student = $result2->fetch_array(MYSQLI_ASSOC);
-
-                        if ($student["Degree"] == "Undergraduate") {
-                            array_push($applying_Undergraduate, $key);
-                        } else {
-                            array_push($applying_Graduate, $key);
-                        }
+                    array_push($applying_Graduate, $key);
                 }
-            }
-
         }
     }
 
