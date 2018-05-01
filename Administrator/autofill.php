@@ -120,8 +120,7 @@
         }
     }
 
-    $body = "<h3>TAs were successfully assigned to classes.</h3>";
-    $body .= "<h3>Return Home. You will be able to new add/remove TAs manually</h3>";
+    $body = "<div class='mycontainer'><h4>TAs were successfully assigned to classes.</h4> <h4>Return Home. You will be able to new add/remove TAs manually</h4></div>";
 
     $page = generatePage($body, "autofill");
     echo $page;
