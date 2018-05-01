@@ -265,9 +265,6 @@ NEXT;
 					<b>File:</b> $filePath <br>
 					<br>
 
-					<input type="submit" name="mainMenuButton" value="Return to main menu">
-					<br>
-
 					</form>
 EOBODY;
 				session_destroy();
