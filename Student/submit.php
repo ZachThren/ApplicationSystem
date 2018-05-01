@@ -22,7 +22,7 @@
               <div class="panel-body">
               </div>
               <div class="panel-footer">
-                <input type="submit" class="btn btn-info continueButton" value="Apply" name="undergraduate">
+                <input type="submit" class="btn btn-info continueButton" value="Undergraduate" name="undergraduate">
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@
               <div class="panel-body">
               </div>
               <div class="panel-footer">
-                <input type="submit" class="btn btn-info continueButton" value="Apply" name="graduate">
+                <input type="submit" class="btn btn-info continueButton" value="Graduate" name="graduate">
               </div>
             </div>
           </div>
