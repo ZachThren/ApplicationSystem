@@ -308,7 +308,7 @@ EOMODAL;
 
     $homeForm = <<<EOFORM
         <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">
-        <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
+        <input type="submit" class="btn btn-info continueButton" name="goback" value="Choose Another Course">
     </form>
     
 EOFORM;
