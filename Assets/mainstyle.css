@@ -1,7 +1,12 @@
 h1 {color: #edc69a}
 
+.mycontainer {
+    margin: auto; 
+    width: 50%;
+}
+
 .continueButton {
-    background-color: #45B39D;
+    background-color: LightSeaGreen;
 }
 
 
