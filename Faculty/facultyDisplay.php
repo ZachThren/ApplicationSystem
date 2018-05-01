@@ -124,7 +124,10 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $applying_table .= "<form action='transcript.php' method='post'>";
+                                $applying_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $applying_table .= "<button class='btn btn-primary transcriptButton' type='submit' >Transcript</button></td>";
+                                $applying_table .= "</form>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -139,7 +142,7 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
+                        $applying_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $applying_table .= "</tr>";
                     }
@@ -150,7 +153,10 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $accepted_table .= "<form action='transcript.php' method='post'>";
+                                $accepted_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $accepted_table .= "<button class='btn btn-primary transcriptButton' type='submit' >Transcript</button></td>";
+                                $accepted_table .= "</form>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -165,7 +171,7 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><input type='submit' class='btn btn-warning' value='More Info {$row['Directory_ID']}' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
+                        $accepted_table .= "<td><input type='submit' class='btn btn-warning moreInfoButton' value='More Info' name ='moreInfo{$row['Directory_ID']}' data-toggle='modal' data-target='#myModal' id='{$row['Directory_ID']}' onclick='showDetails(this);' ></td>";
 
                         $accepted_table .= "</tr>";
                     }
@@ -199,8 +205,8 @@ TABLE2;
 
             <p>Degree: <span id="degree"></span></p>
             <p>Position Type: <span id="type"></span></p>
-            <p>Want_Teach: <span id="pref"></span></p>
-            <p>Currently A TA: <span id="currentta"></span></p>
+            <p>Want To Teach: <span id="pref"></span></p>
+            <p>Currently a TA: <span id="currentta"></span></p>
             <p>TAing for Current Course: <span id="currentcourse"></span></p>
             <p>Instructor for that Course: <span id="instructor"></span></p>
             <p>Advisor: <span id="advisor"></span></p>
@@ -228,6 +234,7 @@ TABLE2;
         data: {"id": id},
         success: function(response) {
           var student = JSON.parse(response);
+          var pref = "No";
 
 
           $("#first").text(student.First);
@@ -238,13 +245,33 @@ TABLE2;
 
           $("#degree").text(student.Degree);
           $("#type").text(student.Position_Type);
-          $("#pref").text(student.Want_Teach);
-          $("#currentta").text(student.Current_TA);
+          if (student.Want_Teach == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#pref").text(pref);
+          if (student.Current_TA == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#currentta").text(pref);
             $("#currentcourse").text(student.Current_Course);
-              $("#instrctor").text(student.Instructor);
+              $("#instructor").text(student.Current_Instructor);
           $("#advisor").text(student.Advisor);
-          $("#takenumei").text(student.Taking_UMEI);
-            $("#passedumei").text(student.Passed_MEI);
+          if (student.Taking_UMEI == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+          $("#takenumei").text(pref);
+          if (student.Passed_MEI == 1) {
+            pref = "Yes"
+          } else {
+            pref = "Yes"
+          }
+            $("#passedumei").text(pref);
 
           $("#note").text(student.Extra_Information);
         }
@@ -270,13 +297,13 @@ EOMODAL;
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
     }
 
-    $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
-    $accepted_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
+    $applying_table .= "</form>";
+    $accepted_table .= "</form>";
 
 
     $homeForm = <<<EOFORM
         <form action = "faculty.php" method='post' align="left" style="margin-left: 20px">
-        <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
+        <input type="submit" class="btn btn-info continueButton" name="goback" value="Choose Another Course">
         </form>
 EOFORM;
 

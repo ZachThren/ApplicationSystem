@@ -38,14 +38,6 @@
 		$courses = serialize($coursesToTA);
 		$degree = 'Undergraduate';
 		
-		$rr = rand(1,4);
-
-		if ($rr == 1) {
-			$degree = "MS";	
-		}
-		if ($rr == 2) {
-			$degree = "PhD";	
-		}
 
 		$fileResume = "resume.pdf";
 		$fileData = addslashes(file_get_contents($fileResume));
@@ -92,19 +84,13 @@
 		            
 		        }
 		    }
-
-		    if (empty($applying_Undergraduate)) {
-                $applying_Undergraduate = [];
-            }
-            if (empty($applying_Graduate)) {
-                $applying_Graduate = [];
-            }
-      
 		    
 
 		    if ($degree == 'Undergraduate') {
+		    	global $applying_Undergraduate;
 		    	array_push($applying_Undergraduate, $id);
 		    } else {
+		    	global $applying_Graduate;
 		    	array_push($applying_Graduate, $id);
 		    }
 
@@ -122,8 +108,4 @@
 
 		$incrementator = $incrementator + 1;
 	}
-
-	$body = "test entries added";
-    
-    echo generatePage($body, "test entries");
 ?>

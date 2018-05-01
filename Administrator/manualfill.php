@@ -19,7 +19,7 @@
     $_SESSION["applicationsTable"] = $applicationsTable;
      
     $body = <<<EOBODY
-            <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
+            <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid mycontainer">
             <h1>Applications</h1><br>
             
             <div class="form-group">
@@ -74,7 +74,7 @@ EOBODY;
           <label class="form-check-label" for="undergrad">Undergraduate</label>
         </div><br><br>
         
-        <input type="submit" class="btn btn-info" name="displayApp" value="Display Applications"/>
+        <input type="submit" class="btn btn-info continueButton" name="displayApp" value="Display Applications"/>
         <br>
         </form>
 eobody;

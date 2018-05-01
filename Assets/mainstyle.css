@@ -1,0 +1,57 @@
+h1 {color: #edc69a}
+
+.mycontainer {
+    margin: auto; 
+    width: 50%;
+}
+
+.continueButton {
+    background-color: LightSeaGreen;
+}
+
+
+.addButton {
+    margin-left:5px;
+    background-color: #2980B9;
+}
+
+.moreInfoButton {
+    color: white;
+    background-color: #F8C471;
+}
+
+.moreInfoButton:hover {
+    color:white;
+}
+
+.transcriptButton {
+    border-color: #5DADE2;
+    background-color: #5DADE2;
+}
+
+.deleteButtonTA {
+    background-color: #CD5C5C;
+}
+
+.addButtonTA {
+    background-color: #28B463;
+}
+
+#submit {
+    background-color: #bbb;
+    padding: .5em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 6px;
+    color: #00fafa;
+    font-family: 'Oswald';
+    font-size: 20px;
+    text-decoration: none;
+    border: none;
+}
+
+#submit:hover {
+    border: none;
+    background: orange;
+    box-shadow: 0px 0px 1px #777;
+}

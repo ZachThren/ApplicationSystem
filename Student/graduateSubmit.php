@@ -1,7 +1,7 @@
 <?php
 	require_once("support.php");
 	require_once('applicant.php');
-
+	require_once('dblogin.php');
 	// Starts session. We need to keep track to see if they are a valid user.
 	session_start();
 
@@ -9,148 +9,296 @@
 	$message = "";
 	$body = <<<BODY
 	<br>
-	<img src="../Assets/umdLogo.gif" alt = "umdLogo.gif">
-	<hr style="height:1px;border:none;color:#333;background-color:#333;" />
-	<h1 align="center">Graduate UMD CS TA Application </h1>
+	<h1 align="center">Graduate UMD CS TA Application</h1>
 	  <div class="container-fluid">
 
 		<h3> Contact Information </h3>
 		<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
-		<label>First Name: </label>
+		<span>First Name: </span>
 			<input type="text" name="first" placeholder="John" class="form-control" required><br>
-		<label>Last Name: </label>
+		<span>Last Name: </span>
 			<input type="text" name="last" placeholder="Smith" class="form-control" required><br>
-		<b>Email: </b>
+		<span>Email: </span>
 			<input type="email" name="email" placeholder="example@umd.edu" class="form-control" required><br>
-		<div id="container">
+		<div>
 		<h3> Student Information </h3>
-		<b>University Directory ID: </b>
-			<input type="text" name="uid" placeholder="terps" class="form-control" required><br>
-		<b>GPA: </b>
+		<span>University Directory ID: </span>
+			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
+		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
 
-		<div class="col-sm-3">
-		<b>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</b>
-		<select id="course" class="form-control" multiple size="10">
-				<option>CMSC 131</option>
-				<option>CMSC 132</option>
-				<option>CMSC 216</option>
-				<option>CMSC 250</option>
-				<option>CMSC 330</option>
-				<option>CMSC 351</option>
-				<option>CMSC 414</option>
-				<option>CMSC 420</option>
-				<option>CMSC 451</option>
+		<span>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</span>
+		<select id="course" class="form-control" name="courses[]" multiple size="10">
+BODY;
+$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+if ($db_connection->connect_error) {
+		die($db_connection->connect_error);
+}
+$course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} order by 'Course'";
+$result0 = mysqli_query($db_connection, $course_query);
+if (!$result0) {
+		die("Retrieval of courses failed: ". $db_connection->error);
+} else {
+		$num_rows_course = $result0->num_rows;
+		if ($num_rows_course === 0) {
+				echo "Empty Table<br>";
+		} else {
+				//iterating through the courses
+				for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+						$result0->data_seek($course_index);
+						$a_course = $result0->fetch_array(MYSQLI_ASSOC);
+						$currName = $a_course['Course'];
+						$body .= "<option value="."$currName".">"."$currName"."</option> ";
+				}
+
+		}
+}
+mysqli_close($db_connection);
+	$body .= <<<WHATEVER
 		</select><br>
-		</div>
-		<div class="col-sm-9">
-		<b>Are you a Masters, or PhD Student?</b>
-		<div class="form-group">
-				<div class="col-sm-12">
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
-						<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Please upload your unofficial transcript</span>
+		<input type="file" name="transcript">
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Part-time or Full-time?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
+		<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Would you like to teach?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
-				</div>
-		</div>
+		<span>Have you ever been/are you currently a TA for a CMSC course?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
+		<input type="radio" name="currentTA" value="false" class="radio-inline"> No
+
+		<span> If you answered "Yes", which courses have you been/currently being a TA for?</span> <br>(Ctrl/Cmd + Click for multiple)
+		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
+WHATEVER;
+$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+if ($db_connection->connect_error) {
+		die($db_connection->connect_error);
+}
+$course_query = "select Course, Applying_Undergraduate, Applying_Graduate, Accepted_Undergraduate, Accepted_Graduate, Max_Undergraduate, Max_Graduate, Max_Total from {$coursesTable} order by 'Course'";
+$result0 = mysqli_query($db_connection, $course_query);
+if (!$result0) {
+		die("Retrieval of courses failed: ". $db_connection->error);
+} else {
+		$num_rows_course = $result0->num_rows;
+		if ($num_rows_course === 0) {
+				echo "Empty Table<br>";
+		} else {
+				//iterating through the courses
+				for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
+						$result0->data_seek($course_index);
+						$a_course = $result0->fetch_array(MYSQLI_ASSOC);
+						$currName = $a_course['Course'];
+						$body .= "<option value="."$currName".">"."$currName"."</option> ";
+				}
+
+		}
+}
+mysqli_close($db_connection);
+
+		$body .=<<<NEXT
+		</select><br>
+		<span>Last name of Advisor: </span>
+		<input type="text" name="advisor" placeholder="Nelson" class="form-control" required>
 		<br>
-		<div class="form-group">
-		<b>Have you ever been a TA for a CMSC class?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="experience" id="checkbox" value="yes" class="radio-inline"> Yes
-						<input type="radio" name="experience" id="checkbox" value="no" class="radio-inline"> No
+		<span>Masters or PhD Candidate?</span>
+		<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
+		<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
+		<br><br>
+		<span>Current Step in program?</span>
+		<input type="radio" name="step" id="checkbox" value="1" class="radio-inline"> 1
+		<input type="radio" name="step" id="checkbox" value="2" class="radio-inline"> 2
+		<input type="radio" name="step" id="checkbox" value="3" class="radio-inline"> 3
+
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>What course are you currently a Graduate TA for? (CMSCXXX)</span>
+		<input type="text" name="currentCourseTAing" class="form-control" required><br/>
+
+		<span>What professor are you currently a TA for in that course?</span>
+		<input type="text" name="currentInstructor" class="form-control" required><br/>
+
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Have you passed the MEI exam?</span>
+		<input type="radio" name="passedMEI" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="passedMEI" id="checkbox" value="false" class="radio-inline"> No
+		<br><br>
+		<span>Are you currently taking the UMEI course?</span>
+		<input type="radio" name="takingUMEI" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="takingUMEI" id="checkbox" value="false" class="radio-inline"> No
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Any other information you would like to provide us?</span>
+		<input type="text" name="extraInformation" class="form-control" required><br/>
+
 		</div>
 
-		<div class="form-group">
-			<label for="transcript_upload">Please upload your unofficial transcript</label>
-			<input type="file">
 		</div>
-		<div class="form-group">
-		<b>Part-time or Full-time?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
-						<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
-		</div>
-		<b>Would you like to teach?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
-						<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
-		</div>
-		<div class="form-group">
-		<a href="#" id="add">Add more</a>
-		<br>
-		</div> <!--- Div that handles the grid --->
-		</div> <!--- #container div --->
-		</div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 
-		</div>
-		<div class="form-group" align="center">
-			<input type="submit" class="btn btn-info" name="submitInfoButton" value="Submit Data">
-			<input type="submit" class="btn btn-info" name="mainMenuButton" value="Return to main menu">
+		<div class="form-group container-fluid" align="left">
+			<div class="col-sm-2 col-sm-push-2">
+				<input type="submit" class="btn btn-info" name="continueButton" value="Continue">
+			</div>
 		</div>
 		</form>
-BODY;
+NEXT;
 
-	if(isset($_POST["submitInfoButton"])){
+	if(isset($_POST["continueButton"])){
+		$db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
+			if ($db_connection->connect_error) {
+					die($db_connection->connect_error);
+			}
 
-		$name = trim($_POST["name"]);
-		$email = trim($_POST["email"]);
-		$gpa = trim($_POST["gpa"]);
-		$year = trim($_POST["year"]);
-		$gender = trim($_POST["gender"]);
-		$password = trim($_POST["password"]);
-		$verifypass = trim($_POST["verifypass"]);
+		$first = $_POST["first"];
+		$last = $_POST["last"];
+		$email = $_POST["email"];
+		$id = $_POST["directoryid"];
+		$gpa = $_POST["gpa"];
+		$previous = serialize($_POST["previousCourses"]);
+		$coursesToTA = $_POST["courses"];
+		$courses = serialize($coursesToTA );
+		$degree = $_POST["degree"];
 
-		if ($password !== $verifypass) {
-			$message = "<h2>Passwords do not match</h2>";
+		$filePath = $_POST["transcript"];
+		$fileData = addslashes(file_get_contents($_POST["transcript"]));
+
+		$wanteach = $_POST["wantTeach"];
+		$advisor = $_POST["advisor"];
+
+		if(strcmp($_POST["currentTA"],"true") == 0){
+				$currTA = true;
 		} else {
-			$safePass = password_hash($password, PASSWORD_DEFAULT);
-			$password = "";
-			$userID = new applicant($name,$email,$gpa,$year,$gender,$safePass);
-			$_SESSION["userID"] = serialize($userID);
+				$currTA = false;
 		}
 
-		if(isset($_SESSION['userID'])){
-			$userID = unserialize($_SESSION["userID"]);
+		$currStep = $_POST["step"]; // 1, 2, 3
+		$currCourse = $_POST["currentCourseTAing"];
+		$currInstructor = $_POST["currentInstructor"];
 
-			$host = "localhost";
-		    $user = "dbuser";
-		    $dbpassword = "goodbyeWorld";
-		    $database = "applicationdb";
-		    $table = "applicants";
-		    $db = connectToDB($host, $user, $dbpassword, $database);
+		if(strcmp($_POST["passedMEI"],"true") == 0){
+				$passedMEI = true;
+		} else {
+				$passedMEI = false;
+		}
 
-		    $name = $userID->getName();
-		    $email = $userID->getEmail();
-		 	$gpa = $userID->getGpa();
-			$year = $userID->getYear();
-			$gender = $userID->getGender();
-			$password = $userID->getPassword();
+		if(strcmp($_POST["takingUMEI"],"true") == 0){
+				$takingUMEI = true;
+		} else {
+				$takingUMEI = false;
+		}
 
-			$sqlQuery  = "insert into $table (name,email,gpa,year,gender,password) values (\"$name\",\"$email\",$gpa,$year,\"$gender\",\"$password\")";
-			$result = mysqli_query($db, $sqlQuery);
+		$extraInfo = $_POST["extraInformation"];
+		$posi = $_POST["positionType"];
 
+		$applicationsTable = "Applications_Spring_2018";
+		$coursesTable = "Courses_Spring_2018";
+
+
+		if (isset($_SESSION["coursesTable"])) {
+				$coursesTable = $_SESSION["coursesTable"];
+		}
+
+		if (isset($_SESSION["applicationsTable"])) {
+				$applicationsTable = $_SESSION["applicationsTable"];
+		}
+
+		$sqlQuery = "insert into $applicationsTable (First, Last, Email, Directory_ID, GPA, Courses, Degree, Transcript, Previous, Want_Teach, Advisor, Current_TA, Current_Step, Current_Course, Current_Instructor, Passed_MEI, Taking_UMEI, Extra_Information, Position_Type) values ";
+		$sqlQuery .= "('{$first}', '{$last}', '{$email}', '{$id}', '{$gpa}', '{$courses}', '{$degree}', '{$fileData}', '{$previous}','{$wanteach}','{$advisor}', '{$currTA}', '{$currStep}', '{$currCourse}', '$currInstructor', '$passedMEI', '$takingUMEI', '{$extraInfo}', '{$posi}')";
+
+		$result1 = $db_connection->query($sqlQuery);
+
+		if (!$result1) {
+					die("Applications failed: ". $db_connection->error);
+			}
+
+
+		foreach($coursesToTA as $key => $value) {
+			//retrieving data from courses table
+				$course_query = "select Course, Applying_Undergraduate, Applying_Graduate from {$coursesTable} where Course = '{$value}'";
+				$applying_Undergraduate = array();
+				$applying_Graduate = array();
+
+
+				$result1 = $db_connection->query($course_query);
+				if (!$result1) {
+						die("Courses failed: ". $db_connection->error);
+				} else {
+						$num_rows = $result1->num_rows;
+						if ($num_rows === 0) {
+								echo "Empty Table<br>";
+						} else {
+								$result1->data_seek(0);
+								$row = $result1->fetch_array(MYSQLI_ASSOC);
+								$applying_Undergraduate = unserialize($row["Applying_Undergraduate"]);
+								$applying_Graduate = unserialize($row["Applying_Graduate"]);
+
+						}
+				}
+
+				if (empty($applying_Undergraduate)) {
+	    		$applying_Undergraduate = [];
+			}
+			if (empty($applying_Graduate)) {
+				$applying_Graduate = [];
+			}
+
+
+				if ($degree == 'Undergraduate') {
+					array_push($applying_Undergraduate, $id);
+				} else {
+					array_push($applying_Graduate, $id);
+				}
+
+				$Applying_U = serialize($applying_Undergraduate);
+				$Applying_G = serialize($applying_Graduate);
+
+				$update_query = "update Courses_Spring_2018 set Applying_Graduate = '{$Applying_G}', Applying_Undergraduate = '{$Applying_U}' where Course = '{$value}'";
+
+				$result = $db_connection->query($update_query);
+				if (!$result) {
+						die("Retrieval of courses failed: ". $db_connection->error);
+				}
+
+		}
+
+
+/*
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+			// If SQL query did not fail
 			if ($result) {
+				if(empty($coursesToTA)){
+					$coursesToTA = [];
+				}
+				$result = implode(", ",$coursesToTA);
 				$body = <<<EOBODY
 					<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
-					<h3>The following entry has been added to the database</h3>
+					<h3>--Confirmation--</h3>
 
-					<b>Name: </b> $name<br>
+					<b>Name: </b> $first $last<br>
+					<b>DirectoryID: </b> $id<br>
 					<b>Email: </b> $email<br>
-					<b>Gpa: </b> $gpa<br>
-					<b>Year: </b> $year<br>
-					<b>Gender: </b> $gender<br>
-					<br>
-
-					<input type="submit" name="mainMenuButton" value="Return to main menu">
+					<b>Course Applied: </b> $result<br>
+					<b>File:</b> $filePath <br>
 					<br>
 
 					</form>
@@ -159,11 +307,12 @@ EOBODY;
 		        unset($_SESSION["userID"]);
 
 			} else {
+				// SQL query failed
 				$body = "Inserting records failed.".mysqli_error($db);
 			}
-			mysqli_close($db);
+			mysqli_close($db_connection);
 		}
-	}
+
 
 	if(isset($_POST["mainMenuButton"])){
   	 	header("Location: ../main.html");

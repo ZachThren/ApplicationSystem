@@ -1,6 +1,5 @@
 <?php
     require_once("support.php");
-    require_once("courses.php");
     require_once "dblogin.php";
 
     session_start();
@@ -10,18 +9,18 @@
         $_SESSION["coursesTable"] = "Courses_".$term;
         $_SESSION["applicationsTable"] = "Applications_".$term;
         echo  $_SESSION["coursesTable"]."<br>".$_SESSION["applicationsTable"];
-        header("Location: faculty.php");
+        header("Location: submit.php");
     }
 
     $body = <<<EOBODY
-        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid mycontainer">
+        <form action="{$_SERVER["PHP_SELF"]}" method="post" class="container-fluid">
         <h1>Select Term</h1><br>
-        
+
         <div class="form-group">
             <label for="name">Select Course</label>
-            <select class="form-control" name="term">                               
+            <select class="form-control" name="term">
 EOBODY;
-    
+
     $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
     if ($db_connection->connect_error) {
         die($db_connection->connect_error);

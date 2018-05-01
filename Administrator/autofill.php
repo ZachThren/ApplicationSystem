@@ -33,11 +33,10 @@
             echo "Empty Table<br>";
         } else {
             //iterating through the courses
-            for ($course_index = 0; $course_index < 5; $course_index++) {
+            for ($course_index = 0; $course_index < $num_rows_course; $course_index++) {
                 $result0->data_seek($course_index);
                 $a_course = $result0->fetch_array(MYSQLI_ASSOC);
                 $currName = $a_course['Course'];
-                echo $currName." ".$course_index."<br>";
                 //initializing the data for the current course
                 $new_Max_Ugrad = $a_course["Max_Undergraduate"];
                 $new_Max_Grad = $a_course["Max_Graduate"];
@@ -74,13 +73,13 @@
                             $row = $result2->fetch_array(MYSQLI_ASSOC);
                             $applyingTo = unserialize($row['Courses']);
 
+                            if (empty($applyingTo)) {
+                                $applyingTo = [];
+                            }
+
                             if ($addedUndergrad >= $new_Max_Ugrad && $addedGrad >= $new_Max_Grad) {
                                 break;
                             }
-                            echo "DEBUG";
-                            echo $currName;
-                            print_r($applyingTo);
-                            echo "<<>>";
                             if ($row["Degree"] == "Undergraduate" && $addedUndergrad < $new_Max_Ugrad && in_array($currName, $applyingTo)) {
                                 array_push($accepted_Undergraduate, $row["Directory_ID"]);
                                 $addedUndergrad = $addedUndergrad + 1;
@@ -113,19 +112,18 @@
                     if (!$result3) {
                         die("Retrieval of courses failed: ". $db_connection->error);
                     } else {
-                        echo $currName;
-                        echo "<br>";
-                        print_r($updated_applying_u);
-                        echo "<br>";
-                        print_r($updated_applying_g);
-                        echo "<br>";
-                        print_r($accepted_Undergraduate);
-                        echo "<br>";
-                        print_r($accepted_Graduate);
-                        echo "<br>";
+                        
+
                     }
                 }
             }
         }
     }
+
+    $body = "<h3>TAs were successfully assigned to classes.</h3>";
+    $body .= "<h3>Return Home. You will be able to new add/remove TAs manually</h3>";
+
+    $page = generatePage($body, "autofill");
+    echo $page;
+    
 ?>
