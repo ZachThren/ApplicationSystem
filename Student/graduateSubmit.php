@@ -92,7 +92,8 @@ mysqli_close($db_connection);
 						<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
 						<input type="radio" name="currentTA" value="false" class="radio-inline"> No
 		<br><br/>
-		<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
+
+		<b> If you answered "Yes", which courses have you been/currently being a TA for?</b> <br>(Ctrl/Cmd + Click for multiple)
 		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
 WHATEVER;
 $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -122,7 +123,29 @@ mysqli_close($db_connection);
 
 		$body .=<<<NEXT
 		</select><br>
-
+		<label>Last name of Advisor: </label>
+			<input type="text" name="advisor" placeholder="Trump" class="form-control" required><br>
+		<label>Masters or PhD Candidate?
+			<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
+			<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
+			<br/><br>
+			<label>Current Step in program?
+				<input type="radio" name="step" id="checkbox" value="1" class="radio-inline"> 1
+				<input type="radio" name="step" id="checkbox" value="2" class="radio-inline"> 2
+				<input type="radio" name="step" id="checkbox" value="3" class="radio-inline"> 3
+				<br/><br>
+			<b>What course are you currently a Graduate TA for? (CMSCXXX)</b>
+			<input type="text" name="currentCourseTAing" class="form-control" required><br/>
+			<b>What professor are you currently a TA for in that course?</b>
+			<input type="text" name="currentInstructor" class="form-control" required><br/>
+			<label>Have you passed the MEI exam?
+				<input type="radio" name="passedMEI" id="checkbox" value="true" class="radio-inline"> Yes
+				<input type="radio" name="passedMEI" id="checkbox" value="false" class="radio-inline"> No
+				<br><br>
+				<label>Are you currently taking the UMEI course?
+					<input type="radio" name="takingUMEI" id="checkbox" value="true" class="radio-inline"> Yes
+					<input type="radio" name="takingUMEI" id="checkbox" value="false" class="radio-inline"> No
+					<br><br>
 		<b>Any other information you would like to provide us?</b>
 		<input type="text" name="extraInformation" class="form-control" required><br/>
 
@@ -156,19 +179,36 @@ NEXT;
 		$previous = serialize($_POST["previousCourses"]);
 		$coursesToTA = $_POST["courses"];
 		$courses = serialize($coursesToTA );
-		$degree = 'Undergraduate';
+		$degree = $_POST["degree"];
 
 		$filePath = $_POST["transcript"];
 		$fileData = addslashes(file_get_contents($_POST["transcript"]));
 
-		$wanteach = "NULL";
-		$advisor = "NULL";
-		$currTA = "NULL";
-		$currStep = "NULL"; // 1, 2, 3
-		$currCourse = "NULL";
-		$currInstructor = "NULL";
-		$passedMEI = "NULL";
-		$takingUMEI = "NULL";
+		$wanteach = $_POST["wantTeach"];
+		$advisor = $_POST["advisor"];
+
+		if(strcmp($_POST["currentTA"],"true") == 0){
+				$currTA = true;
+		} else {
+				$currTA = false;
+		}
+
+		$currStep = $_POST["step"]; // 1, 2, 3
+		$currCourse = $_POST["currentCourseTAing"];
+		$currInstructor = $_POST["currentInstructor"];
+
+		if(strcmp($_POST["passedMEI"],"true") == 0){
+				$passedMEI = true;
+		} else {
+				$passedMEI = false;
+		}
+
+		if(strcmp($_POST["takingUMEI"],"true") == 0){
+				$takingUMEI = true;
+		} else {
+				$takingUMEI = false;
+		}
+
 		$extraInfo = $_POST["extraInformation"];
 		$posi = $_POST["positionType"];
 

@@ -161,9 +161,17 @@ NEXT;
 		$filePath = $_POST["transcript"];
 		$fileData = addslashes(file_get_contents($_POST["transcript"]));
 
-		$wanteach = "NULL";
+		$wanteach = $_POST["wantTeach"];
 		$advisor = "NULL";
-		$currTA = "NULL";
+
+
+		if(strcmp($_POST["currentTA"],"true") == 0){
+				$currTA = true;
+		} else {
+				$currTA = false;
+		}
+
+
 		$currStep = "NULL"; // 1, 2, 3
 		$currCourse = "NULL";
 		$currInstructor = "NULL";
