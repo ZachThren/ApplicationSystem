@@ -125,7 +125,7 @@ TABLE2;
                         $applying_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $applying_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $applying_table .= "<td><dvi class='btn btn-primary transcriptButton' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -140,7 +140,7 @@ TABLE2;
                             }
                         }
 
-                        $applying_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
+                        $applying_table .= "<td><dvi class='btn btn-warning moreInfoButton' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
 
                         $applying_table .= "<td><div class='form-check'>
                                             <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
@@ -154,7 +154,7 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><dvi class='btn btn-primary' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $accepted_table .= "<td><dvi class='btn btn-primary transcriptButton' onClick='showTranscript({$row['Directory_ID']})' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
@@ -169,7 +169,7 @@ TABLE2;
                             }
                         }
 
-                        $accepted_table .= "<td><dvi class='btn btn-warning' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
+                        $accepted_table .= "<td><dvi class='btn btn-warning moreInfoButton' onClick='showModal({$row['Directory_ID']})' value='{$row['Directory_ID']}'>More Info</dvi></td>";
 
                         $accepted_table .= "<td><div class='form-check'>
                                             <input type='checkbox' id='{$row['Directory_ID']}' name='{$row['Directory_ID']}'>
@@ -188,12 +188,12 @@ TABLE2;
     if (empty($accepted_TAs)) {
         $accepted_table .= "<p> There are no TAs currently assigned to this class </p>";
     } else {
-        $accepted_table .= "<div align='right'><input type='submit' class='btn btn-danger' value='Remove checked TAs' name='Remove'></div>";
+        $accepted_table .= "<div align='right'><input type='submit' class='btn btn-danger deleteButtonTA' value='Remove checked TAs' name='Remove'></div>";
     }
     if (empty($applying_TAs)) {
         $applying_table .= "<p> There are no TAs currently applying to this class </p>";
     } else {
-        $applying_table .= "<div align='right'><input type='submit' class='btn btn-success' value='Add checked TAs' name='Add'></div>";
+        $applying_table .= "<div align='right'><input type='submit' class='btn btn-success addButtonTA' value='Add checked TAs' name='Add'></div>";
     }
 
     $applying_table .= "<hr style='height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;' /></form>";
@@ -201,7 +201,7 @@ TABLE2;
 
     $homeForm = <<<EOFORM
         <form action = "manualfill.php" method='post' align="left" style="margin-left: 20px">
-        <input type="submit" class="btn btn-info" name="goback" value="Choose Another Course">
+        <input type="submit" class="btn btn-info continueButton" name="goback" value="Choose Another Course">
     </form>
     
 EOFORM;

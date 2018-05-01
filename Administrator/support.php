@@ -8,20 +8,20 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <title>$title</title>
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-                <link rel="stylesheet" type="text/css" href="mainstyle.css">
+                <link rel="stylesheet" type="text/css" href="../Assets/mainstyle.css">
             </head>
 
             <body>
                 <br><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px"><br>
                 <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
-                <div class="container-fluid" style="margin: auto; width: 50%">
+                <div class="container-fluid">
                     $body
                 </div>
 
                 <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
                 <form action = "../main.html" method='post' align="center">
-                        <input type="submit" class="btn btn-primary" name="home" value="Return Home">
+                        <input type="submit" class="btn btn-info" name="home" value="Return Home">
                 </form>
                 <br><br>
                 <script src="https://code.jquery.com/jquery-3.1.1.min.js">

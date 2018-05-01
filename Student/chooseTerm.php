@@ -47,7 +47,7 @@ EOBODY;
     }
     $formPart2 = <<<part
         </select></div><br>
-        <input type="submit" class="btn btn-info" name="termSubmit" value="Continue"/>
+        <input type="submit" class="btn btn-info continueButton" name="termSubmit" value="Continue"/>
         <br>
         </form>
 part;

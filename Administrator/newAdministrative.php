@@ -104,13 +104,13 @@
                   <form action="autofill.php" method="post">
                     <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
                     <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
-                    <button type="submit" class="btn btn-primary" $option4>Automatically Assign TAs</button>
+                    <button type="submit" class="btn btn-info continueButton" $option4>Automatically Assign TAs</button>
                   </form>
                   <br>
                   <form action="manualfill.php" method="post">
                     <input type="hidden" name="coursesTable" value="Courses_{$row["season"]}_{$row["year"]}" />
                     <input type="hidden" name="applicationsTable" value="Applications_{$row["season"]}_{$row["year"]}" />
-                    <button type="submit" class="btn btn-primary" $option4>Manually Assign TAs</button>
+                    <button type="submit" class="btn btn-info continueButton" $option4>Manually Assign TAs</button>
                   </form>
                 </div>
               </div>
@@ -122,14 +122,15 @@ EOBODY;
       }
     }
 
-    $body .= "<br><a class=\"btn btn-primary\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
+    $body .= "<br><a class=\"btn btn-primary addButton\" href=\"newAddSemester.php\" role=\"button\">Add Semester</a></div>";
     $body .= "<hr style='height:1px; border:none; color: white; background-color: white;'/>";
 
     $header = <<<headx
+    <div style="margin: auto; width: 50%">
     <h1> Choose Term</h1>
 headx;
 
-    $finalBody = $header.$body;
+    $finalBody = $header.$body."</div>";
     echo generatePage($finalBody, "Administrative");
   }
 ?>

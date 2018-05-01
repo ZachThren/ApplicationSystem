@@ -72,7 +72,7 @@ EOBODY;
           <label class="form-check-label" for="undergrad">Undergraduate</label>
         </div><br><br>
 
-        <input type="submit" class="btn btn-info" name="displayApp" value="Display Applications"/>
+        <input type="submit" class="btn btn-info continueButton" name="displayApp" value="Display Applications"/>
         <br>
         </form>
 eobody;

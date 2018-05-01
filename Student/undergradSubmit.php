@@ -128,9 +128,9 @@ mysqli_close($db_connection);
 		</div>
 
 		</div>
-		<div class="form-group container-fluid" align="center">
+		<div class="form-group container-fluid">
 			<div class="col-sm-2 col-sm-push-2">
-				<input type="submit" class="btn btn-info" name="continueButton" value="Continue">
+				<input type="submit" class="btn btn-info continueButton" name="continueButton" value="Continue">
 			</div>
 		</div>
 		</form>
