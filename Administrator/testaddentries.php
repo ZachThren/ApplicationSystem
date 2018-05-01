@@ -23,7 +23,7 @@
 
 	$incrementator = 0;
 
-	while ($incrementator < 20) {
+	while ($incrementator < 15) {
 
 		$random = generateRandomString();
 		
