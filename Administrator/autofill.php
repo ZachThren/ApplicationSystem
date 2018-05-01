@@ -119,7 +119,7 @@
                         echo "<br>";
                         print_r($updated_applying_g);
                         echo "<br>";
-                        print_r($accepted_Undergraduate);  
+                        print_r($accepted_Undergraduate);
                         echo "<br>";
                         print_r($accepted_Graduate);
                         echo "<br>";
