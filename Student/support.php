@@ -9,7 +9,9 @@ function generatePage($body, $title="Example") {
         <title>$title</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="../Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../Assets/mainstyle.css">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
         $(document).ready(function(e){
@@ -40,11 +42,18 @@ function generatePage($body, $title="Example") {
     </head>
 
     <body>
+        <img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px; margin-top:15px;"><img src="../Assets/Logo.png" alt="TAMS logo" style="margin-right: 15px; margin-top:3px" align="right" height="60px" width="150px"><br>
+        <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
         <div class="container-fluid">
           $body
         </div>
+        
         <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
+        <form action = "../main.html" method='post' align="center">
+                <input type="submit" class="btn btn-info" name="home" value="Return Home">
+        </form>
+        <br><br>
 
         <script src="bootstrap/jquery-3.2.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>

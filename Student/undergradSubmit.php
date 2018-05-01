@@ -8,9 +8,6 @@
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
 	$body = <<<BODY
-	<br>
-	<img src="../Assets/umdLogo.gif" alt = "umdLogo.gif">
-	<hr style="height:1px;border:none;color:#333;background-color:#333;" />
 	<h1 align="center">Undergraduate UMD CS TA Application</h1>
 	  <div class="container-fluid">
 
@@ -131,12 +128,9 @@ mysqli_close($db_connection);
 		</div>
 
 		</div>
-		<div class="form-group container-fluid" align="center">
+		<div class="form-group container-fluid">
 			<div class="col-sm-2 col-sm-push-2">
-				<input type="submit" class="btn btn-info" name="continueButton" value="Continue">
-			</div>
-			<div class="col-sm-4 col-sm-push-4">
-				<input type="submit" class="btn btn-info" name="mainMenuButton" value="Return to main menu">
+				<input type="submit" class="btn btn-info continueButton" name="continueButton" value="Continue">
 			</div>
 		</div>
 		</form>
