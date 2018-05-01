@@ -161,7 +161,10 @@ NEXT;
 		$email = $_POST["email"];
 		$id = $_POST["directoryid"];
 		$gpa = $_POST["gpa"];
-		$previous = serialize($_POST["previousCourses"]);
+		$previous = serialize([]);
+		if (isset($_POST["previousCourses"])) {
+			$previous = serialize($_POST["previousCourses"]);
+		}
 		$coursesToTA = $_POST["courses"];
 		$courses = serialize($coursesToTA );
 		$degree = $_POST["degree"];
