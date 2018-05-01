@@ -153,7 +153,10 @@ TABLE2;
                         $accepted_table .= "<tr>";
                         foreach($row as $columKey=>$columValue) {
                             if ($columKey == "Transcript") {
-                                $accepted_table .= "<td><dvi class='btn btn-primary' value='{$row['Directory_ID']}'>Transcript</dvi></td>";
+                                $accepted_table .= "<form action='transcript.php' method='post'>";
+                                $accepted_table .= "<td><input type='hidden' name='transcript' value='{$row['Directory_ID']}'>";
+                                $accepted_table .= "<button class='btn btn-primary' type='submit' >Transcript</button></td>";
+                                $accepted_table .= "</form>";
                             } else if ($columKey == "Previous") {
                                 $previous_course = unserialize($columValue);
                                 if (empty($previous_course)) {
