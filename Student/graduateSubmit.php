@@ -9,29 +9,26 @@
 	$message = "";
 	$body = <<<BODY
 	<br>
-	<img src="../Assets/umdLogo.gif" alt = "umdLogo.gif">
-	<hr style="height:1px;border:none;color:#333;background-color:#333;" />
-	<h1 align="center">Undergraduate UMD CS TA Application</h1>
+	<h1 align="center">Graduate UMD CS TA Application</h1>
 	  <div class="container-fluid">
 
 		<h3> Contact Information </h3>
 		<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
-		<label>First Name: </label>
+		<span>First Name: </span>
 			<input type="text" name="first" placeholder="John" class="form-control" required><br>
-		<label>Last Name: </label>
+		<span>Last Name: </span>
 			<input type="text" name="last" placeholder="Smith" class="form-control" required><br>
-		<b>Email: </b>
+		<span>Email: </span>
 			<input type="email" name="email" placeholder="example@umd.edu" class="form-control" required><br>
 		<div>
 		<h3> Student Information </h3>
-		<b>University Directory ID: </b>
+		<span>University Directory ID: </span>
 			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
-		<b>GPA: </b>
+		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
 
-		<div class="col-sm-6">
-		<b>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</b>
+		<span>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</span>
 		<select id="course" class="form-control" name="courses[]" multiple size="10">
 BODY;
 $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -60,40 +57,27 @@ if (!$result0) {
 mysqli_close($db_connection);
 	$body .= <<<WHATEVER
 		</select><br>
-		</div>
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Please upload your unofficial transcript</span>
+		<input type="file" name="transcript">
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Part-time or Full-time?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
+		<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Would you like to teach?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
 
-		<br>
-		<div class="form-group col-sm-6">
-						<br/><br>
-						<label for="transcript_upload">Please upload your unofficial transcript</label>
-						<input type="file" name="transcript">
-						<br/>
-						<b>Part-time or Full-time?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
-						<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
-						<br/><br/>
-						<b>Would you like to teach?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
-						<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
-		</div>
+		<span>Have you ever been/are you currently a TA for a CMSC course?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
+		<input type="radio" name="currentTA" value="false" class="radio-inline"> No
 
-
-
-
-		</div>
-
-		</div> <!--- #container div --->
-
-		<div class="container-fluid" id="container">
-		<b>Have you ever been/are you currently a TA for a CMSC course?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
-						<input type="radio" name="currentTA" value="false" class="radio-inline"> No
-		<br><br/>
-
-		<b> If you answered "Yes", which courses have you been/currently being a TA for?</b> <br>(Ctrl/Cmd + Click for multiple)
+		<span> If you answered "Yes", which courses have you been/currently being a TA for?</span> <br>(Ctrl/Cmd + Click for multiple)
 		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
 WHATEVER;
 $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -123,43 +107,44 @@ mysqli_close($db_connection);
 
 		$body .=<<<NEXT
 		</select><br>
-		<label>Last name of Advisor: </label>
-			<input type="text" name="advisor" placeholder="Trump" class="form-control" required><br>
-		<label>Masters or PhD Candidate?
-			<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
-			<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
-			<br/><br>
-			<label>Current Step in program?
-				<input type="radio" name="step" id="checkbox" value="1" class="radio-inline"> 1
-				<input type="radio" name="step" id="checkbox" value="2" class="radio-inline"> 2
-				<input type="radio" name="step" id="checkbox" value="3" class="radio-inline"> 3
-				<br/><br>
-			<b>What course are you currently a Graduate TA for? (CMSCXXX)</b>
-			<input type="text" name="currentCourseTAing" class="form-control" required><br/>
-			<b>What professor are you currently a TA for in that course?</b>
-			<input type="text" name="currentInstructor" class="form-control" required><br/>
-			<label>Have you passed the MEI exam?
-				<input type="radio" name="passedMEI" id="checkbox" value="true" class="radio-inline"> Yes
-				<input type="radio" name="passedMEI" id="checkbox" value="false" class="radio-inline"> No
-				<br><br>
-				<label>Are you currently taking the UMEI course?
-					<input type="radio" name="takingUMEI" id="checkbox" value="true" class="radio-inline"> Yes
-					<input type="radio" name="takingUMEI" id="checkbox" value="false" class="radio-inline"> No
-					<br><br>
-		<b>Any other information you would like to provide us?</b>
+		<span>Last name of Advisor: </span>
+		<input type="text" name="advisor" placeholder="Nelson" class="form-control" required>
+		<br>
+		<span>Masters or PhD Candidate?</span>
+		<input type="radio" name="degree" id="checkbox" value="MS" class="radio-inline"> MS
+		<input type="radio" name="degree" id="checkbox" value="PhD" class="radio-inline"> PhD
+		<br><br>
+		<span>Current Step in program?</span>
+		<input type="radio" name="step" id="checkbox" value="1" class="radio-inline"> 1
+		<input type="radio" name="step" id="checkbox" value="2" class="radio-inline"> 2
+		<input type="radio" name="step" id="checkbox" value="3" class="radio-inline"> 3
+
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>What course are you currently a Graduate TA for? (CMSCXXX)</span>
+		<input type="text" name="currentCourseTAing" class="form-control" required><br/>
+
+		<span>What professor are you currently a TA for in that course?</span>
+		<input type="text" name="currentInstructor" class="form-control" required><br/>
+
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Have you passed the MEI exam?</span>
+		<input type="radio" name="passedMEI" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="passedMEI" id="checkbox" value="false" class="radio-inline"> No
+		<br><br>
+		<span>Are you currently taking the UMEI course?</span>
+		<input type="radio" name="takingUMEI" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="takingUMEI" id="checkbox" value="false" class="radio-inline"> No
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Any other information you would like to provide us?</span>
 		<input type="text" name="extraInformation" class="form-control" required><br/>
 
 		</div>
 
 		</div>
 
-		</div>
-		<div class="form-group container-fluid" align="center">
+		<div class="form-group container-fluid" align="left">
 			<div class="col-sm-2 col-sm-push-2">
 				<input type="submit" class="btn btn-info" name="continueButton" value="Continue">
-			</div>
-			<div class="col-sm-4 col-sm-push-4">
-				<input type="submit" class="btn btn-info" name="mainMenuButton" value="Return to main menu">
 			</div>
 		</div>
 		</form>

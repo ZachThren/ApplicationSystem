@@ -14,21 +14,22 @@
 		<h3> Contact Information </h3>
 		<form action="{$_SERVER["PHP_SELF"]}" method="post">
 
-		<label>First Name: </label>
+		<span>First Name: </span>
 			<input type="text" name="first" placeholder="John" class="form-control" required><br>
-		<label>Last Name: </label>
+		<span>Last Name: </span>
 			<input type="text" name="last" placeholder="Smith" class="form-control" required><br>
-		<b>Email: </b>
+		<span>Email: </span>
 			<input type="email" name="email" placeholder="example@umd.edu" class="form-control" required><br>
 		<div>
 		<h3> Student Information </h3>
-		<b>University Directory ID: </b>
+		<span>University Directory ID: </span>
 			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
-		<b>GPA: </b>
+		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
 
-		<div class="col-sm-6">
-		<b>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</b>
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+
+		<span>Courses applying to be a TA for: <br>(Ctrl/Cmd + Click for multiple)</span>
 		<select id="course" class="form-control" name="courses[]" multiple size="10">
 BODY;
 $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -56,40 +57,27 @@ if (!$result0) {
 }
 mysqli_close($db_connection);
 	$body .= <<<WHATEVER
-		</select><br>
-		</div>
-
-		<br>
-		<div class="form-group col-sm-6">
-						<br/><br>
-						<label for="transcript_upload">Please upload your unofficial transcript</label>
-						<input type="file" name="transcript">
-						<br/>
-						<b>Part-time or Full-time?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
-						<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
-						<br/><br/>
-						<b>Would you like to teach?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
-						<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
-		</div>
-
-
-
-
-		</div>
-
-		</div> <!--- #container div --->
-
-		<div class="container-fluid" id="container">
-		<b>Have you ever been/are you currently a TA for a CMSC course?</b>
-						<!-- you can replace radio-inline with checkbox -->
-						<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
-						<input type="radio" name="currentTA" value="false" class="radio-inline"> No
+		</select>
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Please upload your unofficial transcript</span>
+		<input type="file" name="transcript">
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Part-time or Full-time?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="positionType" id="checkbox" value="Part" class="radio-inline"> Part
+		<input type="radio" name="positionType" id="checkbox" value="Full" class="radio-inline"> Full
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Would you like to teach?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="wantTeach" id="checkbox" value="true" class="radio-inline"> Yes
+		<input type="radio" name="wantTeach" id="checkbox" value="false" class="radio-inline"> No
+		<br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Have you ever been/are you currently a TA for a CMSC course?</span>
+		<!-- you can replace radio-inline with checkbox -->
+		<input type="radio" name="currentTA" id="add" value="true" class="radio-inline" required> Yes
+		<input type="radio" name="currentTA" value="false" class="radio-inline"> No
 		<br><br/>
-		<b> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)
+		<span> If you answered "Yes", which courses have you been/currently being a TA for? <br>(Ctrl/Cmd + Click for multiple)</span>
 		<select id="course" class="form-control" name="previousCourses[]" multiple size="10">
 WHATEVER;
 $db_connection = new mysqli($dbhost, $dbuser, $dbpassword, $database);
@@ -119,16 +107,15 @@ mysqli_close($db_connection);
 
 		$body .=<<<NEXT
 		</select><br>
-
-		<b>Any other information you would like to provide us?</b>
+		<hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
+		<span>Any other information you would like to provide us?</span>
 		<input type="text" name="extraInformation" class="form-control" required><br/>
 
 		</div>
 
 		</div>
 
-		</div>
-		<div class="form-group container-fluid mycontainer">
+		<div class="form-group container-fluid">
 			<div class="col-sm-2 col-sm-push-2">
 				<input type="submit" class="btn btn-info continueButton" name="continueButton" value="Continue">
 			</div>
