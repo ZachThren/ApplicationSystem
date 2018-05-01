@@ -197,23 +197,25 @@ TABLE2;
           </div>
 
           <div class="modal-body">
-            <p>First Name: <span id="first"></span></p>
-            <p>Last Name: <span id="last"></span></p>
-            <p>Email: <span id="email"></span></p>
-            <p>Directory ID: <span id="directoryid"></span></p>
-            <p>GPA: <span id="gpa"></span></p>
+            <p><b>First Name:</b> <span id="first"></span></p>
+            <p><b>Last Name:</b> <span id="last"></span></p>
+            <p><b>Email:</b> <span id="email"></span></p>
+            <p><b>Directory ID:</b> <span id="directoryid"></span></p>
+            <p><b>GPA:</b> <span id="gpa"></span></p>
 
-            <p>Degree: <span id="degree"></span></p>
-            <p>Position Type: <span id="type"></span></p>
-            <p>Want To Teach: <span id="pref"></span></p>
-            <p>Currently a TA: <span id="currentta"></span></p>
-            <p>TAing for Current Course: <span id="currentcourse"></span></p>
-            <p>Instructor for that Course: <span id="instructor"></span></p>
-            <p>Advisor: <span id="advisor"></span></p>
+            <p><b>Degree:</b> <span id="degree"></span></p>
+            <p><b>Position Type:</b> <span id="type"></span></p>
+            <p><b>Want To Teach?</b> <span id="pref"></span></p>
 
-            <p>Taking UMEI: <span id="takenumei"></span></p>
-            <p>Passed UMEI: <span id="passedumei"></span></p>
-            <p>Extra Info: <span id="note"></span></p>
+            <p><b>Currently a TA?</b> <span id="currentta"></span></p>
+            <p><b>Current Step:</b> <span id="currentstep"></span></p>
+            <p><b>Currently TAing For:</b> <span id="currentcourse"></span></p>
+            <p><b>Instructor for that Course:</b> <span id="instructor"></span></p>
+            <p><b>Advisor:</b> <span id="advisor"></span></p>
+
+            <p><b>Taking UMEI:</b> <span id="takenumei"></span></p>
+            <p><b>Passed UMEI:</b> <span id="passedumei"></span></p>
+            <p><b>Extra Info:</b> <span id="note"></span></p>
           </div>
 
           <div class="modal-footer">
@@ -257,8 +259,9 @@ TABLE2;
             pref = "Yes"
           }
           $("#currentta").text(pref);
-            $("#currentcourse").text(student.Current_Course);
-              $("#instructor").text(student.Current_Instructor);
+          $("#currentstep").text(student.Current_Step);
+          $("#currentcourse").text(student.Current_Course);
+          $("#instructor").text(student.Current_Instructor);
           $("#advisor").text(student.Advisor);
           if (student.Taking_UMEI == 1) {
             pref = "Yes"
@@ -271,7 +274,8 @@ TABLE2;
           } else {
             pref = "Yes"
           }
-            $("#passedumei").text(pref);
+         
+         $("#passedumei").text(pref);
 
           $("#note").text(student.Extra_Information);
         }

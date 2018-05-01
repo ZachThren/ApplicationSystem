@@ -8,7 +8,7 @@ if ($db_connection->connect_error) {
     die($db_connection->connect_error);
 }
 $id = $_GET["id"];
-$studentInfo_query = "select First, Last, Email, Directory_ID, GPA, Degree, Position_Type, Want_Teach, Advisor, Passed_MEI, Current_TA, Current_Course, Extra_Information, Current_Instructor, Taking_UMEI from Applications_Spring_2018 where Directory_ID = '{$id}'";
+$studentInfo_query = "select First, Last, Email, Directory_ID, GPA, Degree, Position_Type, Want_Teach, Advisor, Passed_MEI, Current_TA, Current_Step, Current_Course, Extra_Information, Current_Instructor, Taking_UMEI from Applications_Spring_2018 where Directory_ID = '{$id}'";
 $result = $db_connection->query($studentInfo_query);
 
 if (!$result) {

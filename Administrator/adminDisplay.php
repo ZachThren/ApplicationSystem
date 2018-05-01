@@ -264,7 +264,7 @@ TABLE2;
             pref = "Yes"
           }
           $("#currentta").text(pref);
-          $("#currentta").text(student.Current_Step);
+          $("#currentstep").text(student.Current_Step);
           $("#currentcourse").text(student.Current_Course);
           $("#instructor").text(student.Current_Instructor);
           $("#advisor").text(student.Advisor);
