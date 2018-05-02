@@ -43,7 +43,7 @@
                 $applying_Undergraduate = unserialize($a_course["Applying_Undergraduate"]);
                 $applying_Graduate = unserialize($a_course["Applying_Graduate"]);
                 $accepted_Undergraduate = unserialize($a_course["Accepted_Undergraduate"]);
-                $accepted_Graduate = unserialize($a_course["Accepted_Graduate"]);
+                //$accepted_Graduate = unserialize($a_course["Accepted_Graduate"]);
                 if (empty($applying_Undergraduate)) {
                     $applying_Undergraduate = [];
                 }
