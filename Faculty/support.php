@@ -15,19 +15,20 @@
             <body>
                 <img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px; margin-top:15px;"><img src="../Assets/Logo.png" alt="TAMS logo" style="margin-right: 15px; margin-top:3px" align="right" height="60px" width="150px"><br>
                 <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
-                
+
 
                 <div class="container-fluid">
                     $body
                 </div>
 
-                <br><hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;"/>
+                <br><hr style="height:1px; color:#C0C0C0; background-color:#C0C0C0;"/>
+
                 <form action = "../main.html" method='post' align="center">
                         <input type="submit" class="btn btn-info" name="home" value="Return Home">
                 </form>
                 <br><br>
                 <script src="https://code.jquery.com/jquery-3.1.1.min.js">
-                // <script src=""https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
                 </body>
