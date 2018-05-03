@@ -25,11 +25,7 @@
 		<div>
 		<h3> Student Information </h3>
 		<span>University Directory ID: </span>
-			<span><strong>{$currentStudent}</strong></span> <br>
-		<span>Password: </span>
-					<input type="password" name="password" required><br><br>
-		<span>Verify Password: </span>
-					<input required type="password" name="verifypass" required>
+			<span class="text-success">{$currentStudent}</span>
 			<br><br>
 		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
