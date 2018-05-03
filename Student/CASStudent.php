@@ -46,6 +46,7 @@ if ($verify_user != 1) {
 } else {
   /* Success */
   $_SESSION["studentDirectoryId"] = $login_nm;
+  $_SESSION["studentPassword"] = $login_passwd;
   header("location: chooseTerm.php");
 
 }

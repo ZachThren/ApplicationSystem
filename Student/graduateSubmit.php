@@ -5,6 +5,8 @@
 	// Starts session. We need to keep track to see if they are a valid user.
 	session_start();
 	$currentStudent = $_SESSION["studentDirectoryId"];
+	$currentStudentPassword = $_SESSION["studentPassword"];
+
 
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
