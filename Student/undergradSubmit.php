@@ -24,7 +24,7 @@
 		<div>
 		<h3> Student Information </h3>
 		<span>University Directory ID: </span>
-			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
+			<input type="text" name="directoryid" value="{$currentStudent}" placeholder="terps" class="form-control" required><br>
 		<span>Password: </span>
 					<input type="password" name="password" required><br><br>
 		<span>Verify Password: </span>
