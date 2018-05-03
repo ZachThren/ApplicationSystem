@@ -5,7 +5,7 @@
 	// Starts session. We need to keep track to see if they are a valid user.
 	session_start();
 
-	// Basic form for entering applicant info. Makes a new applicant() object.
+	// Asking if they would like to Apply or Delete their application
 	$message = "";
 	$body = <<<BODY
 	<br>
@@ -62,7 +62,7 @@ BODY;
 	}
 
 	if(isset($_POST["deleteUndergrad"])){
-  	 	header("Location: .php");
+  	 	header("Location: delete.php");
 	}
 
 	if(isset($_POST["main"])){

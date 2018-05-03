@@ -167,11 +167,6 @@ NEXT;
 		$extraInfo = $_POST["extraInformation"];
 		$posi = $_POST["positionType"];
 
-		$password = trim($_POST["password"]);
-		$verifypass = trim($_POST["verifypass"]);
-
-
-
 		$applicationsTable = "Applications_Spring_2018";
 		$coursesTable = "Courses_Spring_2018";
 
