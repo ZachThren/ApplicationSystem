@@ -171,14 +171,6 @@ NEXT;
 		$coursesTable = "Courses_Spring_2018";
 
 
-
-		if ($password !== $verifypass) {
-			$message = "Passwords do not match. Please try again.";
-			echo "<script type='text/javascript'>alert('$message');</script>";
-			header("Location: ./undergradSubmit.php");
-			exit;
-		}
-
 		if (isset($_SESSION["coursesTable"])) {
 				$coursesTable = $_SESSION["coursesTable"];
 		}
