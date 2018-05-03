@@ -10,16 +10,16 @@ function generatePage($body, $title="Example") {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="../Assets/mainstyle.css">
-        <link rel="apple-touch-icon" sizes="180x180" href="/Assets/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/Assets/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/Assets/favicon-16x16.png">
-        <link rel="manifest" href="/Assets/site.webmanifest">
-        <link rel="mask-icon" href="/Assets/safari-pinned-tab.svg" color="#5bbad5">
-        <link rel="shortcut icon" href="/Assets/favicon.ico">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="msapplication-config" content="/Assets/browserconfig.xml">
-        <meta name="theme-color" content="#ffffff">
+        <link href="Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="Assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Assets/favicon-16x16.png">
+    <link rel="manifest" href="Assets/site.webmanifest">
+    <link rel="mask-icon" href="Assets/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="Assets/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="Assets/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
         $(document).ready(function(e){
