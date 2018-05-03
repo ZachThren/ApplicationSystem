@@ -1,5 +1,7 @@
 <?php
 require_once("support.php");
+session_start();
+
 
 $topPart = <<<EOPAGE
 
@@ -43,6 +45,7 @@ if ($verify_user != 1) {
   $bottomPart .= "<p align='center' style='color:red; font-size:18px'>*Invalid Directory Id/Password</p>";
 } else {
   /* Success */
+  $_SESSION["studentDirectoryId"] = $login_nm;
   header("location: chooseTerm.php");
 
 }

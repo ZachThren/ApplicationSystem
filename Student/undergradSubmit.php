@@ -4,6 +4,7 @@
 	require_once('dblogin.php');
 	// Starts session. We need to keep track to see if they are a valid user.
 	session_start();
+	$currentStudent = $_SESSION["studentDirectoryId"];
 
 	// Basic form for entering applicant info. Makes a new applicant() object.
 	$message = "";
@@ -23,7 +24,7 @@
 		<div>
 		<h3> Student Information </h3>
 		<span>University Directory ID: </span>
-			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
+			<input type="text" name="directoryid" value="{$currentStudent}" placeholder="terps" class="form-control" required><br>
 		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
 
