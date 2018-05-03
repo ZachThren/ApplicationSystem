@@ -3,7 +3,7 @@ require_once("support.php");
 
 $topPart = <<<EOPAGE
 
-  <form action="{$_SERVER['PHP_SELF']}" method="post">
+  <form class="mycontainer" action="{$_SERVER['PHP_SELF']}" method="post">
 
   <strong>DirectoryID: </strong><input type="text" name = "directoryid" class="form-control" /><br /><br />
   <strong>Password: </strong><input type="password" name="password" class="form-control" /><br /><br>
