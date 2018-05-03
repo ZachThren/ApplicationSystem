@@ -25,7 +25,7 @@
 		<div>
 		<h3> Student Information </h3>
 		<span>University Directory ID: </span>
-			<input type="text" name="directoryid" value="{$currentStudent}" placeholder="terps" class="form-control" required><br>
+			<span><strong>{$currentStudent}</strong></span> <br>
 		<span>Password: </span>
 					<input type="password" name="password" required><br><br>
 		<span>Verify Password: </span>
@@ -139,7 +139,7 @@ NEXT;
 		$first = $_POST["first"];
 		$last = $_POST["last"];
 		$email = $_POST["email"];
-		$id = $_POST["directoryid"];
+		$id = $currentStudent;
 		$gpa = $_POST["gpa"];
 		$previous = serialize([]);
 		if (isset($_POST["previousCourses"])) {
