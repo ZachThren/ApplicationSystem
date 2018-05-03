@@ -57,12 +57,9 @@ BODY;
   	 	header("Location: graduateSubmit.php");
 	}
 
-	if(isset($_POST["deleteGrad"])){
-		header("Location: .php");
-	}
-
-	if(isset($_POST["deleteUndergrad"])){
-  	 	header("Location: delete.php");
+	// Delete button for Undergrad OR Grad student
+	if(isset($_POST["deleteGrad"]) || isset($_POST["deleteUndergrad"])){
+		header("Location: delete.php");
 	}
 
 	if(isset($_POST["main"])){
