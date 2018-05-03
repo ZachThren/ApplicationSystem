@@ -43,7 +43,7 @@
                 $applying_Undergraduate = unserialize($a_course["Applying_Undergraduate"]);
                 $applying_Graduate = unserialize($a_course["Applying_Graduate"]);
                 $accepted_Undergraduate = unserialize($a_course["Accepted_Undergraduate"]);
-                $accepted_Graduate = unserialize($a_course["Accepted_Graduate"]);
+                //$accepted_Graduate = unserialize($a_course["Accepted_Graduate"]);
                 if (empty($applying_Undergraduate)) {
                     $applying_Undergraduate = [];
                 }
@@ -118,11 +118,57 @@
                 }
             }
         }
+
+        $display_query = "select Course, Max_Undergraduate, Max_Graduate, Max_Total  from {$coursesTable} order by Course";
+        $result4 = mysqli_query($db_connection, $display_query);
+
+        if ($result4) {
+            $numberOfRows = mysqli_num_rows($result4);
+            if ($numberOfRows == 0) {
+                $body = "<h2>No entries exists in the table</h2>";
+            } else {
+                $body = <<<EOBODY
+                    <table class="table table-stripped table-bordered">
+                    <thead>                    
+                        <th><div style="text-align:center">Course</div></th>
+                        <th><div style="text-align:center">Undergraduate TAs</div></th>
+                        <th><div style="text-align:center">Graduate TAs</div></th>
+                        <th><div style="text-align:center">Total TAs</div></th>
+                    </thead>
+                    <tbody>
+EOBODY;
+                while ($recordArray = mysqli_fetch_array($result4, MYSQLI_ASSOC)) {
+                    $crse = $recordArray['Course'];
+                    $Max_u = $recordArray['Max_Undergraduate'];
+                    $Max_grad = $recordArray['Max_Graduate'];
+                    $Max_Tot = $recordArray['Max_Total'];
+
+                    $body .= "<tr>";
+                    $body .= "<td><div style=\"text-align:center\">".$crse."</div> </td>";
+                    $body .= "<td><div style=\"text-align:center\">".$Max_u."</div> </td>";
+                    $body .= "<td><div style=\"text-align:center\">".$Max_grad."</div> </td>";
+                    $body .= "<td><div style=\"text-align:center\">".$Max_Tot."</div> </td>";
+                    $body .= "</tr>";
+                }
+
+            }
+        } else {
+            $body = "Retrieving records failed." . mysqli_error($db_connection);
+        }
     }
 
-    $body = "<div class='mycontainer'><h4>TAs were successfully assigned to classes.</h4> <h4>Return Home. You will be able to new add/remove TAs manually</h4></div>";
+    $body .= "<div class='mycontainer'><h4>TAs were successfully assigned to classes.</h4> <h4>Return Home. You will be able to add/remove TAs manually</h4></div>";
 
     $page = generatePage($body, "autofill");
     echo $page;
+
+    function connectToDB($host, $user, $password, $database) {
+        $db = mysqli_connect($host, $user, $password, $database);
+        if (mysqli_connect_errno()) {
+            echo "Connect failed.\n".mysqli_connect_error();
+            exit();
+        }
+        return $db;
+    }
     
 ?>

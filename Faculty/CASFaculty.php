@@ -3,9 +3,9 @@ require_once("support.php");
 
 $topPart = <<<EOPAGE
 
-  <form action="{$_SERVER['PHP_SELF']}" method="post">
+  <form class="mycontainer" action="{$_SERVER['PHP_SELF']}" method="post">
 
-  <strong>DirectoryID: </strong><input type="text" name = "directoryid" class="form-control" /><br /><br />
+  <strong>Directory ID: </strong><input type="text" name = "directoryid" class="form-control" /><br /><br />
   <strong>Password: </strong><input type="password" name="password" class="form-control" /><br /><br>
 
 
@@ -33,13 +33,14 @@ $ldapconn=ldap_connect("ldap://ldap.umd.edu/",389) or die('Could not connect<br>
 /* Set the protocol version to 3 (unless set to 3 by default) */
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 
+error_reporting(E_ALL ^ E_WARNING); 
 /* Bind user to LDAP with password */
 $verify_user=ldap_bind($ldapconn,"uid=$login_nm,ou=people,dc=umd,dc=edu",$login_passwd);
 
 /* Returns 1 on Success */
 if ($verify_user != 1) {
   /* Failed */
-  $bottomPart .= "Invalid directoryId/password<br>";
+  $bottomPart .= "<p align='center' style='color:red; font-size:18px'>*Invalid Directory Id/Password</p>";
 } else {
   /* Success */
   header("location: chooseTerm.php");
