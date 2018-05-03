@@ -20,9 +20,11 @@
               <div class="panel-heading">
               </div>
               <div class="panel-body">
+              <h2>Undergraduate</h2>
               </div>
               <div class="panel-footer">
-                <input type="submit" class="btn btn-info continueButton" value="Undergraduate" name="undergraduate">
+                <input type="submit" class="btn btn-info continueButton" value="Apply" name="undergraduate">
+                <input type="submit" class="btn btn-danger continueButton" value="Delete" name="deleteUndergrad">
               </div>
             </div>
           </div>
@@ -31,9 +33,11 @@
               <div class="panel-heading">
               </div>
               <div class="panel-body">
+               <h2>Graduate</h2>
               </div>
               <div class="panel-footer">
-                <input type="submit" class="btn btn-info continueButton" value="Graduate" name="graduate">
+                <input type="submit" class="btn btn-info continueButton" value="Apply" name="graduate">
+                <input type="submit" class="btn btn-danger continueButton" value="Delete" name="deleteGrad">
               </div>
             </div>
           </div>
@@ -51,6 +55,14 @@ BODY;
 
 	if(isset($_POST["graduate"])){
   	 	header("Location: graduateSubmit.php");
+	}
+
+	if(isset($_POST["deleteGrad"])){
+		header("Location: .php");
+	}
+
+	if(isset($_POST["deleteUndergrad"])){
+  	 	header("Location: .php");
 	}
 
 	if(isset($_POST["main"])){
