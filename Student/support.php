@@ -20,6 +20,7 @@ function generatePage($body, $title="Example") {
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="Assets/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    </head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
         $(document).ready(function(e){

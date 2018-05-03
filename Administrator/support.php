@@ -18,7 +18,7 @@
             <meta name="msapplication-TileColor" content="#da532c">
             <meta name="msapplication-config" content="Assets/browserconfig.xml">
             <meta name="theme-color" content="#ffffff">
-
+            </head>
             <body>
                 <a href="../main.html"><img src="../Assets/umdLogo.gif" alt="UMD logo" style="margin-left: 10px; margin-top:15px;"></a><img src="../Assets/Logo.png" alt="TAMS logo" style="margin-right: 15px; margin-top:3px" align="right" height="60px" width="150px"><br>
                 <hr style="height:1px;border:none;color:#C0C0C0;background-color:#C0C0C0;" />
