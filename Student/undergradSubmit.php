@@ -24,7 +24,12 @@
 		<div>
 		<h3> Student Information </h3>
 		<span>University Directory ID: </span>
-			<input type="text" name="directoryid" value="{$currentStudent}" placeholder="terps" class="form-control" required><br>
+			<input type="text" name="directoryid" placeholder="terps" class="form-control" required><br>
+		<span>Password: </span>
+					<input type="password" name="password" required><br><br>
+		<span>Verify Password: </span>
+					<input required type="password" name="verifypass" required>
+			<br><br>
 		<span>GPA: </span>
 			<input type="number" name="gpa" step="0.01" placeholder="3.0" class="form-control" required><br>
 
@@ -165,9 +170,22 @@ NEXT;
 		$extraInfo = $_POST["extraInformation"];
 		$posi = $_POST["positionType"];
 
+		$password = trim($_POST["password"]);
+		$verifypass = trim($_POST["verifypass"]);
+
+
+
 		$applicationsTable = "Applications_Spring_2018";
 		$coursesTable = "Courses_Spring_2018";
 
+
+
+		if ($password !== $verifypass) {
+			$message = "Passwords do not match. Please try again.";
+			echo "<script type='text/javascript'>alert('$message');</script>";
+			header("Location: ./undergradSubmit.php");
+			exit;
+		}
 
 		if (isset($_SESSION["coursesTable"])) {
 				$coursesTable = $_SESSION["coursesTable"];
