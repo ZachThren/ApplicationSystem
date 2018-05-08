@@ -14,7 +14,7 @@ Faculty:
 See the information of applicants
 
 
-<Contributors>
+Contributors:
 Erik
 Zach
 Nelson
