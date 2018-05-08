@@ -12,3 +12,12 @@ Manually remove and add applicants to courses
 
 Faculty:
 See the information of applicants
+
+
+<Contributors>
+Erik
+Zach
+Nelson
+Mishel
+Tumasang
+
