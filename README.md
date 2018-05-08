@@ -15,9 +15,9 @@ See the information of applicants
 
 
 Contributors:
-Erik
-Zach
-Nelson
-Mishel
+Erik,
+Zach,
+Nelson,
+Mishel,
 Tumasang
 
